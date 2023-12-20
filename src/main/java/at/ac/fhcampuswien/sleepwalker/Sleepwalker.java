@@ -8,8 +8,10 @@ import java.io.IOException;
 public class Sleepwalker extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException{
-        GameObjects.stageRoot = primaryStage;
-        GameObjects.loadMainMenu();
+        String windowTitle = GameProperties.TITLE + " v" + GameProperties.GAME_VERSION;
+        primaryStage.setTitle(windowTitle);
+        GameManager.stageRoot = primaryStage;
+        GameManager.showMainMenu();
     }
 
     public static void main(String[] args){

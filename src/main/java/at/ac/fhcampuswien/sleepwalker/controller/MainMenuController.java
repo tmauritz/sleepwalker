@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker.controller;
 
-import at.ac.fhcampuswien.sleepwalker.GameObjects;
+import at.ac.fhcampuswien.sleepwalker.GameManager;
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
 import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import javafx.application.Platform;
@@ -49,7 +49,7 @@ public class MainMenuController implements Initializable {
         Image background = new Image(Sleepwalker.class.getResource("img/placeholder_image1.jpg").toString()); //TODO: fix null pointer possibility
         formatMenu();
         backgroundView.setImage(background);
-        GameObjects.playBackgroundMusic(mainTheme);
+        GameManager.playBackgroundMusic(mainTheme);
     }
 
     /**
@@ -57,7 +57,7 @@ public class MainMenuController implements Initializable {
      */
     public void onPlayButtonClick(){
         //switch to WorldMap Scene
-        GameObjects.loadWorldMap();
+        GameManager.showWorldMap();
     }
 
     /**
@@ -68,7 +68,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void onToggleMusic(ActionEvent actionEvent){
-        MediaPlayer music = GameObjects.getBackgroundMusic();
+        MediaPlayer music = GameManager.getBackgroundMusic();
         if(music.isMute()){
             music.setMute(false);
             musicToggle.setText("Mute");
