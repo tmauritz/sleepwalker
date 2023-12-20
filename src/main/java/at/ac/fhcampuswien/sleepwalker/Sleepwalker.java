@@ -9,7 +9,7 @@ public class Sleepwalker extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException{
         GameObjects.stageRoot = primaryStage;
-        GameObjects.loadMainMenu(); //push Test
+        GameObjects.loadMainMenu();
     }
 
     public static void main(String[] args){
