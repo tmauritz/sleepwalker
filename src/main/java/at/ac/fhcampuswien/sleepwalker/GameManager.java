@@ -58,6 +58,7 @@ public class GameManager {
             FXMLLoader fxmlLoader = new FXMLLoader(Sleepwalker.class.getResource("ui/MainMenu.fxml"));
             try{
                 mainMenu = new Scene(fxmlLoader.load(), GameProperties.WIDTH, GameProperties.HEIGHT);
+                sceneLibrary.put("mainMenu",mainMenu);
             } catch(IOException e){
                 throw new RuntimeException(e);
             }
@@ -80,6 +81,7 @@ public class GameManager {
             Pane x = new AnchorPane(backToMainMenu);
             backToMainMenu.setOnAction(t -> GameManager.showMainMenu()); //Look Mum, I'm using Lambdas!
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
+            sceneLibrary.put("worldMap",worldMap);
         }
         stageRoot.setScene(worldMap);
         stageRoot.show();
