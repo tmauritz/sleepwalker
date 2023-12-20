@@ -34,6 +34,7 @@ public class MainMenuController implements Initializable {
     private Button exitButton;
     @FXML
     private Button musicToggle;
+
     /**
      * fixes layout of the main menu
      */
@@ -45,6 +46,7 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        //TODO: outsource media loading into MediaManager class to better separate GUI and background tasks
         Media mainTheme = new Media(Sleepwalker.class.getResource("audio/maintheme.mp3").toString()); //TODO: fix null pointer possibility
         Image background = new Image(Sleepwalker.class.getResource("img/placeholder_image1.jpg").toString()); //TODO: fix null pointer possibility
         formatMenu();
@@ -53,7 +55,7 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * Starts the game from the main menu
+     * Shows the world map
      */
     public void onPlayButtonClick(){
         //switch to WorldMap Scene

@@ -1,5 +1,8 @@
 package at.ac.fhcampuswien.sleepwalker;
 
+/**
+ * GameProperties class stores various constants in one place.
+ */
 public class GameProperties {
     public static final String TITLE = "Sleepwalker";
     public static final String DESCRIPTION = "a TeamTwo platformer";

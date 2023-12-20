@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameManager {
-    private static Map<String, Scene> sceneLibrary = new HashMap<>();
+    private static final Map<String, Scene> sceneLibrary = new HashMap<>();
     public static Stage stageRoot;
     private static MediaPlayer backgroundMusic;
 
@@ -34,6 +34,7 @@ public class GameManager {
         backgroundMusic = new MediaPlayer(media);
         backgroundMusic.play();
     }
+
     public static void stopBackgroundMusic(){
         backgroundMusic.stop();
     }
@@ -74,6 +75,7 @@ public class GameManager {
         Scene worldMap = sceneLibrary.get("worldMap");
         if(worldMap == null){
             //load world map if not present
+            //TODO: implement proper World Map
             Button backToMainMenu = new Button("Back to Main Menu");
             Pane x = new AnchorPane(backToMainMenu);
             backToMainMenu.setOnAction(t -> GameManager.showMainMenu()); //Look Mum, I'm using Lambdas!
