@@ -59,7 +59,7 @@ public class MainMenuController implements Initializable {
      */
     public void onPlayButtonClick(){
         //switch to WorldMap Scene
-        GameManager.showWorldMap();
+        GameManager.getInstance().showWorldMap();
     }
 
     /**

@@ -1,7 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker;
 
+import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -11,9 +11,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,11 +19,24 @@ import java.util.Map;
  * Manages Scene loading and background tasks
  */
 public class GameManager {
-    private static final Map<String, Scene> sceneLibrary = new HashMap<>();
-    private static final List<Node> gameObjects = new ArrayList<>();
-    public static Stage stageRoot;
+    private final Map<String, Scene> sceneLibrary = new HashMap<>();
+    private final Stage stageRoot;
     private static MediaPlayer backgroundMusic;
-    private static Node player;
+
+    private static GameManager gameManager;
+
+    private GameManager(Stage stageRoot){
+        this.stageRoot = stageRoot;
+    }
+
+    public static GameManager getInstance(){
+        return getInstance(null);
+    }
+
+    public static GameManager getInstance(Stage stageRoot){
+        if(gameManager == null) gameManager = new GameManager(stageRoot);
+        return gameManager;
+    }
 
     /**
      * Exposes the background media player for volume control, muting etc.
@@ -61,7 +72,7 @@ public class GameManager {
      * displays the main menu
      * if the main menu has been initialized before, it will be used again
      */
-    public static void showMainMenu(){
+    public void showMainMenu(){
         Scene mainMenu = sceneLibrary.get("mainMenu");
         if(mainMenu == null){
             //load main menu if not present
@@ -82,7 +93,7 @@ public class GameManager {
      * if the world map has been initialized before, the same world map will be displayed
      * to prevent multiple world maps existing at once
      */
-    public static void showWorldMap(){
+    public void showWorldMap(){
         Scene worldMap = sceneLibrary.get("worldMap");
         if(worldMap == null){
             //load world map if not present
@@ -90,12 +101,12 @@ public class GameManager {
             Button backToMainMenu = new Button("Back to Main Menu");
             backToMainMenu.setLayoutX(GameProperties.WIDTH - 200);
             backToMainMenu.setLayoutY(GameProperties.HEIGHT - 100);
-            backToMainMenu.setOnAction(t -> GameManager.showMainMenu()); //Look Mum, I'm using lambdas!
+            backToMainMenu.setOnAction(t -> getInstance().showMainMenu()); //Look Mum, I'm using lambdas!
 
             Button loadLevel1 = new Button("Level 1"); //TODO: automatically generate Buttons based on level number
             loadLevel1.setLayoutX(100);
             loadLevel1.setLayoutY(100);
-            loadLevel1.setOnAction(t -> GameManager.loadLevel(1)); //lambdas again
+            loadLevel1.setOnAction(t -> getInstance().loadLevel(1)); //lambdas again
 
             Pane x = new AnchorPane(backToMainMenu, loadLevel1);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
@@ -105,10 +116,16 @@ public class GameManager {
         stageRoot.show();
     }
 
-    public static void loadLevel(int levelId){
+    public void loadLevel(int levelId){
+        LevelManager lm = new LevelManager();
         stopBackgroundMusic();
-        stageRoot.setScene(LevelManager.loadLevel(levelId));
+        stageRoot.setScene(lm.loadLevel(levelId));
         stageRoot.show();
-        LevelManager.startLevel();
+        try{
+            lm.startLevel();
+        } catch(LevelNotLoadedException e){
+            //TODO: figure out what to do
+            throw new RuntimeException(e);
+        }
     }
 }

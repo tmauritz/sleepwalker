@@ -15,7 +15,6 @@ public class Sleepwalker extends Application {
         String windowTitle = GameProperties.TITLE + " v" + GameProperties.GAME_VERSION;
         primaryStage.setTitle(windowTitle);
         primaryStage.setResizable(false);
-        GameManager.stageRoot = primaryStage;
-        GameManager.showMainMenu();
+        GameManager.getInstance(primaryStage).showMainMenu();
     }
 }
