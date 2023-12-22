@@ -13,17 +13,25 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * GameManager class
+ * Manages Scene loading and background tasks
+ */
 public class GameManager {
     private static final Map<String, Scene> sceneLibrary = new HashMap<>();
     public static Stage stageRoot;
     private static MediaPlayer backgroundMusic;
 
+    /**
+     * Exposes the background media player for volume control, muting etc.
+     * @return MediaPlayer
+     */
     public static MediaPlayer getBackgroundMusic(){
         return backgroundMusic;
     }
 
     /**
-     * Plays background media (music).
+     * Plays background media (music) in a loop.
      *
      * @param media media to be played in the background
      */
@@ -32,19 +40,15 @@ public class GameManager {
             backgroundMusic.setMute(true);
         }
         backgroundMusic = new MediaPlayer(media);
+        backgroundMusic.setOnEndOfMedia(() -> playBackgroundMusic(backgroundMusic.getMedia()));
         backgroundMusic.play();
     }
 
+    /**
+     * Stops the background media player.
+     */
     public static void stopBackgroundMusic(){
         backgroundMusic.stop();
-    }
-
-    public static void addToLibrary(Scene scene, String name){
-        sceneLibrary.put(name, scene);
-    }
-
-    public static Scene getScene(String name){
-        return sceneLibrary.get(name);
     }
 
     /**

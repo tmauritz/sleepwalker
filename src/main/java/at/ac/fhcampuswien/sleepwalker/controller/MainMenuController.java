@@ -36,7 +36,7 @@ public class MainMenuController implements Initializable {
     private Button musicToggle;
 
     /**
-     * fixes layout of the main menu
+     * Formats the main Menu at runtime.
      */
     private void formatMenu(){
         title.setText(GameProperties.TITLE);
