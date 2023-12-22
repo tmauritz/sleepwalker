@@ -9,5 +9,7 @@ public class GameProperties {
     public static final double GAME_VERSION = 0.1;
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
+    public static final int PLAYER_SPEED = 20;
+    public static final int GRAVITY = 10;
 
 }

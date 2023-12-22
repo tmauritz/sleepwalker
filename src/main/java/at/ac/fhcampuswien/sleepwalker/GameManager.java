@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -10,7 +11,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,11 +22,14 @@ import java.util.Map;
  */
 public class GameManager {
     private static final Map<String, Scene> sceneLibrary = new HashMap<>();
+    private static final List<Node> gameObjects = new ArrayList<>();
     public static Stage stageRoot;
     private static MediaPlayer backgroundMusic;
+    private static Node player;
 
     /**
      * Exposes the background media player for volume control, muting etc.
+     *
      * @return MediaPlayer
      */
     public static MediaPlayer getBackgroundMusic(){
@@ -62,7 +68,7 @@ public class GameManager {
             FXMLLoader fxmlLoader = new FXMLLoader(Sleepwalker.class.getResource("ui/MainMenu.fxml"));
             try{
                 mainMenu = new Scene(fxmlLoader.load(), GameProperties.WIDTH, GameProperties.HEIGHT);
-                sceneLibrary.put("mainMenu",mainMenu);
+                sceneLibrary.put("mainMenu", mainMenu);
             } catch(IOException e){
                 throw new RuntimeException(e);
             }
@@ -82,12 +88,27 @@ public class GameManager {
             //load world map if not present
             //TODO: implement proper World Map
             Button backToMainMenu = new Button("Back to Main Menu");
-            Pane x = new AnchorPane(backToMainMenu);
-            backToMainMenu.setOnAction(t -> GameManager.showMainMenu()); //Look Mum, I'm using Lambdas!
+            backToMainMenu.setLayoutX(GameProperties.WIDTH - 200);
+            backToMainMenu.setLayoutY(GameProperties.HEIGHT - 100);
+            backToMainMenu.setOnAction(t -> GameManager.showMainMenu()); //Look Mum, I'm using lambdas!
+
+            Button loadLevel1 = new Button("Level 1"); //TODO: automatically generate Buttons based on level number
+            loadLevel1.setLayoutX(100);
+            loadLevel1.setLayoutY(100);
+            loadLevel1.setOnAction(t -> GameManager.loadLevel(1)); //lambdas again
+
+            Pane x = new AnchorPane(backToMainMenu, loadLevel1);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
-            sceneLibrary.put("worldMap",worldMap);
+            sceneLibrary.put("worldMap", worldMap);
         }
         stageRoot.setScene(worldMap);
         stageRoot.show();
+    }
+
+    public static void loadLevel(int levelId){
+        stopBackgroundMusic();
+        stageRoot.setScene(LevelManager.loadLevel(levelId));
+        stageRoot.show();
+        LevelManager.startLevel();
     }
 }
