@@ -12,8 +12,9 @@ public class GameProperties {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final int PLAYER_SPEED = 20;
-    public static final int PLAYER_JUMP = 25;
-    public static final int GRAVITY = 10;
+    public static final int PLAYER_JUMP = 20;
+    public static final int TERMINAL_VELOCITY = 10;
+    public static final double GRAVITY = 1;
     public static final KeyCode JUMP = KeyCode.UP;
     public static final KeyCode LEFT = KeyCode.LEFT;
     public static final KeyCode RIGHT = KeyCode.RIGHT;

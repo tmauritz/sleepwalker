@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.sleepwalker;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -27,17 +28,22 @@ import java.util.Map;
  */
 public class LevelManager {
     private long framecount;
-    private final Label debugFrameCount = new Label();
+    private final Label debugInfo = new Label();
     private Node player;
+    private Point2D playerVelocity;
+    private boolean playerCanJump;
     private Scene loadedLevel;
     private final Map<KeyCode, Boolean> pressedKeys;
 
     public LevelManager(){
         pressedKeys = new HashMap<>();
+        playerVelocity = new Point2D(0, 0);
+        playerCanJump = true;
     }
 
     /**
      * finds out if a key is currently presses or not.
+     *
      * @param key KeyCode
      * @return true if key is pressed, false if not
      */
@@ -47,6 +53,7 @@ public class LevelManager {
 
     /**
      * Moves the Player along the X Axis
+     *
      * @param amount how far the player is moved
      */
     private void movePlayerX(int amount){
@@ -55,6 +62,7 @@ public class LevelManager {
 
     /**
      * Moves the Player along the Y Axis
+     *
      * @param amount how far the player is moved
      */
     private void movePlayerY(int amount){
@@ -62,8 +70,10 @@ public class LevelManager {
     }
 
     private void jumpPlayer(){
-        //TODO
-
+        if(playerCanJump){
+            playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
+            playerCanJump = false;
+        }
     }
 
     /**
@@ -87,7 +97,7 @@ public class LevelManager {
         floor.setFill(Color.BLACK);
 
         //add everything to the level
-        levelRoot.getChildren().addAll(debugFrameCount, player, floor);
+        levelRoot.getChildren().addAll(debugInfo, player, floor);
 
         loadedLevel = new Scene(levelRoot);
         return loadedLevel;
@@ -101,10 +111,10 @@ public class LevelManager {
         if(loadedLevel == null) throw new LevelNotLoadedException("No Level loaded.");
 
         //position and style frame counter
-        debugFrameCount.setLayoutX(0);
-        debugFrameCount.setLayoutY(10);
-        debugFrameCount.setTextFill(Color.WHITE);
-        debugFrameCount.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        debugInfo.setLayoutX(0);
+        debugInfo.setLayoutY(10);
+        debugInfo.setTextFill(Color.WHITE);
+        debugInfo.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         //add listeners for key presses
         loadedLevel.setOnKeyPressed(keypress -> pressedKeys.put(keypress.getCode(), true));
@@ -124,13 +134,18 @@ public class LevelManager {
      * updates the level every frame
      */
     private void update(){
-        debugFrameCount.setText("FRAME: " + framecount++);
+        debugInfo.setText("FRAME: " + framecount++ + System.lineSeparator() + "Player: (" + player.getLayoutX() + " | " + player.getLayoutY() + ")" + System.lineSeparator() + "VELOCITY: " + playerVelocity.toString());
+
         //TODO
         //process player input
         if(isPressed(GameProperties.LEFT)) movePlayerX(-GameProperties.PLAYER_SPEED);
         if(isPressed(GameProperties.RIGHT)) movePlayerX(GameProperties.PLAYER_SPEED);
         if(isPressed(GameProperties.JUMP)) jumpPlayer();
-
+        //assess the gravity of the situation
+        if(playerVelocity.getY() < GameProperties.TERMINAL_VELOCITY){
+            playerVelocity = playerVelocity.add(0,GameProperties.GRAVITY);
+        }
+        movePlayerY((int) playerVelocity.getY());
 
     }
 
