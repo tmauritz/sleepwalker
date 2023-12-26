@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -86,6 +87,17 @@ public class GameManager {
         }
         stageRoot.setScene(mainMenu);
         stageRoot.show();
+    }
+    public void showHowToPlay() {
+        Scene tutorialScene;
+        FXMLLoader fxmlLoader = new FXMLLoader(Sleepwalker.class.getResource("ui/HowToPlay.fxml"));
+        try {
+            tutorialScene = new Scene(fxmlLoader.load(), GameProperties.WIDTH, GameProperties.HEIGHT);
+            stageRoot.setScene(tutorialScene);
+            stageRoot.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
