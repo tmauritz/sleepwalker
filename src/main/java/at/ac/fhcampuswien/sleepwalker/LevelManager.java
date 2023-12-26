@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker;
 
+import at.ac.fhcampuswien.sleepwalker.entities.Platform;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
@@ -124,37 +125,44 @@ public class LevelManager {
     }
 
     /**
-     * handles Level loading
+     * Loads a Level from level data
      *
      * @param levelId ID of the level to be loaded
-     * @return a Scene containing the loaded level
+     * @return a Scene containing the loaded level or null if the level could not be loaded
      */
     public Scene loadLevel(int levelId){
-        //TODO: actual level loading, this is just a test placehoder for now
+        //TODO: refine level loading
         Pane levelRoot = new Pane();
-        //create Player
-        player = new Rectangle(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, Color.BLUE);
 
-        //set spawn for player
-        player.setTranslateX(GameProperties.TILE_UNIT * 2);
-        player.setTranslateY(GameProperties.TILE_UNIT * 4);
-
-        //create floor
-        Rectangle floor = new Rectangle(0, GameProperties.HEIGHT - GameProperties.TILE_UNIT, GameProperties.TILE_UNIT * (GameProperties.WIDTH / GameProperties.TILE_UNIT), GameProperties.TILE_UNIT);
-        floor.setFill(Color.BLACK);
-        //create second test platform
-        Rectangle platform = new Rectangle(GameProperties.TILE_UNIT * 8, GameProperties.TILE_UNIT * 10, GameProperties.TILE_UNIT * (GameProperties.HEIGHT / GameProperties.TILE_UNIT / 2), GameProperties.TILE_UNIT);
-        platform.setFill(Color.BLACK);
-
-        Rectangle wall = new Rectangle(GameProperties.TILE_UNIT * 8, GameProperties.HEIGHT - (GameProperties.TILE_UNIT * 6), GameProperties.TILE_UNIT, GameProperties.TILE_UNIT * 6);
-
-        platforms.add(floor);
-        platforms.add(platform);
-        platforms.add(wall);
-
-        //add everything to the level
-        levelRoot.getChildren().addAll(debugInfo, player, floor, platform, wall);
-
+        String[] levelData = LevelData.Levels.getOrDefault(levelId, null);
+        if (levelData == null) return null;
+        levelRoot.setMinWidth(GameProperties.WIDTH);
+        levelRoot.setMinHeight(GameProperties.HEIGHT);
+        //process each line and make platforms
+        for(int i = 0; i < levelData.length; i++){
+            char[] tiles = levelData[i].toCharArray();
+            for(int j = 0; j < tiles.length; j++){
+                switch(tiles[j]){
+                    case '-': //platform
+                        Platform platform = new Platform(
+                                    j * GameProperties.TILE_UNIT,
+                                    i * GameProperties.TILE_UNIT,
+                                    GameProperties.TILE_UNIT,
+                                    GameProperties.TILE_UNIT);
+                        platforms.add(platform);
+                        levelRoot.getChildren().add(platform);
+                        break;
+                    case 's': //player spawn
+                        //TODO: outsource player into its own class?
+                        player = new Rectangle(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, Color.BLUE);
+                        //set spawn for player
+                        player.setTranslateX(GameProperties.TILE_UNIT * j);
+                        player.setTranslateY(GameProperties.TILE_UNIT * i);
+                        levelRoot.getChildren().add(player);
+                        break;
+                }
+            }
+        }
         loadedLevel = new Scene(levelRoot);
         return loadedLevel;
 
