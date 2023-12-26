@@ -191,6 +191,26 @@ public class LevelManager {
         updateTimer.start();
     }
 
+    private void enforceFrameBounds() {
+        double playerX = player.getTranslateX();
+        double playerY = player.getTranslateY();
+
+        // Limit the player on the X-axis
+        if (playerX < 0) {
+            player.setTranslateX(0);
+        } else if (playerX > GameProperties.WIDTH - player.getBoundsInParent().getWidth()) {
+            player.setTranslateX(GameProperties.WIDTH - player.getBoundsInParent().getWidth());
+        }
+
+        // Limit the player on the Y-axis
+        if (playerY < 0) {
+            player.setTranslateY(0);
+        } else if (playerY > GameProperties.HEIGHT - player.getBoundsInParent().getHeight()) {
+            player.setTranslateY(GameProperties.HEIGHT - player.getBoundsInParent().getHeight());
+            playerCanJump = true;  // The player can jump again when touching the ground
+        }
+    }
+
     /**
      * updates the level every frame
      */
@@ -205,6 +225,8 @@ public class LevelManager {
             playerVelocity = playerVelocity.add(0, GameProperties.GRAVITY);
         }
         movePlayerY((int) playerVelocity.getY());
+
+        enforceFrameBounds();
 
         //TODO: keep player from exiting frame
         //TODO: scrolling

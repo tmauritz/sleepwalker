@@ -25,16 +25,16 @@ public class GameManager {
 
     private static GameManager gameManager;
 
-    private GameManager(Stage stageRoot){
+    private GameManager(Stage stageRoot) {
         this.stageRoot = stageRoot;
     }
 
-    public static GameManager getInstance(){
+    public static GameManager getInstance() {
         return getInstance(null);
     }
 
-    public static GameManager getInstance(Stage stageRoot){
-        if(gameManager == null) gameManager = new GameManager(stageRoot);
+    public static GameManager getInstance(Stage stageRoot) {
+        if (gameManager == null) gameManager = new GameManager(stageRoot);
         return gameManager;
     }
 
@@ -43,7 +43,7 @@ public class GameManager {
      *
      * @return MediaPlayer
      */
-    public static MediaPlayer getBackgroundMusic(){
+    public static MediaPlayer getBackgroundMusic() {
         return backgroundMusic;
     }
 
@@ -52,8 +52,8 @@ public class GameManager {
      *
      * @param media media to be played in the background
      */
-    public static void playBackgroundMusic(Media media){
-        if(backgroundMusic != null){
+    public static void playBackgroundMusic(Media media) {
+        if (backgroundMusic != null) {
             backgroundMusic.setMute(true);
         }
         backgroundMusic = new MediaPlayer(media);
@@ -64,7 +64,7 @@ public class GameManager {
     /**
      * Stops the background media player.
      */
-    public static void stopBackgroundMusic(){
+    public static void stopBackgroundMusic() {
         backgroundMusic.stop();
     }
 
@@ -72,15 +72,15 @@ public class GameManager {
      * displays the main menu
      * if the main menu has been initialized before, it will be used again
      */
-    public void showMainMenu(){
+    public void showMainMenu() {
         Scene mainMenu = sceneLibrary.get("mainMenu");
-        if(mainMenu == null){
+        if (mainMenu == null) {
             //load main menu if not present
             FXMLLoader fxmlLoader = new FXMLLoader(Sleepwalker.class.getResource("ui/MainMenu.fxml"));
-            try{
+            try {
                 mainMenu = new Scene(fxmlLoader.load(), GameProperties.WIDTH, GameProperties.HEIGHT);
                 sceneLibrary.put("mainMenu", mainMenu);
-            } catch(IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -93,9 +93,9 @@ public class GameManager {
      * if the world map has been initialized before, the same world map will be displayed
      * to prevent multiple world maps existing at once
      */
-    public void showWorldMap(){
+    public void showWorldMap() {
         Scene worldMap = sceneLibrary.get("worldMap");
-        if(worldMap == null){
+        if (worldMap == null) {
             //load world map if not present
             //TODO: implement proper World Map
             Button backToMainMenu = new Button("Back to Main Menu");
@@ -116,14 +116,14 @@ public class GameManager {
         stageRoot.show();
     }
 
-    public void loadLevel(int levelId){
+    public void loadLevel(int levelId) {
         LevelManager lm = new LevelManager();
         stopBackgroundMusic();
         stageRoot.setScene(lm.loadLevel(levelId));
         stageRoot.show();
-        try{
+        try {
             lm.startLevel();
-        } catch(LevelNotLoadedException e){
+        } catch (LevelNotLoadedException e) {
             //TODO: figure out what to do
             throw new RuntimeException(e);
         }

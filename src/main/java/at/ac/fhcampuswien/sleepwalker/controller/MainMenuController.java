@@ -34,18 +34,20 @@ public class MainMenuController implements Initializable {
     private Button exitButton;
     @FXML
     private Button musicToggle;
+    @FXML
+    private Button howToPlayButton;
 
     /**
      * Formats the main Menu at runtime.
      */
-    private void formatMenu(){
+    private void formatMenu() {
         title.setText(GameProperties.TITLE);
         description.setText(GameProperties.DESCRIPTION);
         //TODO: format menu
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         //TODO: outsource media loading into MediaManager class to better separate GUI and background tasks
         Media mainTheme = new Media(Sleepwalker.class.getResource("audio/maintheme.mp3").toString()); //TODO: fix null pointer possibility
         Image background = new Image(Sleepwalker.class.getResource("img/placeholder_image1.jpg").toString()); //TODO: fix null pointer possibility
@@ -57,7 +59,7 @@ public class MainMenuController implements Initializable {
     /**
      * Shows the world map
      */
-    public void onPlayButtonClick(){
+    public void onPlayButtonClick() {
         //switch to WorldMap Scene
         GameManager.getInstance().showWorldMap();
     }
@@ -65,16 +67,16 @@ public class MainMenuController implements Initializable {
     /**
      * Exits the game.
      */
-    public void onExitButtonClick(){
+    public void onExitButtonClick() {
         Platform.exit();
     }
 
-    public void onToggleMusic(ActionEvent actionEvent){
+    public void onToggleMusic(ActionEvent actionEvent) {
         MediaPlayer music = GameManager.getBackgroundMusic();
-        if(music.isMute()){
+        if (music.isMute()) {
             music.setMute(false);
             musicToggle.setText("Mute");
-        } else{
+        } else {
             music.setMute(true);
             musicToggle.setText("Unmute");
         }
