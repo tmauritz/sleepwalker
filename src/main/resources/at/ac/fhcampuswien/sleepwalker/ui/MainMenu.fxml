@@ -35,6 +35,6 @@
             <Font name="Bitstream Vera Sans Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="HowToPlay" layoutX="254.0" layoutY="280.0" mnemonicParsing="false" onAction="#showHowToPlay" text="How To Play" />
+      <Button fx:id="howToPlayButton" layoutX="254.0" layoutY="280.0" mnemonicParsing="false" onAction="#showHowToPlay" text="How To Play" />
    </children>
 </AnchorPane>
