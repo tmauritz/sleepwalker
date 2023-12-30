@@ -140,17 +140,59 @@ public class LevelManager {
         levelRoot.setMinHeight(GameProperties.HEIGHT);
         //process each line and make platforms
         for(int i = 0; i < levelData.length; i++){
+            boolean platformCheck = false;
             char[] tiles = levelData[i].toCharArray();
             for(int j = 0; j < tiles.length; j++){
                 switch(tiles[j]){
                     case '-': //platform
-                        Platform platform = new Platform(
-                                    j * GameProperties.TILE_UNIT,
-                                    i * GameProperties.TILE_UNIT,
-                                    GameProperties.TILE_UNIT,
-                                    GameProperties.TILE_UNIT);
-                        platforms.add(platform);
-                        levelRoot.getChildren().add(platform);
+                        Platform platformBase = new Platform(
+                                j * GameProperties.TILE_UNIT,
+                                i * GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                32, 448);
+                        platforms.add(platformBase);
+                        levelRoot.getChildren().add(platformBase);
+                        break;
+                    case 'm': //platform
+                        Platform platformStart = new Platform(
+                                j * GameProperties.TILE_UNIT,
+                                i * GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                0, 448);
+                        platforms.add(platformStart);
+                        levelRoot.getChildren().add(platformStart);
+                        break;
+                    case 'n': //platform
+                        Platform platformEnd = new Platform(
+                                j * GameProperties.TILE_UNIT,
+                                i * GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                64, 448);
+                        platforms.add(platformEnd);
+                        levelRoot.getChildren().add(platformEnd);
+                        break;
+                    case 'o': //platform
+                        Platform platformSingle = new Platform(
+                                j * GameProperties.TILE_UNIT,
+                                i * GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                128, 96);
+                        platforms.add(platformSingle);
+                        levelRoot.getChildren().add(platformSingle);
+                        break;
+                    case 'I': //platform
+                        Platform platformColumn = new Platform(
+                                j * GameProperties.TILE_UNIT,
+                                i * GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                0, 288);
+                        platforms.add(platformColumn);
+                        levelRoot.getChildren().add(platformColumn);
                         break;
                     case 's': //player spawn
                         //TODO: outsource player into its own class?
