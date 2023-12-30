@@ -140,7 +140,6 @@ public class LevelManager {
         levelRoot.setMinHeight(GameProperties.HEIGHT);
         //process each line and make platforms
         for(int i = 0; i < levelData.length; i++){
-            boolean platformCheck = false;
             char[] tiles = levelData[i].toCharArray();
             for(int j = 0; j < tiles.length; j++){
                 switch(tiles[j]){
