@@ -14,30 +14,26 @@ public class LevelData {
 
     public static final Map<Integer, String[]> Levels = new HashMap<>();
 
-    /* m walkway start
-     * - walkway
-     * n walkway end
-     * _ column top
-     * I single column
-     * o single square
+    /* - walkway
+     * s player
      */
 
     static{
         Levels.put(1, new String[]{
                 "                    ",
                 "                    ",
-                "             mn     ",
+                "             --     ",
                 "                    ",
-                "   o mn       ",
-                "      mn            ",
-                "                    ",
-                "          m-n     ",
-                "                    ",
-                "                    ",
-                "        m--n        ----      ------    -----    ----",
-                "   s    I           ",
-                "        I           ",
-                "--------------------"
+                "   - --       ",
+                "    ---            ",
+                "   ---     -           ",
+                "          ---     ",
+                "      -              ",
+                "        -    -        ",
+                "        ----        ",
+                " --  s    -           ",
+                "        -           ",
+                "--------------------",
         });
     }
 
