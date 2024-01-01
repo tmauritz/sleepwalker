@@ -22,7 +22,7 @@ public class LevelData {
         Levels.put(1, new String[]{
                 "                    ",
                 "                    ",
-                "             --     ",
+                "     ^^      --     ",
                 "                    ",
                 "   - --       ",
                 "    ---            ",

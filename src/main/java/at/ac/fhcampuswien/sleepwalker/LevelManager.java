@@ -1,7 +1,9 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.entities.Platform;
+import at.ac.fhcampuswien.sleepwalker.entities.Spike;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
+import at.ac.fhcampuswien.sleepwalker.GameManager;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -33,15 +35,34 @@ public class LevelManager {
     private final Label debugInfo = new Label();
     private final Map<KeyCode, Boolean> pressedKeys;
     private final List<Node> platforms;
+    private final List<Node> spikes;
     private long frameCounter;
     private Node player;
     private Point2D playerVelocity;
     private boolean playerCanJump;
     private Scene loadedLevel;
+    // Instances for respawning : spawnPositionX and spawnPositionY
+    private int spawnPositionX;
+    private int spawnPositionY;
+    private int health;
+    /*
+    Set the health of the player
+     */
+    public int getHealth() {
+        return health;
+    }
+    /*
+    Get the health of the player
+     */
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
 
     public LevelManager(){
         pressedKeys = new HashMap<>();
         platforms = new ArrayList<>();
+        spikes = new ArrayList<>();
         playerVelocity = new Point2D(0, 0);
         playerCanJump = true;
     }
@@ -56,6 +77,7 @@ public class LevelManager {
         return pressedKeys.getOrDefault(key, false);
     }
 
+
     /**
      * Moves the Player along the X Axis and checks for collision
      * if a collision is detected (overlap), player is moved back 1 unit.
@@ -68,18 +90,27 @@ public class LevelManager {
 
         for(int i = 1; i <= Math.abs(amount); i++){
             for(Node platform : platforms){
-                if(player.getBoundsInParent().intersects(platform.getBoundsInParent())){
-                    //collision detected
-                    if(movingRight){
-                        player.setTranslateX(player.getTranslateX() - 1);
-                    } else{
-                        player.setTranslateX(player.getTranslateX() + 1);
+                    if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
+                        //collision detected
+                        if (movingRight) {
+                            player.setTranslateX(player.getTranslateX() - 1);
+                        } else {
+                            player.setTranslateX(player.getTranslateX() + 1);
+                        }
+                        return;
                     }
-                    return;
+                }
+            player.setTranslateX(player.getTranslateX() + (movingRight ? 1 : -1));
+            //Player looses one life if it touches a spike and respawns at the spawn
+            for(Node spike : spikes) {
+                if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
+                    setHealth(getHealth() - 1);
+                    player.setTranslateX(spawnPositionX);
+                    player.setTranslateY(spawnPositionY);
                 }
             }
-            player.setTranslateX(player.getTranslateX() + (movingRight ? 1 : -1));
-        }
+            }
+
     }
 
     /**
@@ -94,20 +125,29 @@ public class LevelManager {
 
         for(int i = 1; i <= Math.abs(amount); i++){
             for(Node platform : platforms){
-                if(player.getBoundsInParent().intersects(platform.getBoundsInParent())){
-                    //collision detected
-                    if(movingDown){
-                        player.setTranslateY(player.getTranslateY() - 1);
-                        playerCanJump = true;
-                    } else{
-                        player.setTranslateY(player.getTranslateY() + 1);
-                        playerVelocity = playerVelocity.add(0, -playerVelocity.getY()); //reset jump velocity
+                    if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
+                        //collision detected
+                        if (movingDown) {
+                            player.setTranslateY(player.getTranslateY() - 1);
+                            playerCanJump = true;
+                        } else {
+                            player.setTranslateY(player.getTranslateY() + 1);
+                            playerVelocity = playerVelocity.add(0, -playerVelocity.getY()); //reset jump velocity
+                        }
+                        return;
                     }
-                    return;
+            }
+            //Player looses one life if it touches a spike and respawns at the spawn
+            for(Node spike : spikes) {
+                if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
+                    setHealth(getHealth() - 1);
+                    player.setTranslateX(spawnPositionX);
+                    player.setTranslateY(spawnPositionY);
                 }
             }
             player.setTranslateY(player.getTranslateY() + (movingDown ? 1 : -1));
         }
+
     }
 
     private void jumpPlayer(){
@@ -347,6 +387,7 @@ public class LevelManager {
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         levelRoot.setBackground(new Background(bg));
+        setHealth(3);
 
         String[] levelData = LevelData.Levels.getOrDefault(levelId, null);
         if (levelData == null) return null;
@@ -373,7 +414,19 @@ public class LevelManager {
                         //set spawn for player
                         player.setTranslateX(GameProperties.TILE_UNIT * j);
                         player.setTranslateY(GameProperties.TILE_UNIT * i);
+                        spawnPositionX = GameProperties.TILE_UNIT * j;
+                        spawnPositionY = GameProperties.TILE_UNIT * i;
                         levelRoot.getChildren().add(player);
+                        break;
+                    case '^': //Spike Hindernis wird platziert
+                        Spike spike = new Spike(
+                                j * GameProperties.TILE_UNIT,
+                                i * GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                getTileX(getTileID(levelData, i, j)), getTileY(getTileID(levelData, i, j)));
+                        spikes.add(spike);
+                        levelRoot.getChildren().add(spike);
                         break;
                 }
             }
