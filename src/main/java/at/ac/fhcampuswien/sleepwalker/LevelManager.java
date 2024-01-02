@@ -16,10 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -516,9 +513,18 @@ public class LevelManager {
         }
         movePlayerY((int) playerVelocity.getY());
 
+        Iterator<Node> iterator = collectibles.iterator();
+        while (iterator.hasNext()) {
+            Collectible coin = (Collectible) iterator.next();
+            if (coin.getBoundsInParent().intersects(player.getBoundsInParent())) {
+                coin.setVisible(false); //TODO: Handle Collected Coin
+                iterator.remove();
+            }
+        }
+
         enforceFrameBounds();
 
-        //TODO: keep player from exiting frame
+        //TODO: keep player from exiting frame (Player can fall down)
         //TODO: scrolling
         //TODO: finish conditions
 
