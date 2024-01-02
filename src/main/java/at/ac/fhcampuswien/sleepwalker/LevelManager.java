@@ -4,7 +4,9 @@ import at.ac.fhcampuswien.sleepwalker.entities.Collectible;
 import at.ac.fhcampuswien.sleepwalker.entities.Platform;
 import at.ac.fhcampuswien.sleepwalker.entities.Spike;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
-import javafx.animation.AnimationTimer;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.*;
 
@@ -30,6 +33,7 @@ import static java.lang.Integer.parseInt;
  */
 public class LevelManager {
     private final Label debugInfo = new Label();
+    private final Label GUI = new Label("TEST");
     private final Map<KeyCode, Boolean> pressedKeys;
     private final List<Node> platforms;
     private final List<Node> spikes;
@@ -382,6 +386,8 @@ public class LevelManager {
     public Scene loadLevel(int levelId){
         //TODO: refine level loading
         Pane levelRoot = new Pane();
+        levelRoot.getChildren().add(debugInfo);
+        levelRoot.getChildren().add(GUI);
         BackgroundImage bg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/background_layer_1.png"))),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
@@ -459,6 +465,11 @@ public class LevelManager {
         debugInfo.setTextFill(Color.WHITE);
         debugInfo.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
+        GUI.setLayoutX((double) GameProperties.WIDTH / 2);
+        GUI.setLayoutY(10);
+        debugInfo.setTextFill(Color.WHITE);
+        debugInfo.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
         //add listeners for key presses
         loadedLevel.setOnKeyPressed(keypress -> {
             pressedKeys.put(keypress.getCode(), true);
@@ -468,14 +479,27 @@ public class LevelManager {
         });
         loadedLevel.setOnKeyReleased(keypress -> pressedKeys.put(keypress.getCode(), false));
 
+        Duration FPS = Duration.millis((double) 1000 /GameProperties.FPS); //FPS
+        KeyFrame updateFrame = new KeyFrame(FPS, event -> {
+            update();
+        });
+
+        Timeline gameUpdate = new Timeline(updateFrame);
+        gameUpdate.setCycleCount(Animation.INDEFINITE);
+        gameUpdate.play();
+
         //updateTimer controls the level speed
+        /*
         AnimationTimer updateTimer = new AnimationTimer() {
+            final long startTime = System.currentTimeMillis();
+            final int frameUpdate = 100;
             @Override
             public void handle(long now){
-                update();
+                if(startTime - System.currentTimeMillis() % frameUpdate == 0) update();
             }
         };
         updateTimer.start();
+        */
     }
 
     private void enforceFrameBounds() {
@@ -503,6 +527,10 @@ public class LevelManager {
      */
     private void update(){
         debugInfo.setText("FRAME: " + frameCounter++ + System.lineSeparator() + "Player: (" + player.getTranslateX() + " | " + player.getTranslateY() + ")" + System.lineSeparator() + "VELOCITY: " + playerVelocity.toString());
+
+        GUI.setText("Collectibles left: " + collectibles.size());
+
+        //TODO: fix collision bugs
         //process player input
         if(isPressed(GameProperties.LEFT)) movePlayerX(-GameProperties.PLAYER_SPEED);
         if(isPressed(GameProperties.RIGHT)) movePlayerX(GameProperties.PLAYER_SPEED);
