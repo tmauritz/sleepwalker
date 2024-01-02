@@ -33,6 +33,7 @@ import static java.lang.Integer.parseInt;
  * </a>
  */
 public class LevelManager {
+
     private final Label debugInfo = new Label();
     private final Label GUI = new Label("TEST");
     private final Map<KeyCode, Boolean> pressedKeys;
@@ -45,6 +46,7 @@ public class LevelManager {
     private boolean playerCanJump;
     private Scene loadedLevel;
     private ImageView currentHearts;
+    private ImageView imageViewGameOver;
     // Instances for respawning : spawnPositionX and spawnPositionY
     private int spawnPositionX;
     private int spawnPositionY;
@@ -58,8 +60,15 @@ public class LevelManager {
     /*
     Get the health of the player
      */
+
     public void setHealth(int health) {
         this.health = health;
+    }
+    private void jumpPlayer(){
+        if(playerCanJump){
+            playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
+            playerCanJump = false;
+        }
     }
 
 
@@ -154,13 +163,6 @@ public class LevelManager {
         }
 
     }
-
-    private void jumpPlayer(){
-        if(playerCanJump){
-            playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
-            playerCanJump = false;
-        }
-    }
     /*
      *  Updates the HealthBar to the actual lives
      *  --> half-heart = 1 life
@@ -172,6 +174,9 @@ public class LevelManager {
         Image image4 = new Image(String.valueOf(Sleepwalker.class.getResource("level/4hearts.png")));
         Image image5 = new Image(String.valueOf(Sleepwalker.class.getResource("level/5hearts.png")));
         Image image6 = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
+        if (health == 0) {
+            loadGameOver();
+        }
         if (health==1) {
             currentHearts.setImage(image1);
         }
@@ -486,6 +491,12 @@ public class LevelManager {
         currentHearts.setLayoutY(450);
 
         levelRoot.getChildren().add(currentHearts);
+        Image imageGameOver = new Image(String.valueOf(Sleepwalker.class.getResource("level/GameOver.png")));
+        imageViewGameOver = new ImageView(imageGameOver);
+        imageViewGameOver.setLayoutX(0);
+        imageViewGameOver.setLayoutY(0);
+        imageViewGameOver.setVisible(false);
+        levelRoot.getChildren().add(imageViewGameOver);
 
 
         loadedLevel = new Scene(levelRoot);
@@ -540,6 +551,21 @@ public class LevelManager {
         };
         updateTimer.start();
         */
+    }
+    /*
+    Is sending player back to the WorldMap after GameOver
+     */
+    private void loadGameOver() {
+
+       /* imageViewGameOver.setVisible(true);
+        try {
+            Thread.sleep(5000); // 5000 Millisekunden entsprechen 5 Sekunden
+        } catch (InterruptedException e) {
+            // Hier kannst du mit einer möglichen Unterbrechung umgehen, wenn nötig
+            e.printStackTrace();
+        }*/ //TODO:Needs some improvement loadGameOver
+
+        GameManager.showWorldMap();
     }
 
     private void enforceFrameBounds() {

@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,8 +21,8 @@ import java.util.Map;
  * Manages Scene loading and background tasks
  */
 public class GameManager {
-    private final Map<String, Scene> sceneLibrary = new HashMap<>();
-    private final Stage stageRoot;
+    private static final Map<String, Scene> sceneLibrary = new HashMap<>();
+    private static Stage stageRoot;
     private static MediaPlayer backgroundMusic;
 
     private static GameManager gameManager;
@@ -106,7 +107,7 @@ public class GameManager {
      * if the world map has been initialized before, the same world map will be displayed
      * to prevent multiple world maps existing at once
      */
-    public void showWorldMap() {
+    public static void showWorldMap() {
         Scene worldMap = sceneLibrary.get("worldMap");
         if (worldMap == null) {
             //load world map if not present
