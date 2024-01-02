@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.entities.Platform;
 import at.ac.fhcampuswien.sleepwalker.entities.Spike;
+import at.ac.fhcampuswien.sleepwalker.entities.Collectible;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.GameManager;
 import javafx.animation.AnimationTimer;
@@ -16,10 +17,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -36,6 +34,7 @@ public class LevelManager {
     private final Map<KeyCode, Boolean> pressedKeys;
     private final List<Node> platforms;
     private final List<Node> spikes;
+    private final List<Node> collectibles;
     private long frameCounter;
     private Node player;
     private Point2D playerVelocity;
@@ -63,6 +62,7 @@ public class LevelManager {
         pressedKeys = new HashMap<>();
         platforms = new ArrayList<>();
         spikes = new ArrayList<>();
+        collectibles = new ArrayList<>();
         playerVelocity = new Point2D(0, 0);
         playerCanJump = true;
     }
@@ -427,6 +427,15 @@ public class LevelManager {
                                 getTileX(getTileID(levelData, i, j)), getTileY(getTileID(levelData, i, j)));
                         spikes.add(spike);
                         levelRoot.getChildren().add(spike);
+                        break;
+                    case 'c' : //set coin placement
+                        Collectible coin = new Collectible(
+                                j * GameProperties.TILE_UNIT,
+                                i * GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT,
+                                GameProperties.TILE_UNIT);
+                        levelRoot.getChildren().add(coin);
+                        collectibles.add(coin);
                         break;
                 }
             }
