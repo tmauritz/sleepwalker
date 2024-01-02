@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.sleepwalker.controller;
 
 import at.ac.fhcampuswien.sleepwalker.GameManager;
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
+import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -51,12 +52,16 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //TODO: outsource media loading into MediaManager class to better separate GUI and background tasks
-        Media mainTheme = new Media(Sleepwalker.class.getResource("audio/maintheme.mp3").toString()); //TODO: fix null pointer possibility
-        Image background = new Image(Sleepwalker.class.getResource("img/placeholder_image1.jpg").toString()); //TODO: fix null pointer possibility
-        formatMenu();
-        backgroundView.setImage(background);
-        GameManager.playBackgroundMusic(mainTheme);
+        Media mainTheme = MediaManager.loadMedia("audio/maintheme.mp3");
+        Image background = MediaManager.loadImage("img/placeholder_image1.jpg");
+
+        if (mainTheme != null && background != null) {
+            formatMenu();
+            backgroundView.setImage(background);
+            GameManager.playBackgroundMusic(mainTheme);
+        } else {
+
+        }
     }
 
     /**

@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.entities.Platform;
-import at.ac.fhcampuswien.sleepwalker.entities.Player;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
@@ -126,7 +125,7 @@ public class LevelManager {
     }
 
     /**
-     * Checks tile neighbours & sets the right ID accordingly (above, left, right, below)
+     * Checks tile neighbours & picks the right ID accordingly
      */
     private String getTileID(String[] levelData, final int ROW, final int COL) {
         StringBuilder neighbours = new StringBuilder();
@@ -153,10 +152,8 @@ public class LevelManager {
 
         return neighbours.toString();
 
-    }
-
     /**
-     * Translates tile ID into X and Y coordinates on spritesheet respectively
+     * Translates tile ID into X and Y coordinates respectively
      */
     private int getTileX(String tileID) {
         HashMap<String, String> tileX = new HashMap<>();
@@ -188,7 +185,6 @@ public class LevelManager {
         tileX.put("  -x", "0");
         tileX.put(" -xx", "32");
         tileX.put(" x-x", "32");
-
 
         if (tileX.containsKey(tileID)) {
             return parseInt(tileX.get(tileID));
@@ -225,7 +221,6 @@ public class LevelManager {
         tileY.put("  -x", "0");
         tileY.put(" x-x", "0");
         tileY.put(" -xx", "0");
-
 
 
         if (tileY.containsKey(tileID)) {
@@ -269,7 +264,6 @@ public class LevelManager {
                     case 's': //player spawn
                         //TODO: outsource player into its own class?
                         player = new Rectangle(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, Color.BLUE);
-                        //player = new Player(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10);
                         //set spawn for player
                         player.setTranslateX(GameProperties.TILE_UNIT * j);
                         player.setTranslateY(GameProperties.TILE_UNIT * i);
