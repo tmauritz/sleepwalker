@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -43,10 +44,11 @@ public class LevelManager {
     private Point2D playerVelocity;
     private boolean playerCanJump;
     private Scene loadedLevel;
+    private ImageView currentHearts;
     // Instances for respawning : spawnPositionX and spawnPositionY
     private int spawnPositionX;
     private int spawnPositionY;
-    private int health;
+    private int health = 6;
     /*
     Set the health of the player
      */
@@ -158,6 +160,38 @@ public class LevelManager {
             playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
             playerCanJump = false;
         }
+    }
+    /*
+     *  Updates the HealthBar to the actual lives
+     *  --> half-heart = 1 life
+     */
+    private void updateHealthPicture() {
+        Image image1 = new Image(String.valueOf(Sleepwalker.class.getResource("level/1hearts.png")));
+        Image image2 = new Image(String.valueOf(Sleepwalker.class.getResource("level/2hearts.png")));
+        Image image3 = new Image(String.valueOf(Sleepwalker.class.getResource("level/3hearts.png")));
+        Image image4 = new Image(String.valueOf(Sleepwalker.class.getResource("level/4hearts.png")));
+        Image image5 = new Image(String.valueOf(Sleepwalker.class.getResource("level/5hearts.png")));
+        Image image6 = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
+        if (health==1) {
+            currentHearts.setImage(image1);
+        }
+        if (health==2) {
+            currentHearts.setImage(image2);
+        }
+        if (health==3) {
+            currentHearts.setImage(image3);
+        }
+        if (health==4) {
+            currentHearts.setImage(image4);
+        }
+        if (health==5) {
+            currentHearts.setImage(image5);
+        }
+        if (health==6) {
+            currentHearts.setImage(image6);
+        }
+
+
     }
 
     /**
@@ -392,7 +426,6 @@ public class LevelManager {
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         levelRoot.setBackground(new Background(bg));
-        setHealth(3);
 
         String[] levelData = LevelData.Levels.getOrDefault(levelId, null);
         if (levelData == null) return null;
@@ -445,7 +478,14 @@ public class LevelManager {
                 }
             }
         }
+        //create Health-Bar
+        Image image = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
+        currentHearts = new ImageView(image);
 
+        currentHearts.setLayoutX(0);
+        currentHearts.setLayoutY(450);
+
+        levelRoot.getChildren().add(currentHearts);
 
 
         loadedLevel = new Scene(levelRoot);
@@ -549,6 +589,8 @@ public class LevelManager {
                 iterator.remove();
             }
         }
+
+        updateHealthPicture();
 
         enforceFrameBounds();
 
