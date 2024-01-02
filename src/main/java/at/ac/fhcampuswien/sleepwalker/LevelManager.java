@@ -133,24 +133,33 @@ public class LevelManager {
         char[] tiles;
         if (ROW > 0) {
             tiles = levelData[ROW - 1].toCharArray();
-            neighbours.append(tiles[COL]);
+            if (tiles[COL] != '-') {
+                neighbours.append(' ');
+            } else neighbours.append('-');
         } else neighbours.append("x");
 
         tiles = levelData[ROW].toCharArray();
         if (COL > 0) {
-            neighbours.append(tiles[COL - 1]);
+            if (tiles[COL - 1] != '-') {
+                neighbours.append(' ');
+            } else neighbours.append('-');
         } else neighbours.append("x");
 
         if (COL + 1 < tiles.length) {
-            neighbours.append(tiles[COL + 1]);
+            if (tiles[COL + 1] != '-') {
+                neighbours.append(' ');
+            } else neighbours.append('-');
         } else neighbours.append("x");
 
         if (ROW + 1 < levelData.length) {
-            tiles = levelData[ROW+1].toCharArray();
-            neighbours.append(tiles[COL]);
+            tiles = levelData[ROW + 1].toCharArray();
+            if (tiles[COL] != '-') {
+                neighbours.append(' ');
+            } else neighbours.append('-');
         } else neighbours.append("x");
 
         return neighbours.toString();
+    }
 
     /**
      * Translates tile ID into X and Y coordinates respectively
