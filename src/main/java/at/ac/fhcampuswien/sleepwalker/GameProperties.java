@@ -12,8 +12,8 @@ public class GameProperties {
     public static final int TILE_UNIT = 32;
     public static final int WIDTH = TILE_UNIT * 20;
     public static final int HEIGHT = TILE_UNIT * 15;
-    public static final int PLAYER_SPEED = 15;
-    public static final int PLAYER_JUMP = 40;
+    public static final int PLAYER_SPEED = 8;
+    public static final int PLAYER_JUMP = 30;
     public static final int TERMINAL_VELOCITY = 15;
     public static final double GRAVITY = 1;
     public static final KeyCode JUMP = KeyCode.UP;

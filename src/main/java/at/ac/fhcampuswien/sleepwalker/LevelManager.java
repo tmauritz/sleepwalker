@@ -1,10 +1,9 @@
 package at.ac.fhcampuswien.sleepwalker;
 
+import at.ac.fhcampuswien.sleepwalker.entities.Collectible;
 import at.ac.fhcampuswien.sleepwalker.entities.Platform;
 import at.ac.fhcampuswien.sleepwalker.entities.Spike;
-import at.ac.fhcampuswien.sleepwalker.entities.Collectible;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
-import at.ac.fhcampuswien.sleepwalker.GameManager;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -17,7 +16,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.lang.Integer.parseInt;
 
@@ -173,21 +175,21 @@ public class LevelManager {
         char[] tiles;
         if (ROW > 0) {
             tiles = levelData[ROW - 1].toCharArray();
-            neighbours.append(tiles[COL]);
+            neighbours.append(tiles[COL] == '-' ? '-' : ' ');
         } else neighbours.append("x");
 
         tiles = levelData[ROW].toCharArray();
         if (COL > 0) {
-            neighbours.append(tiles[COL - 1]);
+            neighbours.append(tiles[COL - 1] == '-' ? '-' : ' ');
         } else neighbours.append("x");
 
         if (COL + 1 < tiles.length) {
-            neighbours.append(tiles[COL + 1]);
+            neighbours.append(tiles[COL + 1] == '-' ? '-' : ' ');
         } else neighbours.append("x");
 
         if (ROW + 1 < levelData.length) {
             tiles = levelData[ROW+1].toCharArray();
-            neighbours.append(tiles[COL]);
+            neighbours.append(tiles[COL] == '-' ? '-' : ' ');
         } else neighbours.append("x");
 
         return neighbours.toString();
