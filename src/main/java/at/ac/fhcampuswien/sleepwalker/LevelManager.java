@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.entities.Platform;
+import at.ac.fhcampuswien.sleepwalker.entities.Player;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
@@ -125,7 +126,7 @@ public class LevelManager {
     }
 
     /**
-     * Checks tile neighbours & picks the right ID accordingly
+     * Checks tile neighbours & sets the right ID accordingly (above, left, right, below)
      */
     private String getTileID(String[] levelData, final int ROW, final int COL) {
         StringBuilder neighbours = new StringBuilder();
@@ -152,29 +153,10 @@ public class LevelManager {
 
         return neighbours.toString();
 
-        /*StringBuilder neighbours = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            if (ROW-1+i < levelData.length && ROW-1+i >= 0) {
-                char[] tiles = levelData[ROW-1+i].toCharArray();
-                for (int j = 0; j < 3; j++) {
-                    if (COL - 1 + j < tiles.length && COL - 1 + j >= 0) {
-                        if (tiles[COL - 1 + j] != '-') {
-                            neighbours.append(0);
-                        } else
-                            neighbours.append(1);
-                    } else
-                        neighbours.append(1);
-                }
-                if (i < 2) {
-                    neighbours.append(" ");
-                }
-            } else neighbours.append("xxx");
-        }
-        return neighbours.toString();*/
     }
 
     /**
-     * Translates tile ID into X and Y coordinates respectively
+     * Translates tile ID into X and Y coordinates on spritesheet respectively
      */
     private int getTileX(String tileID) {
         HashMap<String, String> tileX = new HashMap<>();
@@ -208,55 +190,7 @@ public class LevelManager {
         tileX.put(" x-x", "32");
 
 
-        /*//single
-        tileX.put("000 010 000", "128");
-        tileX.put("001 010 000", "128");
-        tileX.put("100 010 000", "128");
-        tileX.put("000 010 001", "128");
-        tileX.put("000 010 100", "128");
-        tileX.put("001 010 100", "128");
-        tileX.put("001 010 001", "128");
-
-        //platform simple
-        tileX.put("000 011 000", "0");
-        tileX.put("000 111 000", "32");
-        tileX.put("000 110 000", "64");
-
-        //columns
-        tileX.put("000 010 010", "0");
-        tileX.put("010 010 010", "0");
-        tileX.put("010 010 110", "0");
-        tileX.put("010 010 011", "0");
-        tileX.put("010 010 111", "0");
-        tileX.put("010 010 000", "0");
-
-        //lower blocks
-        tileX.put("110 011 000", "128");
-        tileX.put("010 011 000", "128");
-        tileX.put("100 110 000", "352");
-        tileX.put("011 010 000", "224");
-
-        //upper blocks
-        tileX.put("000 011 001", "192");
-        tileX.put("000 110 011", "480");
-        tileX.put("000 011 010", "320");
-        tileX.put("000 111 100", "32");
-
-        //inbetweeners
-
-
-        tileX.put("011 010 010", "320");
-
-        //bottom blocks
-        tileX.put("010 111 xxx", "192");
-        tileX.put("000 111 xxx", "32");
-        tileX.put("100 111 xxx", "32");
-        tileX.put("001 111 xxx", "32");*/
-
-
         if (tileX.containsKey(tileID)) {
-            System.out.println("As is: " + tileX.get(tileID));
-            System.out.println("Parse int: " + parseInt(tileX.get(tileID)));
             return parseInt(tileX.get(tileID));
         } else return 0;
     }
@@ -292,41 +226,6 @@ public class LevelManager {
         tileY.put(" x-x", "0");
         tileY.put(" -xx", "0");
 
-
-        /*//single
-        tileY.put("000 010 000", "96");
-
-        //platform simple
-        tileY.put("000 011 000", "384");
-        tileY.put("000 111 000", "384");
-        tileY.put("000 110 000", "384");
-
-        //column
-        tileY.put("000 010 010", "256");
-        tileY.put("010 010 010", "288");
-        tileY.put("010 010 110", "288");
-        tileY.put("010 010 011", "288");
-        tileY.put("010 010 111", "288");
-        tileY.put("010 010 000", "320");
-        tileY.put("011 010 010", "448");
-
-        //lower blocks
-        tileY.put("110 011 000", "480");
-        tileY.put("010 011 000", "480");
-        tileY.put("100 110 000", "480");
-        tileY.put("011 010 000", "32");
-
-        //upper blocks
-        tileY.put("000 011 001", "96");
-        tileY.put("000 110 011", "96");
-        tileY.put("000 011 010", "352");
-        tileY.put("000 111 100", "384");
-
-        //bottom blocks
-        tileY.put("010 111 xxx", "288");
-        tileY.put("100 111 xxx", "0");
-        tileY.put("001 111 xxx", "0");
-        tileY.put("000 111 xxx", "0");*/
 
 
         if (tileY.containsKey(tileID)) {
@@ -370,6 +269,7 @@ public class LevelManager {
                     case 's': //player spawn
                         //TODO: outsource player into its own class?
                         player = new Rectangle(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, Color.BLUE);
+                        //player = new Player(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10);
                         //set spawn for player
                         player.setTranslateX(GameProperties.TILE_UNIT * j);
                         player.setTranslateY(GameProperties.TILE_UNIT * i);
