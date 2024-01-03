@@ -10,6 +10,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -347,6 +349,11 @@ public class LevelManager {
     public Scene loadLevel(int levelId){
         loadedLevelID = levelId;
         //TODO: refine level loading
+
+        platforms.clear();
+        spikes.clear();
+        collectibles.clear();
+
         Pane levelRoot = new Pane();
         levelRoot.getChildren().add(debugInfo);
         debugInfo.setVisible(false);
@@ -607,35 +614,46 @@ public class LevelManager {
      */
     public void showDialog(String dialogText, Button... options){
 
+        //TODO: fix formatting pls i can't deal with this
         dialogBox.getChildren().clear();
         dialogBox.setMinHeight(200);
         dialogBox.setMinWidth(400);
         Label message = new Label(dialogText);
         dialogBox.getChildren().add(message);
-        dialogBox.setMinWidth(200);
-        dialogBox.setMinHeight(100);
+        dialogBox.setMinWidth(400);
+        dialogBox.setMinHeight(200);
         dialogBox.setBackground(new Background(new BackgroundFill(Color.GREY, new CornerRadii(3), Insets.EMPTY)));
 
         int buttonHeight = 20;
         int buttonAmount = 1;
+        int spacing = 10;
 
         for(Button option:options){
 
-            option.setPrefWidth(40);
+            option.setPrefWidth(200);
             option.setMinHeight(buttonHeight);
-            option.setLayoutX((dialogBox.getWidth()/2) - (option.getWidth()/2));
-            option.setLayoutY(buttonHeight * buttonAmount++);
+            option.setAlignment(Pos.CENTER);
+            option.setLayoutX((dialogBox.getWidth() /2) - (option.getPrefWidth()/2));
+            option.setLayoutY(20 + (buttonHeight+spacing)* buttonAmount++);
 
             dialogBox.getChildren().add(option);
         }
 
-        dialogBox.setLayoutX((double) GameProperties.WIDTH /2 - dialogBox.getWidth()/2);
-        dialogBox.setLayoutY((double) GameProperties.HEIGHT /2 - dialogBox.getHeight()/2);
+        message.setFont(Font.font(20));
+        message.setAlignment(Pos.CENTER);
+        message.setLayoutX((dialogBox.getWidth()/2) - (message.getWidth()/2));
+        message.setPrefWidth(200);
+
+        dialogBox.setLayoutX((double) (GameProperties.WIDTH /2) - (dialogBox.getWidth()/2));
+        dialogBox.setLayoutY((double) (GameProperties.HEIGHT /2) - (dialogBox.getHeight()/2));
         dialogBox.toFront();
         dialogBox.setVisible(true);
 
     }
 
+    /**
+     * Hides the dialog pane.
+     */
     public void hideDialog(){
         dialogBox.setVisible(false);
         dialogBox.getChildren().clear();
