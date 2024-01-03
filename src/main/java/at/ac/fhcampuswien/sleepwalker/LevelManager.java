@@ -1,9 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker;
 
-import at.ac.fhcampuswien.sleepwalker.entities.Collectible;
-import at.ac.fhcampuswien.sleepwalker.entities.LevelFinish;
-import at.ac.fhcampuswien.sleepwalker.entities.Platform;
-import at.ac.fhcampuswien.sleepwalker.entities.Spike;
+import at.ac.fhcampuswien.sleepwalker.entities.*;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -45,6 +42,7 @@ public class LevelManager {
     private final List<Node> spikes;
     private final List<Node> collectibles;
     private LevelFinish levelFinish = null;
+    private LevelFail failLevel = null;
     private Pane dialogBox = new Pane();
     private int loadedLevelID;
     private long frameCounter;
@@ -53,11 +51,12 @@ public class LevelManager {
     private boolean playerCanJump;
     private Scene loadedLevel;
     private ImageView currentHearts;
-    private ImageView imageViewGameOver;
     // Instances for respawning : spawnPositionX and spawnPositionY
     private int spawnPositionX;
     private int spawnPositionY;
     private int health = 6;
+    private int xFail;
+    private int yFail;
     /*
     Set the health of the player
      */
@@ -414,6 +413,8 @@ public class LevelManager {
                         collectibles.add(coin);
                         break;
                     case 'F': //level exit
+                        xFail = j * GameProperties.TILE_UNIT;
+                        yFail = i * GameProperties.TILE_UNIT;
                         levelFinish = new LevelFinish(
                                 j * GameProperties.TILE_UNIT,
                                 i * GameProperties.TILE_UNIT,
@@ -423,6 +424,12 @@ public class LevelManager {
                 }
             }
         }
+        //game Over exit
+        failLevel = new LevelFail(
+                xFail,
+                yFail,
+                this);
+        levelRoot.getChildren().add(failLevel);
         //create Health-Bar
         Image image = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
         currentHearts = new ImageView(image);
@@ -431,12 +438,6 @@ public class LevelManager {
         currentHearts.setLayoutY(450);
 
         levelRoot.getChildren().add(currentHearts);
-        Image imageGameOver = new Image(String.valueOf(Sleepwalker.class.getResource("level/GameOver.png")));
-        imageViewGameOver = new ImageView(imageGameOver);
-        imageViewGameOver.setLayoutX(0);
-        imageViewGameOver.setLayoutY(0);
-        imageViewGameOver.setVisible(false);
-        levelRoot.getChildren().add(imageViewGameOver);
 
 
         loadedLevel = new Scene(levelRoot);
@@ -482,19 +483,10 @@ public class LevelManager {
 
     }
     /*
-    Is sending player back to the WorldMap after GameOver
+    Is showing GameOver Screen
      */
     private void loadGameOver() {
-
-       /* imageViewGameOver.setVisible(true);
-        try {
-            Thread.sleep(5000); // 5000 Millisekunden entsprechen 5 Sekunden
-        } catch (InterruptedException e) {
-            // Hier kannst du mit einer möglichen Unterbrechung umgehen, wenn nötig
-            e.printStackTrace();
-        }*/ //TODO:Needs some improvement loadGameOver
-
-        GameManager.showWorldMap();
+        failLevel.failLevel();
     }
 
     private void enforceFrameBounds() {
