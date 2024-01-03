@@ -526,6 +526,12 @@ public class LevelManager {
             for (Node platform : platforms) {
                 platform.setTranslateY(platform.getTranslateY() + distanceToMove);
             }
+            for (Node collectible : collectibles) {
+                collectible.setTranslateY(collectible.getTranslateY() + distanceToMove);
+            }
+            for (Node spike : spikes) {
+                spike.setTranslateY(spike.getTranslateY() + distanceToMove);
+            }
             player.setTranslateY(halfScreenHeight);
         }
         // when the player moves down the camera follows him downwards
@@ -533,6 +539,12 @@ public class LevelManager {
             double distanceToMove = playerVelocity.getY();
             for (Node platform : platforms) {
                 platform.setTranslateY(platform.getTranslateY() - distanceToMove);
+            }
+            for (Node collectible : collectibles) {
+                collectible.setTranslateY(collectible.getTranslateY() - distanceToMove);
+            }
+            for (Node spike : spikes) {
+                spike.setTranslateY(spike.getTranslateY() - distanceToMove);
             }
             player.setTranslateY(halfScreenHeight);
         }
