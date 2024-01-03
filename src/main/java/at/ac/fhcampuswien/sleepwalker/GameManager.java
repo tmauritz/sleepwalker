@@ -117,12 +117,17 @@ public class GameManager {
             backToMainMenu.setLayoutY(GameProperties.HEIGHT - 100);
             backToMainMenu.setOnAction(t -> getInstance().showMainMenu()); //Look Mum, I'm using lambdas!
 
-            Button loadLevel1 = new Button("Level 1"); //TODO: automatically generate Buttons based on level number
+            Button loadLevel1 = new Button("Level 1"); // TODO: automatically generate Buttons based on level number
             loadLevel1.setLayoutX(100);
             loadLevel1.setLayoutY(100);
-            loadLevel1.setOnAction(t -> getInstance().loadLevel(1)); //lambdas again
+            loadLevel1.setOnAction(t -> getInstance().loadLevel(1));//lambdas again
 
-            Pane x = new AnchorPane(backToMainMenu, loadLevel1);
+            Button loadLevel2 = new Button("Level 2");
+            loadLevel2.setLayoutX(200);
+            loadLevel2.setLayoutY(100);
+            loadLevel2.setOnAction(e -> getInstance().loadLevel(2));
+
+            Pane x = new AnchorPane(backToMainMenu, loadLevel1, loadLevel2);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
             sceneLibrary.put("worldMap", worldMap);
         }
