@@ -629,7 +629,6 @@ public class LevelManager {
         dialogBox.getChildren().add(message);
         dialogBox.setMinWidth(400);
         dialogBox.setMinHeight(200);
-        dialogBox.setBackground(new Background(new BackgroundFill(Color.GREY, new CornerRadii(3), Insets.EMPTY)));
 
         int buttonHeight = 20;
         int buttonAmount = 1;
@@ -665,6 +664,11 @@ public class LevelManager {
         dialogBox.setVisible(false);
         dialogBox.getChildren().clear();
     }
+    /**
+     * Displays a Dialog pane.
+     * @param dialogText Text to be displayed in the dialog
+     * @param options Buttons for dialog options must have EventHandlers
+     */
     public void showDialogDead(String dialogText, Button... options){
 
         //TODO: fix formatting pls i can't deal with this
@@ -703,6 +707,9 @@ public class LevelManager {
         dialogBox.setVisible(true);
 
     }
+    /*
+    hide Dialog for gameOver
+     */
     public void hideDialogDead(){
         dialogBoxDead.setVisible(false);
         dialogBoxDead.getChildren().clear();
