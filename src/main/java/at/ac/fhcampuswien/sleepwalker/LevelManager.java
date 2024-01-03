@@ -513,14 +513,14 @@ public class LevelManager {
             }
         }
 
-        // Aktuelle Position des Spielers und Bildschirmhöhe
+        // Gets the actual position of the player and defines the half screen hight
         double playerY = player.getTranslateY();
         double halfScreenHeight = GameProperties.HEIGHT / 2.0;
 
-        double verticalThresholdUp = GameProperties.HEIGHT * 0.4; // Anpassen dieser Schwelle wenn nötig
-        double verticalThresholdDown = GameProperties.HEIGHT * 0.2; // Anpassen dieser Schwelle wenn nötig
+        double verticalThresholdUp = GameProperties.HEIGHT * 0.4;
+        double verticalThresholdDown = GameProperties.HEIGHT * 0.2;
 
-        // Wenn der Spieler hoch genug gesprungen ist, die Kamera nach oben bewegen
+        // when the player jumps high enough the camera moves upwards with him
         if (playerY < halfScreenHeight - verticalThresholdUp) {
             double distanceToMove = halfScreenHeight - playerY;
             for (Node platform : platforms) {
@@ -528,7 +528,7 @@ public class LevelManager {
             }
             player.setTranslateY(halfScreenHeight);
         }
-        // Wenn der Spieler abwärts bewegt und nicht springt, die Kamera nach unten bewegen
+        // when the player moves down the camera follows him downwards
         else if (playerVelocity.getY() > 0 && playerY > halfScreenHeight + verticalThresholdDown) {
             double distanceToMove = playerVelocity.getY();
             for (Node platform : platforms) {
@@ -537,7 +537,7 @@ public class LevelManager {
             player.setTranslateY(halfScreenHeight);
         }
 
-        // Überprüfen und Sicherstellen, dass der Spieler im Rahmen bleibt
+        // checks if player stays in the frame
         enforceFrameBounds();
         updateHealthPicture();
 
