@@ -44,6 +44,7 @@ public class LevelManager {
     private LevelFinish levelFinish = null;
     private LevelFail failLevel = null;
     private Pane dialogBox = new Pane();
+    private Pane dialogBoxDead = new Pane();
     private int loadedLevelID;
     private long frameCounter;
     private Node player;
@@ -124,8 +125,12 @@ public class LevelManager {
             for(Node spike : spikes) {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
                     setHealth(getHealth() - 1);
-                    player.setTranslateX(spawnPositionX);
-                    player.setTranslateY(spawnPositionY);
+                    if (getHealth()==0) {
+                        failLevel.failLevel();
+                    } else {
+                        player.setTranslateX(spawnPositionX);
+                        player.setTranslateY(spawnPositionY);
+                    }
                 }
             }
             if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())){
@@ -171,8 +176,12 @@ public class LevelManager {
             for(Node spike : spikes) {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
                     setHealth(getHealth() - 1);
-                    player.setTranslateX(spawnPositionX);
-                    player.setTranslateY(spawnPositionY);
+                    if (getHealth()==0) {
+                        failLevel.failLevel();
+                    } else {
+                        player.setTranslateX(spawnPositionX);
+                        player.setTranslateY(spawnPositionY);
+                    }
                 }
             }
             if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())){
@@ -347,6 +356,7 @@ public class LevelManager {
      */
     public Scene loadLevel(int levelId){
         loadedLevelID = levelId;
+        setHealth(6);
         //TODO: refine level loading
 
         platforms.clear();
@@ -649,6 +659,48 @@ public class LevelManager {
     public void hideDialog(){
         dialogBox.setVisible(false);
         dialogBox.getChildren().clear();
+    }
+    public void showDialogDead(String dialogText, Button... options){
+
+        //TODO: fix formatting pls i can't deal with this
+        dialogBox.getChildren().clear();
+        dialogBox.setMinHeight(200);
+        dialogBox.setMinWidth(400);
+        Label message = new Label(dialogText);
+        dialogBox.getChildren().add(message);
+        dialogBox.setMinWidth(400);
+        dialogBox.setMinHeight(200);
+        dialogBox.setBackground(new Background(new BackgroundFill(Color.GREY, new CornerRadii(3), Insets.EMPTY)));
+
+        int buttonHeight = 20;
+        int buttonAmount = 1;
+        int spacing = 10;
+
+        for(Button option:options){
+
+            option.setPrefWidth(200);
+            option.setMinHeight(buttonHeight);
+            option.setAlignment(Pos.CENTER);
+            option.setLayoutX((dialogBox.getWidth() /2) - (option.getPrefWidth()/2));
+            option.setLayoutY(20 + (buttonHeight+spacing)* buttonAmount++);
+
+            dialogBox.getChildren().add(option);
+        }
+
+        message.setFont(Font.font(20));
+        message.setAlignment(Pos.CENTER);
+        message.setLayoutX((dialogBox.getWidth()/2) - (message.getWidth()/2));
+        message.setPrefWidth(200);
+
+        dialogBox.setLayoutX((double) (GameProperties.WIDTH /2) - (dialogBox.getWidth()/2));
+        dialogBox.setLayoutY((double) (GameProperties.HEIGHT /2) - (dialogBox.getHeight()/2));
+        dialogBox.toFront();
+        dialogBox.setVisible(true);
+
+    }
+    public void hideDialogDead(){
+        dialogBoxDead.setVisible(false);
+        dialogBoxDead.getChildren().clear();
     }
 
 }

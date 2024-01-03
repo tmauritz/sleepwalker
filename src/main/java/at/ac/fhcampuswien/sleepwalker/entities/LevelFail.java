@@ -11,6 +11,7 @@ import javafx.scene.shape.Rectangle;
 public class LevelFail extends Rectangle{
     private LevelManager levelManager;
     private int currentLevelID;
+
     public LevelFail(double x, double y, LevelManager currentLevel){
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
@@ -33,7 +34,7 @@ public class LevelFail extends Rectangle{
 
         Button retryLevel = new Button("Retry Level");
         retryLevel.setOnAction(event -> GameManager.getInstance().playLevel(currentLevelID));
-        levelManager.showDialog(win, retryLevel, backToMenu);
+        levelManager.showDialogDead(win, retryLevel, backToMenu);
 
 
     }
