@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.entities.Collectible;
+import at.ac.fhcampuswien.sleepwalker.entities.LevelFinish;
 import at.ac.fhcampuswien.sleepwalker.entities.Platform;
 import at.ac.fhcampuswien.sleepwalker.entities.Spike;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
@@ -36,11 +37,14 @@ import static java.lang.Integer.parseInt;
 public class LevelManager {
 
     private final Label debugInfo = new Label();
-    private final Label GUI = new Label("TEST");
+    private final Label GUI = new Label("TOP GUI");
     private final Map<KeyCode, Boolean> pressedKeys;
     private final List<Node> platforms;
     private final List<Node> spikes;
     private final List<Node> collectibles;
+    private LevelFinish levelFinish = null;
+    private Pane dialogBox = new Pane();
+    private int loadedLevelID;
     private long frameCounter;
     private Node player;
     private Point2D playerVelocity;
@@ -115,7 +119,6 @@ public class LevelManager {
                         return;
                     }
                 }
-            player.setTranslateX(player.getTranslateX() + (movingRight ? 1 : -1));
             //Player looses one life if it touches a spike and respawns at the spawn
             for(Node spike : spikes) {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
@@ -124,7 +127,18 @@ public class LevelManager {
                     player.setTranslateY(spawnPositionY);
                 }
             }
+            if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())){
+                if(levelfinished()){
+                    if(movingRight){
+                        player.setTranslateX(player.getTranslateX() - 1);
+                    }else {
+                        player.setTranslateX(player.getTranslateX() + 1);
+                    }
+                    levelFinish.finishLevel();
+                }
             }
+            player.setTranslateX(player.getTranslateX() + (movingRight ? 1 : -1));
+        }
 
     }
 
@@ -158,6 +172,16 @@ public class LevelManager {
                     setHealth(getHealth() - 1);
                     player.setTranslateX(spawnPositionX);
                     player.setTranslateY(spawnPositionY);
+                }
+            }
+            if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())){
+                if(levelfinished()){
+                    if(movingDown){
+                        player.setTranslateX(player.getTranslateX() - 1);
+                    }else {
+                        player.setTranslateX(player.getTranslateX() + 1);
+                    }
+                    levelFinish.finishLevel();
                 }
             }
             player.setTranslateY(player.getTranslateY() + (movingDown ? 1 : -1));
@@ -321,10 +345,14 @@ public class LevelManager {
      * @return a Scene containing the loaded level or null if the level could not be loaded
      */
     public Scene loadLevel(int levelId){
+        loadedLevelID = levelId;
         //TODO: refine level loading
         Pane levelRoot = new Pane();
         levelRoot.getChildren().add(debugInfo);
+        debugInfo.setVisible(false);
         levelRoot.getChildren().add(GUI);
+        levelRoot.getChildren().add(dialogBox);
+        dialogBox.setVisible(false);
         BackgroundImage bg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/background_layer_1.png"))),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
@@ -377,6 +405,13 @@ public class LevelManager {
                                 GameProperties.TILE_UNIT);
                         levelRoot.getChildren().add(coin);
                         collectibles.add(coin);
+                        break;
+                    case 'F': //level exit
+                        levelFinish = new LevelFinish(
+                                j * GameProperties.TILE_UNIT,
+                                i * GameProperties.TILE_UNIT,
+                                this);
+                        levelRoot.getChildren().add(levelFinish);
                         break;
                 }
             }
@@ -539,11 +574,8 @@ public class LevelManager {
             player.setTranslateY(halfScreenHeight);
         }
 
-        // checks if player stays in the frame
         enforceFrameBounds();
         updateHealthPicture();
-
-        enforceFrameBounds();
 
         //TODO: keep player from exiting frame (Player can fall down)
         //TODO: scrolling
@@ -551,14 +583,31 @@ public class LevelManager {
 
     }
 
+    public boolean levelfinished(){
+        //TODO: check for collectibles
+
+        return true;
+    }
+
+    public int getLoadedLevelID(){
+        return loadedLevelID;
+    }
+
+    /**
+     * Displays a Dialog pane.
+     * @param dialogText Text to be displayed in the dialog
+     * @param options Buttons for dialog options must have EventHandlers
+     */
     public void showDialog(String dialogText, Button... options){
 
-        Pane dialog = new Pane();
-
-        dialog.setMinHeight(200);
-        dialog.setMinWidth(400);
+        dialogBox.getChildren().clear();
+        dialogBox.setMinHeight(200);
+        dialogBox.setMinWidth(400);
         Label message = new Label(dialogText);
-        dialog.getChildren().add(message);
+        dialogBox.getChildren().add(message);
+        dialogBox.setMinWidth(200);
+        dialogBox.setMinHeight(100);
+        dialogBox.setBackground(new Background(new BackgroundFill(Color.GREY, new CornerRadii(3), Insets.EMPTY)));
 
         int buttonHeight = 20;
         int buttonAmount = 1;
@@ -567,15 +616,22 @@ public class LevelManager {
 
             option.setPrefWidth(40);
             option.setMinHeight(buttonHeight);
-            option.setLayoutX((dialog.getWidth()/2) - (option.getWidth()/2));
+            option.setLayoutX((dialogBox.getWidth()/2) - (option.getWidth()/2));
             option.setLayoutY(buttonHeight * buttonAmount++);
 
-            dialog.getChildren().add(option);
+            dialogBox.getChildren().add(option);
         }
 
-        loadedLevel.getRoot().getChildrenUnmodifiable().add(dialog);
-        dialog.setVisible(true);
+        dialogBox.setLayoutX((double) GameProperties.WIDTH /2 - dialogBox.getWidth()/2);
+        dialogBox.setLayoutY((double) GameProperties.HEIGHT /2 - dialogBox.getHeight()/2);
+        dialogBox.toFront();
+        dialogBox.setVisible(true);
 
+    }
+
+    public void hideDialog(){
+        dialogBox.setVisible(false);
+        dialogBox.getChildren().clear();
     }
 
 }

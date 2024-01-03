@@ -31,9 +31,9 @@ public class LevelData {
                 "          ---     ",
                 "      -              ",
                 "        -    -        ",
-                "        ----        ",
+                "        ----      F  ",
                 " --  s    -    c       ",
-                "        -         F  ",
+                "        -           ",
                 "--------------------",
         });
         Levels.put(2, new String[]{
@@ -41,7 +41,7 @@ public class LevelData {
                 "                    ",
                 "                    ",
                 "                    ",
-                "                  c ",
+                "             F     c ",
                 "  c    ---  --   -   ",
                 " ---                ",
                 "            ^^    -  ",
@@ -54,7 +54,7 @@ public class LevelData {
         });
         Levels.put(3, new String[]{
                 "                     ",
-                "                     ",
+                "               F     ",
                 " ----         ---    ",
                 "                     ",
                 "                     ",
