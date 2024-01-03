@@ -16,6 +16,7 @@ public class LevelData {
 
     /* - walkway
      * s player
+     * F finish
      */
 
     static{
@@ -32,7 +33,7 @@ public class LevelData {
                 "        -    -        ",
                 "        ----        ",
                 " --  s    -    c       ",
-                "        -           ",
+                "        -         F  ",
                 "--------------------",
         });
         Levels.put(2, new String[]{

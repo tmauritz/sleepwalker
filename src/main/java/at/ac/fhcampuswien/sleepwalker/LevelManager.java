@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -432,22 +433,11 @@ public class LevelManager {
             update();
         });
 
+        //update timeline controls the level speed
         Timeline gameUpdate = new Timeline(updateFrame);
         gameUpdate.setCycleCount(Animation.INDEFINITE);
         gameUpdate.play();
 
-        //updateTimer controls the level speed
-        /*
-        AnimationTimer updateTimer = new AnimationTimer() {
-            final long startTime = System.currentTimeMillis();
-            final int frameUpdate = 100;
-            @Override
-            public void handle(long now){
-                if(startTime - System.currentTimeMillis() % frameUpdate == 0) update();
-            }
-        };
-        updateTimer.start();
-        */
     }
     /*
     Is sending player back to the WorldMap after GameOver
@@ -558,6 +548,33 @@ public class LevelManager {
         //TODO: keep player from exiting frame (Player can fall down)
         //TODO: scrolling
         //TODO: finish conditions
+
+    }
+
+    public void showDialog(String dialogText, Button... options){
+
+        Pane dialog = new Pane();
+
+        dialog.setMinHeight(200);
+        dialog.setMinWidth(400);
+        Label message = new Label(dialogText);
+        dialog.getChildren().add(message);
+
+        int buttonHeight = 20;
+        int buttonAmount = 1;
+
+        for(Button option:options){
+
+            option.setPrefWidth(40);
+            option.setMinHeight(buttonHeight);
+            option.setLayoutX((dialog.getWidth()/2) - (option.getWidth()/2));
+            option.setLayoutY(buttonHeight * buttonAmount++);
+
+            dialog.getChildren().add(option);
+        }
+
+        loadedLevel.getRoot().getChildrenUnmodifiable().add(dialog);
+        dialog.setVisible(true);
 
     }
 
