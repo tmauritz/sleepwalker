@@ -590,6 +590,32 @@ public class LevelManager {
             }
         }
 
+        // Aktuelle Position des Spielers und Bildschirmhöhe
+        double playerY = player.getTranslateY();
+        double halfScreenHeight = GameProperties.HEIGHT / 2.0;
+
+        double verticalThresholdUp = GameProperties.HEIGHT * 0.4; // Anpassen dieser Schwelle wenn nötig
+        double verticalThresholdDown = GameProperties.HEIGHT * 0.2; // Anpassen dieser Schwelle wenn nötig
+
+        // Wenn der Spieler hoch genug gesprungen ist, die Kamera nach oben bewegen
+        if (playerY < halfScreenHeight - verticalThresholdUp) {
+            double distanceToMove = halfScreenHeight - playerY;
+            for (Node platform : platforms) {
+                platform.setTranslateY(platform.getTranslateY() + distanceToMove);
+            }
+            player.setTranslateY(halfScreenHeight);
+        }
+        // Wenn der Spieler abwärts bewegt und nicht springt, die Kamera nach unten bewegen
+        else if (playerVelocity.getY() > 0 && playerY > halfScreenHeight + verticalThresholdDown) {
+            double distanceToMove = playerVelocity.getY();
+            for (Node platform : platforms) {
+                platform.setTranslateY(platform.getTranslateY() - distanceToMove);
+            }
+            player.setTranslateY(halfScreenHeight);
+        }
+
+        // Überprüfen und Sicherstellen, dass der Spieler im Rahmen bleibt
+        enforceFrameBounds();
         updateHealthPicture();
 
         enforceFrameBounds();
