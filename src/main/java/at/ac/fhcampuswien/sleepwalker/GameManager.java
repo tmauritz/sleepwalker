@@ -24,9 +24,11 @@ public class GameManager {
     private static MediaPlayer backgroundMusic;
 
     private static GameManager gameManager;
+    private LevelManager levelManager;
 
     private GameManager(Stage stageRoot) {
         this.stageRoot = stageRoot;
+        levelManager = new LevelManager();
     }
 
     public static GameManager getInstance() {
@@ -145,12 +147,11 @@ public class GameManager {
      * @param levelId the level to be played
      */
     public void playLevel(int levelId) {
-        LevelManager lm = new LevelManager();
         stopBackgroundMusic();
-        stageRoot.setScene(lm.loadLevel(levelId));
+        stageRoot.setScene(levelManager.loadLevel(levelId));
         stageRoot.show();
         try {
-            lm.startLevel();
+            levelManager.startLevel();
         } catch (LevelNotLoadedException e) {
             //TODO: figure out what to do
             throw new RuntimeException(e);
