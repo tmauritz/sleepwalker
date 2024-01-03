@@ -33,6 +33,7 @@ import static java.lang.Integer.parseInt;
  * </a>
  */
 public class LevelManager {
+
     private final Label debugInfo = new Label();
     private final Label GUI = new Label("TEST");
     private final Map<KeyCode, Boolean> pressedKeys;
@@ -45,6 +46,7 @@ public class LevelManager {
     private boolean playerCanJump;
     private Scene loadedLevel;
     private ImageView currentHearts;
+    private ImageView imageViewGameOver;
     // Instances for respawning : spawnPositionX and spawnPositionY
     private int spawnPositionX;
     private int spawnPositionY;
@@ -58,8 +60,15 @@ public class LevelManager {
     /*
     Get the health of the player
      */
+
     public void setHealth(int health) {
         this.health = health;
+    }
+    private void jumpPlayer(){
+        if(playerCanJump){
+            playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
+            playerCanJump = false;
+        }
     }
 
 
@@ -154,13 +163,6 @@ public class LevelManager {
         }
 
     }
-
-    private void jumpPlayer(){
-        if(playerCanJump){
-            playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
-            playerCanJump = false;
-        }
-    }
     /*
      *  Updates the HealthBar to the actual lives
      *  --> half-heart = 1 life
@@ -172,6 +174,9 @@ public class LevelManager {
         Image image4 = new Image(String.valueOf(Sleepwalker.class.getResource("level/4hearts.png")));
         Image image5 = new Image(String.valueOf(Sleepwalker.class.getResource("level/5hearts.png")));
         Image image6 = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
+        if (health == 0) {
+            loadGameOver();
+        }
         if (health==1) {
             currentHearts.setImage(image1);
         }
@@ -229,25 +234,6 @@ public class LevelManager {
 
         return neighbours.toString();
 
-        /*StringBuilder neighbours = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            if (ROW-1+i < levelData.length && ROW-1+i >= 0) {
-                char[] tiles = levelData[ROW-1+i].toCharArray();
-                for (int j = 0; j < 3; j++) {
-                    if (COL - 1 + j < tiles.length && COL - 1 + j >= 0) {
-                        if (tiles[COL - 1 + j] != '-') {
-                            neighbours.append(0);
-                        } else
-                            neighbours.append(1);
-                    } else
-                        neighbours.append(1);
-                }
-                if (i < 2) {
-                    neighbours.append(" ");
-                }
-            } else neighbours.append("xxx");
-        }
-        return neighbours.toString();*/
     }
 
     /**
@@ -283,53 +269,6 @@ public class LevelManager {
         tileX.put("  -x", "0");
         tileX.put(" -xx", "32");
         tileX.put(" x-x", "32");
-
-
-        /*//single
-        tileX.put("000 010 000", "128");
-        tileX.put("001 010 000", "128");
-        tileX.put("100 010 000", "128");
-        tileX.put("000 010 001", "128");
-        tileX.put("000 010 100", "128");
-        tileX.put("001 010 100", "128");
-        tileX.put("001 010 001", "128");
-
-        //platform simple
-        tileX.put("000 011 000", "0");
-        tileX.put("000 111 000", "32");
-        tileX.put("000 110 000", "64");
-
-        //columns
-        tileX.put("000 010 010", "0");
-        tileX.put("010 010 010", "0");
-        tileX.put("010 010 110", "0");
-        tileX.put("010 010 011", "0");
-        tileX.put("010 010 111", "0");
-        tileX.put("010 010 000", "0");
-
-        //lower blocks
-        tileX.put("110 011 000", "128");
-        tileX.put("010 011 000", "128");
-        tileX.put("100 110 000", "352");
-        tileX.put("011 010 000", "224");
-
-        //upper blocks
-        tileX.put("000 011 001", "192");
-        tileX.put("000 110 011", "480");
-        tileX.put("000 011 010", "320");
-        tileX.put("000 111 100", "32");
-
-        //inbetweeners
-
-
-        tileX.put("011 010 010", "320");
-
-        //bottom blocks
-        tileX.put("010 111 xxx", "192");
-        tileX.put("000 111 xxx", "32");
-        tileX.put("100 111 xxx", "32");
-        tileX.put("001 111 xxx", "32");*/
-
 
         if (tileX.containsKey(tileID)) {
             System.out.println("As is: " + tileX.get(tileID));
@@ -368,43 +307,6 @@ public class LevelManager {
         tileY.put("  -x", "0");
         tileY.put(" x-x", "0");
         tileY.put(" -xx", "0");
-
-
-        /*//single
-        tileY.put("000 010 000", "96");
-
-        //platform simple
-        tileY.put("000 011 000", "384");
-        tileY.put("000 111 000", "384");
-        tileY.put("000 110 000", "384");
-
-        //column
-        tileY.put("000 010 010", "256");
-        tileY.put("010 010 010", "288");
-        tileY.put("010 010 110", "288");
-        tileY.put("010 010 011", "288");
-        tileY.put("010 010 111", "288");
-        tileY.put("010 010 000", "320");
-        tileY.put("011 010 010", "448");
-
-        //lower blocks
-        tileY.put("110 011 000", "480");
-        tileY.put("010 011 000", "480");
-        tileY.put("100 110 000", "480");
-        tileY.put("011 010 000", "32");
-
-        //upper blocks
-        tileY.put("000 011 001", "96");
-        tileY.put("000 110 011", "96");
-        tileY.put("000 011 010", "352");
-        tileY.put("000 111 100", "384");
-
-        //bottom blocks
-        tileY.put("010 111 xxx", "288");
-        tileY.put("100 111 xxx", "0");
-        tileY.put("001 111 xxx", "0");
-        tileY.put("000 111 xxx", "0");*/
-
 
         if (tileY.containsKey(tileID)) {
             return parseInt(tileY.get(tileID));
@@ -486,6 +388,12 @@ public class LevelManager {
         currentHearts.setLayoutY(450);
 
         levelRoot.getChildren().add(currentHearts);
+        Image imageGameOver = new Image(String.valueOf(Sleepwalker.class.getResource("level/GameOver.png")));
+        imageViewGameOver = new ImageView(imageGameOver);
+        imageViewGameOver.setLayoutX(0);
+        imageViewGameOver.setLayoutY(0);
+        imageViewGameOver.setVisible(false);
+        levelRoot.getChildren().add(imageViewGameOver);
 
 
         loadedLevel = new Scene(levelRoot);
@@ -540,6 +448,21 @@ public class LevelManager {
         };
         updateTimer.start();
         */
+    }
+    /*
+    Is sending player back to the WorldMap after GameOver
+     */
+    private void loadGameOver() {
+
+       /* imageViewGameOver.setVisible(true);
+        try {
+            Thread.sleep(5000); // 5000 Millisekunden entsprechen 5 Sekunden
+        } catch (InterruptedException e) {
+            // Hier kannst du mit einer möglichen Unterbrechung umgehen, wenn nötig
+            e.printStackTrace();
+        }*/ //TODO:Needs some improvement loadGameOver
+
+        GameManager.showWorldMap();
     }
 
     private void enforceFrameBounds() {
