@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -41,6 +42,7 @@ public class LevelManager {
     private final List<Node> platforms;
     private final List<Node> spikes;
     private final List<Node> collectibles;
+    private Timeline updateTimeline;
     private LevelFinish levelFinish = null;
     private LevelFail failLevel = null;
     private Pane dialogBox = new Pane();
@@ -203,12 +205,12 @@ public class LevelManager {
      *  --> half-heart = 1 life
      */
     private void updateHealthPicture() {
-        Image image1 = new Image(String.valueOf(Sleepwalker.class.getResource("level/1hearts.png")));
-        Image image2 = new Image(String.valueOf(Sleepwalker.class.getResource("level/2hearts.png")));
-        Image image3 = new Image(String.valueOf(Sleepwalker.class.getResource("level/3hearts.png")));
-        Image image4 = new Image(String.valueOf(Sleepwalker.class.getResource("level/4hearts.png")));
-        Image image5 = new Image(String.valueOf(Sleepwalker.class.getResource("level/5hearts.png")));
-        Image image6 = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
+        Image image1 = MediaManager.loadImage("level/1hearts.png");
+        Image image2 = MediaManager.loadImage("level/2hearts.png");
+        Image image3 = MediaManager.loadImage("level/3hearts.png");
+        Image image4 = MediaManager.loadImage("level/4hearts.png");
+        Image image5 = MediaManager.loadImage("level/5hearts.png");
+        Image image6 = MediaManager.loadImage("level/6hearts.png");
         if (health == 0) {
             loadGameOver();
         }
@@ -461,6 +463,9 @@ public class LevelManager {
     public void startLevel() throws LevelNotLoadedException{
         if(loadedLevel == null) throw new LevelNotLoadedException("No Level loaded.");
 
+        playerVelocity = new Point2D(0,0);
+        pressedKeys.clear();
+
         //position and style frame counter
         debugInfo.setLayoutX(0);
         debugInfo.setLayoutY(10);
@@ -486,10 +491,10 @@ public class LevelManager {
             update();
         });
 
-        //update timeline controls the level speed
-        Timeline gameUpdate = new Timeline(updateFrame);
-        gameUpdate.setCycleCount(Animation.INDEFINITE);
-        gameUpdate.play();
+        if(updateTimeline != null ) updateTimeline.stop(); //stop timeline if previous level was loaded
+        updateTimeline = new Timeline(updateFrame);
+        updateTimeline.setCycleCount(Animation.INDEFINITE);
+        updateTimeline.play();
 
     }
     /*
