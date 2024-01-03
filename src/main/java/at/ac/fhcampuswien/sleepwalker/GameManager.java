@@ -127,6 +127,11 @@ public class GameManager {
             loadLevel2.setLayoutY(100);
             loadLevel2.setOnAction(e -> getInstance().loadLevel(2));
 
+            Button loadLevel3 = new Button("Level 3");
+            loadLevel2.setLayoutX(300);
+            loadLevel2.setLayoutY(100);
+            loadLevel2.setOnAction(e -> getInstance().loadLevel(3));
+
             Pane x = new AnchorPane(backToMainMenu, loadLevel1, loadLevel2);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
             sceneLibrary.put("worldMap", worldMap);
