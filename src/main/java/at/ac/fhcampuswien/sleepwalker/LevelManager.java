@@ -128,7 +128,7 @@ public class LevelManager {
                 }
             }
             if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())){
-                if(levelfinished()){
+                if(levelFinished()){
                     if(movingRight){
                         player.setTranslateX(player.getTranslateX() - 1);
                     }else {
@@ -175,7 +175,7 @@ public class LevelManager {
                 }
             }
             if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())){
-                if(levelfinished()){
+                if(levelFinished()){
                     if(movingDown){
                         player.setTranslateX(player.getTranslateX() - 1);
                     }else {
@@ -538,6 +538,14 @@ public class LevelManager {
             }
         }
 
+        if (playerVelocity.getY() == 0) {
+            if(levelFinished()) {
+                if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())) {
+                    levelFinish.finishLevel();
+                }
+            }
+        }
+
         // Gets the actual position of the player and defines the half screen hight
         double playerY = player.getTranslateY();
         double halfScreenHeight = GameProperties.HEIGHT / 2.0;
@@ -583,10 +591,9 @@ public class LevelManager {
 
     }
 
-    public boolean levelfinished(){
+    public boolean levelFinished() {
         //TODO: check for collectibles
-
-        return true;
+        return collectibles.isEmpty();
     }
 
     public int getLoadedLevelID(){
