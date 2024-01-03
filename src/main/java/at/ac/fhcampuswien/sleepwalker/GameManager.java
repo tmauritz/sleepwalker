@@ -132,7 +132,7 @@ public class GameManager {
             loadLevel3.setLayoutY(100);
             loadLevel3.setOnAction(e -> getInstance().loadLevel(3));
 
-            Pane x = new AnchorPane(backToMainMenu, loadLevel1, loadLevel2);
+            Pane x = new AnchorPane(backToMainMenu, loadLevel1, loadLevel2,loadLevel3);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
             sceneLibrary.put("worldMap", worldMap);
         }
