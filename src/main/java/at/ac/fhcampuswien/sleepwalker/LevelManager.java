@@ -42,6 +42,7 @@ public class LevelManager {
     private final List<Node> platforms;
     private final List<Node> spikes;
     private final List<Node> collectibles;
+    private Timeline updateTimeline;
     private LevelFinish levelFinish = null;
     private LevelFail failLevel = null;
     private Pane dialogBox = new Pane();
@@ -452,6 +453,9 @@ public class LevelManager {
     public void startLevel() throws LevelNotLoadedException{
         if(loadedLevel == null) throw new LevelNotLoadedException("No Level loaded.");
 
+        playerVelocity = new Point2D(0,0);
+        pressedKeys.clear();
+
         //position and style frame counter
         debugInfo.setLayoutX(0);
         debugInfo.setLayoutY(10);
@@ -477,10 +481,10 @@ public class LevelManager {
             update();
         });
 
-        //update timeline controls the level speed
-        Timeline gameUpdate = new Timeline(updateFrame);
-        gameUpdate.setCycleCount(Animation.INDEFINITE);
-        gameUpdate.play();
+        if(updateTimeline != null ) updateTimeline.stop(); //stop timeline if previous level was loaded
+        updateTimeline = new Timeline(updateFrame);
+        updateTimeline.setCycleCount(Animation.INDEFINITE);
+        updateTimeline.play();
 
     }
     /*
