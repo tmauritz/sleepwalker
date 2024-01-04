@@ -13,15 +13,14 @@ import javafx.scene.shape.Rectangle;
  Spike Class
  */
 
-public class Spike extends Rectangle{
-    public Spike(double x, double y, double width, double height, int partX, int partY){
-        super();
+public class Spike extends ImageView{
+    public Spike(double x, double y, double width, double height, int partX, int partY) {
+        Image spikeImage = new Image(Sleepwalker.class.getResourceAsStream("level/Spike.png"));
+        setImage(spikeImage);
+        setFitWidth(width);
+        setFitHeight(height);
         setTranslateX(x);
         setTranslateY(y);
-        setWidth(width);
-        setHeight(height);
-        setFill(Color.BLACK);
-        //TODO: Grafik für Spike, Optimal Die Mine aus TX Village Props.png
     }
 
 }

@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -54,8 +53,6 @@ public class LevelManager {
     private boolean playerCanJump;
     private Scene loadedLevel;
     private ImageView currentHearts;
-    private Pane levelRootCamera;
-
     // Instances for respawning : spawnPositionX and spawnPositionY
     private int spawnPositionX;
     private int spawnPositionY;
@@ -118,28 +115,18 @@ public class LevelManager {
     private void movePlayerX(int amount){
         boolean movingRight = amount > 0;
 
-        for (int i = 1; i <= Math.abs(amount); i++) {
-            for (Node platform : platforms) {
-                if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
-                    //collision detected
-                    if (movingRight) {
-                        player.setTranslateX(player.getTranslateX() - 1);
-                    } else {
-                        player.setTranslateX(player.getTranslateX() + 1);
+        for(int i = 1; i <= Math.abs(amount); i++){
+            for(Node platform : platforms){
+                    if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
+                        //collision detected
+                        if (movingRight) {
+                            player.setTranslateX(player.getTranslateX() - 1);
+                        } else {
+                            player.setTranslateX(player.getTranslateX() + 1);
+                        }
+                        return;
                     }
-                    return;
                 }
-            }
-            //Camera movement X
-
-            player.translateXProperty().addListener((observable, oldValue, newValue) -> {
-                int offset = newValue.intValue();
-                if (offset > 300 && offset < GameProperties.WIDTH) {
-                    levelRootCamera.setLayoutX(-(offset - 300));
-                }
-
-            });
-
             //Player looses one life if it touches a spike and respawns at the spawn
             for(Node spike : spikes) {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
@@ -191,15 +178,6 @@ public class LevelManager {
                         return;
                     }
             }
-
-            player.translateYProperty().addListener((observable, oldValue, newValue) -> {
-                int offset = newValue.intValue();
-                if (offset > 300 && offset < GameProperties.HEIGHT) {
-                    levelRootCamera.setLayoutY(-(offset - 300));
-                }
-
-            });
-
             //Player looses one life if it touches a spike and respawns at the spawn
             for(Node spike : spikes) {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
@@ -475,11 +453,10 @@ public class LevelManager {
         Image image = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
         currentHearts = new ImageView(image);
 
-        currentHearts.setLayoutX(0);
-        currentHearts.setLayoutY(450);
+        currentHearts.setLayoutX(GameProperties.WIDTH - 120);
+        currentHearts.setLayoutY(0);
 
         levelRoot.getChildren().add(currentHearts);
-        levelRootCamera = levelRoot;
 
 
         loadedLevel = new Scene(levelRoot);
