@@ -23,8 +23,6 @@ import javafx.util.Duration;
 
 import java.util.*;
 
-import static java.lang.Integer.parseInt;
-
 /**
  * LevelManager class <br>
  * handles level loading and level logic <br>
@@ -44,8 +42,8 @@ public class LevelManager {
     private Timeline updateTimeline;
     private LevelFinish levelFinish = null;
     private LevelFail failLevel = null;
-    private Pane dialogBox = new Pane();
-    private Pane dialogBoxDead = new Pane();
+    private final Pane dialogBox = new Pane();
+    private final Pane dialogBoxDead = new Pane();
     private Pane levelRootCamera;
     private int loadedLevelID;
     private long frameCounter;
@@ -61,8 +59,6 @@ public class LevelManager {
     private int xFail;
     private int yFail;
 
-    HashMap<String, String> tileY = new HashMap<>();
-    HashMap<String, String> tileX = new HashMap<>();
 
     public LevelManager(){
         pressedKeys = new HashMap<>();
@@ -71,7 +67,6 @@ public class LevelManager {
         collectibles = new ArrayList<>();
         playerVelocity = new Point2D(0, 0);
         playerCanJump = true;
-        loadXYHashmaps();
     }
 
     /*
@@ -248,115 +243,7 @@ public class LevelManager {
         debugInfo.setVisible(!debugInfo.isVisible());
     }
 
-    /**
-     * Checks tile neighbours & picks the right ID accordingly
-     */
-    private String getTileID(String[] levelData, final int ROW, final int COL) {
-        StringBuilder neighbours = new StringBuilder();
 
-        char[] tiles;
-        if (ROW > 0) {
-            tiles = levelData[ROW - 1].toCharArray();
-            neighbours.append(tiles[COL] == '-' ? '-' : ' ');
-        } else neighbours.append("x");
-
-        tiles = levelData[ROW].toCharArray();
-        if (COL > 0) {
-            neighbours.append(tiles[COL - 1] == '-' ? '-' : ' ');
-        } else neighbours.append("x");
-
-        if (COL + 1 < tiles.length) {
-            neighbours.append(tiles[COL + 1] == '-' ? '-' : ' ');
-        } else neighbours.append("x");
-
-        if (ROW + 1 < levelData.length) {
-            tiles = levelData[ROW+1].toCharArray();
-            neighbours.append(tiles[COL] == '-' ? '-' : ' ');
-        } else neighbours.append("x");
-
-        return neighbours.toString();
-
-    }
-    /*
-    * Loads X & Y hashmaps (in the future)
-    */
-    private void loadXYHashmaps() {
-
-        tileX.put("x   ", "128");
-        tileX.put("    ", "128");
-        tileX.put("-   ", "0");
-        tileX.put(" -  ", "320");
-        tileX.put("  - ", "288");
-        tileX.put("   -", "0");
-        tileX.put(" -- ", "32");
-        tileX.put("-  -", "0");
-        tileX.put("--  ", "352");
-        tileX.put("- - ", "128");
-        tileX.put(" - -", "480");
-        tileX.put("  --", "320");
-        tileX.put(" ---", "256");
-
-        tileX.put("- --", "128");
-        tileX.put("-- -", "480");
-        tileX.put("--- ", "320");
-        tileX.put("----", "320");
-
-        //bottom tiles
-        tileX.put(" --x", "32");
-        tileX.put("---x", "192");
-        tileX.put(" - x", "64");
-        tileX.put("  -x", "0");
-        tileX.put(" -xx", "32");
-        tileX.put(" x-x", "32");
-
-
-        tileY.put("    ", "96");
-        tileY.put("x   ", "96");
-        tileY.put("-   ", "320");
-        tileY.put(" -  ", "0");
-        tileY.put("  - ", "0");
-        tileY.put("   -", "256");
-        tileY.put(" -- ", "384");
-        tileY.put("--  ", "352");
-        tileY.put("- - ", "480");
-        tileY.put(" - -", "96");
-        tileY.put("  --", "352");
-        tileY.put("-  -", "288");
-        tileY.put(" ---", "96");
-
-
-        tileY.put("- --", "352");
-        tileY.put("-- -", "160");
-        tileY.put("--- ", "480");
-        tileY.put("----", "416");
-
-        //bottom tiles
-        tileY.put(" --x", "0");
-        tileY.put("---x", "288");
-        tileY.put(" - x", "0");
-        tileY.put("  -x", "0");
-        tileY.put(" x-x", "0");
-        tileY.put(" -xx", "0");
-
-
-    }
-
-
-
-    /**
-     * Translates tile ID into X and Y coordinates respectively
-     */
-    private int getTileX(String tileID) {
-        if (tileX.containsKey(tileID)) {
-            return parseInt(tileX.get(tileID));
-        } else return 0;
-    }
-
-    private int getTileY(String tileID) {
-        if (tileY.containsKey(tileID)) {
-            return parseInt(tileY.get(tileID));
-        } else return 0;
-    }
 
     /**
      * Loads a Level from level data
@@ -401,7 +288,7 @@ public class LevelManager {
                                 i * GameProperties.TILE_UNIT,
                                 GameProperties.TILE_UNIT,
                                 GameProperties.TILE_UNIT,
-                                getTileX(getTileID(levelData, i, j)), getTileY(getTileID(levelData, i, j)));
+                                TileManager.getTile(levelData, i, j));
                         platforms.add(platform);
                         levelRoot.getChildren().add(platform);
                         break;
@@ -420,8 +307,7 @@ public class LevelManager {
                                 j * GameProperties.TILE_UNIT,
                                 i * GameProperties.TILE_UNIT,
                                 GameProperties.TILE_UNIT,
-                                GameProperties.TILE_UNIT,
-                                getTileX(getTileID(levelData, i, j)), getTileY(getTileID(levelData, i, j)));
+                                GameProperties.TILE_UNIT);
                         spikes.add(spike);
                         levelRoot.getChildren().add(spike);
                         break;
