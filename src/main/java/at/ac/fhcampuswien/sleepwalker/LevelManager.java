@@ -46,6 +46,7 @@ public class LevelManager {
     private LevelFail failLevel = null;
     private Pane dialogBox = new Pane();
     private Pane dialogBoxDead = new Pane();
+    private Pane levelRootCamera;
     private int loadedLevelID;
     private long frameCounter;
     private Node player;
@@ -462,6 +463,7 @@ public class LevelManager {
 
 
         loadedLevel = new Scene(levelRoot);
+        levelRootCamera = levelRoot;
         return loadedLevel;
 
     }
@@ -474,6 +476,24 @@ public class LevelManager {
 
         playerVelocity = new Point2D(0,0);
         pressedKeys.clear();
+
+
+
+        //Camera movement X Y
+        player.translateXProperty().addListener((observable, oldValue, newValue) -> {
+            int offset = newValue.intValue();
+            if (offset > 300 && offset < GameProperties.WIDTH) {
+                levelRootCamera.setLayoutX(-(offset - 300));
+            }
+
+        });
+        player.translateYProperty().addListener((observable, oldValue, newValue) -> {
+            int offset = newValue.intValue();
+            if (offset > 300 && offset < GameProperties.HEIGHT) {
+                levelRootCamera.setLayoutY(-(offset - 300));
+            }
+
+        });
 
         //position and style frame counter
         debugInfo.setLayoutX(0);
