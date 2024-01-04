@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
  * Platform Class
  */
 public class Platform extends Rectangle {
-    public Platform(double x, double y, double width, double height, ImagePattern tile){
+    public Platform(double x, double y, double width, double height, ImagePattern tile) {
         super();
         setTranslateX(x);
         setTranslateY(y);

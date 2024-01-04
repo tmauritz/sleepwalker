@@ -13,7 +13,7 @@ public class LevelFinish extends Rectangle {
     private LevelManager levelManager;
     private int currentLevelID;
 
-    public LevelFinish(double x, double y, LevelManager currentLevel){
+    public LevelFinish(double x, double y, LevelManager currentLevel) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
         this.setX(x);
@@ -27,17 +27,17 @@ public class LevelFinish extends Rectangle {
     /**
      * Finishes the level.
      */
-    public void finishLevel(){
+    public void finishLevel() {
 
         String win = "You win!";
         Button backToMenu = new Button("Back to Main Menu");
         backToMenu.setOnAction(event -> GameManager.getInstance().showMainMenu());
 
-        if(LevelData.Levels.size() > currentLevelID){
+        if (LevelData.Levels.size() > currentLevelID) {
             Button nextLevel = new Button("Next Level");
             nextLevel.setOnAction(event -> GameManager.getInstance().playLevel(++currentLevelID));
             levelManager.showDialog(win, nextLevel, backToMenu);
-        } else{
+        } else {
             levelManager.showDialog(win, backToMenu);
         }
 

@@ -92,6 +92,7 @@ public class GameManager {
         Media mainTheme = MediaManager.loadMedia("audio/maintheme.mp3");
         GameManager.playBackgroundMusic(mainTheme);
     }
+
     public void showHowToPlay() {
         Scene tutorialScene;
         FXMLLoader fxmlLoader = new FXMLLoader(Sleepwalker.class.getResource("ui/HowToPlay.fxml"));
@@ -139,7 +140,7 @@ public class GameManager {
             loadLevel4.setLayoutY(200);
             loadLevel4.setOnAction(e -> getInstance().playLevel(4));
 
-            Pane x = new AnchorPane(backToMainMenu, loadLevel1, loadLevel2,loadLevel3,loadLevel4);
+            Pane x = new AnchorPane(backToMainMenu, loadLevel1, loadLevel2, loadLevel3, loadLevel4);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
             sceneLibrary.put("worldMap", worldMap);
         }
@@ -149,6 +150,7 @@ public class GameManager {
 
     /**
      * Loads and starts the level.
+     *
      * @param levelId the level to be played
      */
     public void playLevel(int levelId) {

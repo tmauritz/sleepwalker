@@ -9,6 +9,7 @@ public class Collectible extends Rectangle {
 
     /**
      * Collectible Class
+     *
      * @param x
      * @param y
      * @param width

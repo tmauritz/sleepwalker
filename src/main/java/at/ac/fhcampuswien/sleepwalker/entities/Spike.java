@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
  */
 
 public class Spike extends ImageView {
-    public Spike(double x, double y, double width, double height){
+    public Spike(double x, double y, double width, double height) {
         Image spikeImage = MediaManager.loadImage("level/Spike.png");
         setImage(spikeImage);
         setFitWidth(width);

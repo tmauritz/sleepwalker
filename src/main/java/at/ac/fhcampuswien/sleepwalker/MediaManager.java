@@ -13,15 +13,16 @@ public class MediaManager {
 
     /**
      * Loads a Media object from Resources
+     *
      * @param mediaPath the path of the media resource
      * @return the media object or null if there is no Media at the specified path
      */
-    public static Media loadMedia(String mediaPath){
+    public static Media loadMedia(String mediaPath) {
         Media loadedMedia = medias.getOrDefault(mediaPath, null);
-        if(loadedMedia == null){
-            try{
+        if (loadedMedia == null) {
+            try {
                 loadedMedia = new Media(Objects.requireNonNull(Sleepwalker.class.getResource(mediaPath)).toString());
-            } catch(NullPointerException e){
+            } catch (NullPointerException e) {
                 System.err.println("Media not found: " + mediaPath);
             }
         }
@@ -31,20 +32,21 @@ public class MediaManager {
 
     /**
      * Loads an image
+     *
      * @param imagePath the path of the image resource
      * @return the loaded image or null if there is no image at the specified path
      */
-    public static Image loadImage(String imagePath){
+    public static Image loadImage(String imagePath) {
         Image loadedImage = images.getOrDefault(imagePath, null);
-        if(loadedImage == null){
-            try{
+        if (loadedImage == null) {
+            try {
                 loadedImage = new Image(Objects.requireNonNull(Sleepwalker.class.getResource(imagePath)).toString());
-            } catch(NullPointerException e){
+            } catch (NullPointerException e) {
                 System.err.println("Image not found: " + imagePath);
                 //TODO: figure out what to do
             }
         }
-        if(loadedImage != null) images.put(imagePath, loadedImage);
+        if (loadedImage != null) images.put(imagePath, loadedImage);
         return loadedImage;
     }
 

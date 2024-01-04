@@ -21,7 +21,7 @@ public class Player extends Rectangle {
         return MediaManager.loadImage("animation/player/IdleNoSlingshot.gif");
     }
 
-    public Player(int height, int width){
+    public Player(int height, int width) {
         super();
         setWidth(width);
         setHeight(height);

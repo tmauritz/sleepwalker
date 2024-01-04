@@ -6,12 +6,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Sleepwalker extends Application {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException{
+    public void start(Stage primaryStage) throws IOException {
         String windowTitle = GameProperties.TITLE + " v" + GameProperties.GAME_VERSION;
         primaryStage.setTitle(windowTitle);
         primaryStage.setMaxWidth(GameProperties.WIDTH);

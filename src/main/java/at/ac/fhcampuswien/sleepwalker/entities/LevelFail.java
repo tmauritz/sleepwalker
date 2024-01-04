@@ -8,11 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class LevelFail extends Rectangle{
+public class LevelFail extends Rectangle {
     private LevelManager levelManager;
     private int currentLevelID;
 
-    public LevelFail(double x, double y, LevelManager currentLevel){
+    public LevelFail(double x, double y, LevelManager currentLevel) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
         this.setX(x);
@@ -26,7 +26,7 @@ public class LevelFail extends Rectangle{
     /**
      * Is ending the level.
      */
-    public void failLevel(){
+    public void failLevel() {
 
         String win = "Game Over!";
         Button backToMenu = new Button("Back to Main Menu");
