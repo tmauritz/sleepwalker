@@ -54,12 +54,15 @@ public class LevelManager {
     private boolean playerCanJump;
     private Scene loadedLevel;
     private ImageView currentHearts;
+    private Pane levelRootCamera;
+
     // Instances for respawning : spawnPositionX and spawnPositionY
     private int spawnPositionX;
     private int spawnPositionY;
     private int health = 6;
     private int xFail;
     private int yFail;
+
     /*
     Set the health of the player
      */
@@ -73,15 +76,16 @@ public class LevelManager {
     public void setHealth(int health) {
         this.health = health;
     }
-    private void jumpPlayer(){
-        if(playerCanJump){
+
+    private void jumpPlayer() {
+        if (playerCanJump) {
             playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
             playerCanJump = false;
         }
     }
 
 
-    public LevelManager(){
+    public LevelManager() {
         pressedKeys = new HashMap<>();
         platforms = new ArrayList<>();
         spikes = new ArrayList<>();
@@ -96,7 +100,7 @@ public class LevelManager {
      * @param key KeyCode
      * @return true if key is pressed, false if not
      */
-    private boolean isPressed(KeyCode key){
+    private boolean isPressed(KeyCode key) {
         return pressedKeys.getOrDefault(key, false);
     }
 
@@ -108,26 +112,36 @@ public class LevelManager {
      *
      * @param amount how far the player is moved
      */
-    private void movePlayerX(int amount){
+    private void movePlayerX(int amount) {
         boolean movingRight = amount > 0;
 
-        for(int i = 1; i <= Math.abs(amount); i++){
-            for(Node platform : platforms){
-                    if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
-                        //collision detected
-                        if (movingRight) {
-                            player.setTranslateX(player.getTranslateX() - 1);
-                        } else {
-                            player.setTranslateX(player.getTranslateX() + 1);
-                        }
-                        return;
+        for (int i = 1; i <= Math.abs(amount); i++) {
+            for (Node platform : platforms) {
+                if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
+                    //collision detected
+                    if (movingRight) {
+                        player.setTranslateX(player.getTranslateX() - 1);
+                    } else {
+                        player.setTranslateX(player.getTranslateX() + 1);
                     }
+                    return;
                 }
+            }
+            //Camera movement X
+
+            player.translateXProperty().addListener((observable, oldValue, newValue) -> {
+                int offset = newValue.intValue();
+                if (offset > 300 && offset < GameProperties.WIDTH) {
+                    levelRootCamera.setLayoutX(-(offset - 300));
+                }
+
+            });
+
             //Player looses one life if it touches a spike and respawns at the spawn
-            for(Node spike : spikes) {
+            for (Node spike : spikes) {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
                     setHealth(getHealth() - 1);
-                    if (getHealth()==0) {
+                    if (getHealth() == 0) {
                         failLevel.failLevel();
                     } else {
                         player.setTranslateX(spawnPositionX);
@@ -135,11 +149,11 @@ public class LevelManager {
                     }
                 }
             }
-            if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())){
-                if(levelFinished()){
-                    if(movingRight){
+            if (levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())) {
+                if (levelFinished()) {
+                    if (movingRight) {
                         player.setTranslateX(player.getTranslateX() - 1);
-                    }else {
+                    } else {
                         player.setTranslateX(player.getTranslateX() + 1);
                     }
                     levelFinish.finishLevel();
@@ -157,28 +171,37 @@ public class LevelManager {
      *
      * @param amount how far the player is moved
      */
-    private void movePlayerY(int amount){
+    private void movePlayerY(int amount) {
         boolean movingDown = amount > 0;
 
-        for(int i = 1; i <= Math.abs(amount); i++){
-            for(Node platform : platforms){
-                    if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
-                        //collision detected
-                        if (movingDown) {
-                            player.setTranslateY(player.getTranslateY() - 1);
-                            playerCanJump = true;
-                        } else {
-                            player.setTranslateY(player.getTranslateY() + 1);
-                            playerVelocity = playerVelocity.add(0, -playerVelocity.getY()); //reset jump velocity
-                        }
-                        return;
+        for (int i = 1; i <= Math.abs(amount); i++) {
+            for (Node platform : platforms) {
+                if (player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
+                    //collision detected
+                    if (movingDown) {
+                        player.setTranslateY(player.getTranslateY() - 1);
+                        playerCanJump = true;
+                    } else {
+                        player.setTranslateY(player.getTranslateY() + 1);
+                        playerVelocity = playerVelocity.add(0, -playerVelocity.getY()); //reset jump velocity
                     }
+                    return;
+                }
             }
+
+            player.translateYProperty().addListener((observable, oldValue, newValue) -> {
+                int offset = newValue.intValue();
+                if (offset > 300 && offset < GameProperties.HEIGHT) {
+                    levelRootCamera.setLayoutY(-(offset - 300));
+                }
+
+            });
+
             //Player looses one life if it touches a spike and respawns at the spawn
-            for(Node spike : spikes) {
+            for (Node spike : spikes) {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
                     setHealth(getHealth() - 1);
-                    if (getHealth()==0) {
+                    if (getHealth() == 0) {
                         failLevel.failLevel();
                     } else {
                         player.setTranslateX(spawnPositionX);
@@ -186,11 +209,11 @@ public class LevelManager {
                     }
                 }
             }
-            if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())){
-                if(levelFinished()){
-                    if(movingDown){
+            if (levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())) {
+                if (levelFinished()) {
+                    if (movingDown) {
                         player.setTranslateX(player.getTranslateX() - 1);
-                    }else {
+                    } else {
                         player.setTranslateX(player.getTranslateX() + 1);
                     }
                     levelFinish.finishLevel();
@@ -200,6 +223,7 @@ public class LevelManager {
         }
 
     }
+
     /*
      *  Updates the HealthBar to the actual lives
      *  --> half-heart = 1 life
@@ -214,22 +238,22 @@ public class LevelManager {
         if (health == 0) {
             loadGameOver();
         }
-        if (health==1) {
+        if (health == 1) {
             currentHearts.setImage(image1);
         }
-        if (health==2) {
+        if (health == 2) {
             currentHearts.setImage(image2);
         }
-        if (health==3) {
+        if (health == 3) {
             currentHearts.setImage(image3);
         }
-        if (health==4) {
+        if (health == 4) {
             currentHearts.setImage(image4);
         }
-        if (health==5) {
+        if (health == 5) {
             currentHearts.setImage(image5);
         }
-        if (health==6) {
+        if (health == 6) {
             currentHearts.setImage(image6);
         }
 
@@ -239,7 +263,7 @@ public class LevelManager {
     /**
      * Toggles debug info visibility.
      */
-    private void toggleDebug(){
+    private void toggleDebug() {
         debugInfo.setVisible(!debugInfo.isVisible());
     }
 
@@ -265,7 +289,7 @@ public class LevelManager {
         } else neighbours.append("x");
 
         if (ROW + 1 < levelData.length) {
-            tiles = levelData[ROW+1].toCharArray();
+            tiles = levelData[ROW + 1].toCharArray();
             neighbours.append(tiles[COL] == '-' ? '-' : ' ');
         } else neighbours.append("x");
 
@@ -356,7 +380,7 @@ public class LevelManager {
      * @param levelId ID of the level to be loaded
      * @return a Scene containing the loaded level or null if the level could not be loaded
      */
-    public Scene loadLevel(int levelId){
+    public Scene loadLevel(int levelId) {
         loadedLevelID = levelId;
         setHealth(6);
         //TODO: refine level loading
@@ -381,10 +405,10 @@ public class LevelManager {
         levelRoot.setMinWidth(GameProperties.WIDTH);
         levelRoot.setMinHeight(GameProperties.HEIGHT);
         //process each line and make platforms
-        for(int i = 0; i < levelData.length; i++){
+        for (int i = 0; i < levelData.length; i++) {
             char[] tiles = levelData[i].toCharArray();
-            for(int j = 0; j < tiles.length; j++){
-                switch(tiles[j]){
+            for (int j = 0; j < tiles.length; j++) {
+                switch (tiles[j]) {
                     case '-': //platform
                         Platform platform = new Platform(
                                 j * GameProperties.TILE_UNIT,
@@ -415,7 +439,7 @@ public class LevelManager {
                         spikes.add(spike);
                         levelRoot.getChildren().add(spike);
                         break;
-                    case 'c' : //set coin placement
+                    case 'c': //set coin placement
                         Collectible coin = new Collectible(
                                 j * GameProperties.TILE_UNIT,
                                 i * GameProperties.TILE_UNIT,
@@ -450,9 +474,10 @@ public class LevelManager {
         currentHearts.setLayoutY(450);
 
         levelRoot.getChildren().add(currentHearts);
+        levelRootCamera = levelRoot;
 
 
-        loadedLevel = new Scene(levelRoot);
+        loadedLevel = new Scene(levelRootCamera);
         return loadedLevel;
 
     }
@@ -460,10 +485,10 @@ public class LevelManager {
     /**
      * starts the Level update cycle
      */
-    public void startLevel() throws LevelNotLoadedException{
-        if(loadedLevel == null) throw new LevelNotLoadedException("No Level loaded.");
+    public void startLevel() throws LevelNotLoadedException {
+        if (loadedLevel == null) throw new LevelNotLoadedException("No Level loaded.");
 
-        playerVelocity = new Point2D(0,0);
+        playerVelocity = new Point2D(0, 0);
         pressedKeys.clear();
 
         //position and style frame counter
@@ -480,23 +505,24 @@ public class LevelManager {
         //add listeners for key presses
         loadedLevel.setOnKeyPressed(keypress -> {
             pressedKeys.put(keypress.getCode(), true);
-            if(keypress.getCode().equals(GameProperties.DEBUGVIEW)){
+            if (keypress.getCode().equals(GameProperties.DEBUGVIEW)) {
                 toggleDebug();
             }
         });
         loadedLevel.setOnKeyReleased(keypress -> pressedKeys.put(keypress.getCode(), false));
 
-        Duration FPS = Duration.millis((double) 1000 /GameProperties.FPS); //FPS
+        Duration FPS = Duration.millis((double) 1000 / GameProperties.FPS); //FPS
         KeyFrame updateFrame = new KeyFrame(FPS, event -> {
             update();
         });
 
-        if(updateTimeline != null ) updateTimeline.stop(); //stop timeline if previous level was loaded
+        if (updateTimeline != null) updateTimeline.stop(); //stop timeline if previous level was loaded
         updateTimeline = new Timeline(updateFrame);
         updateTimeline.setCycleCount(Animation.INDEFINITE);
         updateTimeline.play();
 
     }
+
     /*
     Is showing GameOver Screen
      */
@@ -527,18 +553,18 @@ public class LevelManager {
     /**
      * updates the level every frame
      */
-    private void update(){
+    private void update() {
         debugInfo.setText("FRAME: " + frameCounter++ + System.lineSeparator() + "Player: (" + player.getTranslateX() + " | " + player.getTranslateY() + ")" + System.lineSeparator() + "VELOCITY: " + playerVelocity.toString());
 
         GUI.setText("Collectibles left: " + collectibles.size());
 
         //TODO: fix collision bugs
         //process player input
-        if(isPressed(GameProperties.LEFT)) movePlayerX(-GameProperties.PLAYER_SPEED);
-        if(isPressed(GameProperties.RIGHT)) movePlayerX(GameProperties.PLAYER_SPEED);
-        if(isPressed(GameProperties.JUMP)) jumpPlayer();
+        if (isPressed(GameProperties.LEFT)) movePlayerX(-GameProperties.PLAYER_SPEED);
+        if (isPressed(GameProperties.RIGHT)) movePlayerX(GameProperties.PLAYER_SPEED);
+        if (isPressed(GameProperties.JUMP)) jumpPlayer();
         //assess the gravity of the situation
-        if(playerVelocity.getY() < GameProperties.TERMINAL_VELOCITY){
+        if (playerVelocity.getY() < GameProperties.TERMINAL_VELOCITY) {
             playerVelocity = playerVelocity.add(0, GameProperties.GRAVITY);
         }
         movePlayerY((int) playerVelocity.getY());
@@ -553,8 +579,8 @@ public class LevelManager {
         }
 
         if (playerVelocity.getY() == 0) {
-            if(levelFinished()) {
-                if(levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())) {
+            if (levelFinished()) {
+                if (levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())) {
                     levelFinish.finishLevel();
                 }
             }
@@ -610,16 +636,17 @@ public class LevelManager {
         return collectibles.isEmpty();
     }
 
-    public int getLoadedLevelID(){
+    public int getLoadedLevelID() {
         return loadedLevelID;
     }
 
     /**
      * Displays a Dialog pane.
+     *
      * @param dialogText Text to be displayed in the dialog
-     * @param options Buttons for dialog options must have EventHandlers
+     * @param options    Buttons for dialog options must have EventHandlers
      */
-    public void showDialog(String dialogText, Button... options){
+    public void showDialog(String dialogText, Button... options) {
 
         //TODO: fix formatting pls i can't deal with this
         dialogBox.getChildren().clear();
@@ -634,24 +661,24 @@ public class LevelManager {
         int buttonAmount = 1;
         int spacing = 10;
 
-        for(Button option:options){
+        for (Button option : options) {
 
             option.setPrefWidth(200);
             option.setMinHeight(buttonHeight);
             option.setAlignment(Pos.CENTER);
-            option.setLayoutX((dialogBox.getWidth() /2) - (option.getPrefWidth()/2));
-            option.setLayoutY(20 + (buttonHeight+spacing)* buttonAmount++);
+            option.setLayoutX((dialogBox.getWidth() / 2) - (option.getPrefWidth() / 2));
+            option.setLayoutY(20 + (buttonHeight + spacing) * buttonAmount++);
 
             dialogBox.getChildren().add(option);
         }
 
         message.setFont(Font.font(20));
         message.setAlignment(Pos.CENTER);
-        message.setLayoutX((dialogBox.getWidth()/2) - (message.getWidth()/2));
+        message.setLayoutX((dialogBox.getWidth() / 2) - (message.getWidth() / 2));
         message.setPrefWidth(200);
 
-        dialogBox.setLayoutX((double) (GameProperties.WIDTH /2) - (dialogBox.getWidth()/2));
-        dialogBox.setLayoutY((double) (GameProperties.HEIGHT /2) - (dialogBox.getHeight()/2));
+        dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - (dialogBox.getWidth() / 2));
+        dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - (dialogBox.getHeight() / 2));
         dialogBox.toFront();
         dialogBox.setVisible(true);
 
@@ -660,16 +687,18 @@ public class LevelManager {
     /**
      * Hides the dialog pane.
      */
-    public void hideDialog(){
+    public void hideDialog() {
         dialogBox.setVisible(false);
         dialogBox.getChildren().clear();
     }
+
     /**
      * Displays a Dialog pane.
+     *
      * @param dialogText Text to be displayed in the dialog
-     * @param options Buttons for dialog options must have EventHandlers
+     * @param options    Buttons for dialog options must have EventHandlers
      */
-    public void showDialogDead(String dialogText, Button... options){
+    public void showDialogDead(String dialogText, Button... options) {
 
         //TODO: fix formatting pls i can't deal with this
         dialogBox.getChildren().clear();
@@ -685,32 +714,33 @@ public class LevelManager {
         int buttonAmount = 1;
         int spacing = 10;
 
-        for(Button option:options){
+        for (Button option : options) {
 
             option.setPrefWidth(200);
             option.setMinHeight(buttonHeight);
             option.setAlignment(Pos.CENTER);
-            option.setLayoutX((dialogBox.getWidth() /2) - (option.getPrefWidth()/2));
-            option.setLayoutY(20 + (buttonHeight+spacing)* buttonAmount++);
+            option.setLayoutX((dialogBox.getWidth() / 2) - (option.getPrefWidth() / 2));
+            option.setLayoutY(20 + (buttonHeight + spacing) * buttonAmount++);
 
             dialogBox.getChildren().add(option);
         }
 
         message.setFont(Font.font(20));
         message.setAlignment(Pos.CENTER);
-        message.setLayoutX((dialogBox.getWidth()/2) - (message.getWidth()/2));
+        message.setLayoutX((dialogBox.getWidth() / 2) - (message.getWidth() / 2));
         message.setPrefWidth(200);
 
-        dialogBox.setLayoutX((double) (GameProperties.WIDTH /2) - (dialogBox.getWidth()/2));
-        dialogBox.setLayoutY((double) (GameProperties.HEIGHT /2) - (dialogBox.getHeight()/2));
+        dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - (dialogBox.getWidth() / 2));
+        dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - (dialogBox.getHeight() / 2));
         dialogBox.toFront();
         dialogBox.setVisible(true);
 
     }
+
     /*
     hide Dialog for gameOver
      */
-    public void hideDialogDead(){
+    public void hideDialogDead() {
         dialogBoxDead.setVisible(false);
         dialogBoxDead.getChildren().clear();
     }
