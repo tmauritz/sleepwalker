@@ -560,7 +560,7 @@ public class LevelManager {
             }
         }
 
-        // Gets the actual position of the player and defines the half screen hight
+        /*Gets the actual position of the player and defines the half screen hight
         double playerY = player.getTranslateY();
         double halfScreenHeight = GameProperties.HEIGHT / 2.0;
 
@@ -595,7 +595,7 @@ public class LevelManager {
             }
             player.setTranslateY(halfScreenHeight);
         }
-
+*/
         enforceFrameBounds();
         updateHealthPicture();
 
