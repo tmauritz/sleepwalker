@@ -17,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
@@ -357,7 +356,7 @@ public class LevelManager {
         levelRootCamera = levelRoot;
 
         Pane mainPane = new Pane();
-        mainPane.getChildren().addAll(bgRoot, GUIRoot, levelRoot);
+        mainPane.getChildren().addAll(bgRoot, levelRoot, GUIRoot);
 
         loadedLevel = new Scene(mainPane);
         return loadedLevel;
