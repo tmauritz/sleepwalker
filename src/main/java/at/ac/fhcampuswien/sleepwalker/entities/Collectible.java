@@ -1,6 +1,8 @@
 package at.ac.fhcampuswien.sleepwalker.entities;
 
+import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Collectible extends Rectangle {
@@ -18,7 +20,7 @@ public class Collectible extends Rectangle {
         setTranslateY(y);
         setWidth(width);
         setHeight(height);
-        setFill(Color.GOLD);
+        this.setFill(new ImagePattern(MediaManager.loadImage("level/Coin.gif")));
         //TODO:Image for the Coin
     }
 }

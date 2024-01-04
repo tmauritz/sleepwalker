@@ -47,7 +47,7 @@ public class LevelManager {
     private Pane levelRootCamera;
     private int loadedLevelID;
     private long frameCounter;
-    private Node player;
+    private Player player;
     private Point2D playerVelocity;
     private boolean playerCanJump;
     private Scene loadedLevel;
@@ -297,7 +297,7 @@ public class LevelManager {
                         break;
                     case 's': //player spawn
                         //TODO: outsource player into its own class?
-                        player = new Rectangle(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, Color.BLUE);
+                        player = new Player(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10);
                         //set spawn for player
                         player.setTranslateX(GameProperties.TILE_UNIT * j);
                         player.setTranslateY(GameProperties.TILE_UNIT * i);
