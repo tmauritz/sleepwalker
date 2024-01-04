@@ -137,7 +137,7 @@ public class GameManager {
             Button loadLevel4 = new Button("Level 4");
             loadLevel4.setLayoutX(100);
             loadLevel4.setLayoutY(200);
-            loadLevel4.setOnAction(e -> getInstance().loadLevel(4));
+            loadLevel4.setOnAction(e -> getInstance().playLevel(4));
 
             Pane x = new AnchorPane(backToMainMenu, loadLevel1, loadLevel2,loadLevel3,loadLevel4);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
