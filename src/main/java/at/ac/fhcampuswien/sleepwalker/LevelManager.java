@@ -132,6 +132,8 @@ public class LevelManager {
                     } else {
                         player.setTranslateX(spawnPositionX);
                         player.setTranslateY(spawnPositionY);
+                        levelRootCamera.setLayoutX(spawnPositionX);
+                        levelRootCamera.setLayoutY(spawnPositionY);
                     }
                 }
             }
@@ -183,6 +185,8 @@ public class LevelManager {
                     } else {
                         player.setTranslateX(spawnPositionX);
                         player.setTranslateY(spawnPositionY);
+                        levelRootCamera.setLayoutX(spawnPositionX);
+                        levelRootCamera.setLayoutY(spawnPositionY);
                     }
                 }
             }
@@ -382,13 +386,22 @@ public class LevelManager {
             int offset = newValue.intValue();
             if (offset > 300 && offset < GameProperties.WIDTH) {
                 levelRootCamera.setLayoutX(-(offset - 300));
+            }else if (offset <= 300) {
+                levelRootCamera.setLayoutX(0);
+            } else {
+                levelRootCamera.setLayoutX(-(GameProperties.WIDTH - 600));
             }
 
         });
         player.translateYProperty().addListener((observable, oldValue, newValue) -> {
             int offset = newValue.intValue();
+            int maxYOffset = GameProperties.HEIGHT - 600;
             if (offset > 300 && offset < GameProperties.HEIGHT) {
                 levelRootCamera.setLayoutY(-(offset - 300));
+            }else if (offset <= 300) {
+                levelRootCamera.setLayoutY(0);
+            } else {
+                levelRootCamera.setLayoutY(-maxYOffset);
             }
 
         });
