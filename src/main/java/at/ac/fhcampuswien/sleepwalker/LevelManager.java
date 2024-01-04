@@ -453,8 +453,8 @@ public class LevelManager {
         Image image = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
         currentHearts = new ImageView(image);
 
-        currentHearts.setLayoutX(0);
-        currentHearts.setLayoutY(450);
+        currentHearts.setLayoutX(GameProperties.WIDTH - 32);
+        currentHearts.setLayoutY(0);
 
         levelRoot.getChildren().add(currentHearts);
 
