@@ -263,15 +263,18 @@ public class LevelManager {
         Pane levelRoot = new Pane();
         Pane bgRoot = new Pane ();
         Pane GUIRoot = new Pane ();
-        levelRoot.getChildren().add(debugInfo);
+
+        GUIRoot.getChildren().add(debugInfo);
+
         debugInfo.setVisible(false);
-        levelRoot.getChildren().add(GUI);
-        levelRoot.getChildren().add(dialogBox);
+        GUIRoot.getChildren().add(GUI);
+        GUIRoot.getChildren().add(dialogBox);
         dialogBox.setVisible(false);
         BackgroundImage bg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/background_layer_1.png"))),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        levelRoot.setBackground(new Background(bg));
+        bgRoot.setBackground(new Background(bg));
+        levelRoot.setBackground(Background.EMPTY);
 
         String[] levelData = LevelData.Levels.getOrDefault(levelId, null);
         if (levelData == null) return null;
@@ -345,11 +348,13 @@ public class LevelManager {
         currentHearts.setLayoutX(GameProperties.WIDTH - 120);
         currentHearts.setLayoutY(0);
 
-        levelRoot.getChildren().add(currentHearts);
-
-
-        loadedLevel = new Scene(levelRoot);
+        GUIRoot.getChildren().add(currentHearts);
         levelRootCamera = levelRoot;
+
+        Pane mainPane = new Pane();
+        mainPane.getChildren().addAll(levelRoot, GUIRoot, bgRoot);
+
+        loadedLevel = new Scene(mainPane);
         return loadedLevel;
 
     }
