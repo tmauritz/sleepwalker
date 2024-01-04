@@ -212,29 +212,32 @@ public class LevelManager {
         Image image4 = MediaManager.loadImage("level/4hearts.png");
         Image image5 = MediaManager.loadImage("level/5hearts.png");
         Image image6 = MediaManager.loadImage("level/6hearts.png");
-        if (health == 0) {
-            loadGameOver();
+        switch (health) {
+            case 0:
+                loadGameOver();
+                break;
+            case 1:
+                currentHearts.setImage(image1);
+                break;
+            case 2:
+                currentHearts.setImage(image2);
+                break;
+            case 3:
+                currentHearts.setImage(image3);
+                break;
+            case 4:
+                currentHearts.setImage(image4);
+                break;
+            case 5:
+                currentHearts.setImage(image5);
+                break;
+            case 6:
+                currentHearts.setImage(image6);
+                break;
+            default:
+                // Behandlung für andere mögliche Werte von health
+                break;
         }
-        if (health == 1) {
-            currentHearts.setImage(image1);
-        }
-        if (health == 2) {
-            currentHearts.setImage(image2);
-        }
-        if (health == 3) {
-            currentHearts.setImage(image3);
-        }
-        if (health == 4) {
-            currentHearts.setImage(image4);
-        }
-        if (health == 5) {
-            currentHearts.setImage(image5);
-        }
-        if (health == 6) {
-            currentHearts.setImage(image6);
-        }
-
-
     }
 
     /**
