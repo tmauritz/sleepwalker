@@ -549,6 +549,7 @@ public class LevelManager {
         dialogBox.getChildren().add(message);
         dialogBox.setMinWidth(400);
         dialogBox.setMinHeight(200);
+        dialogBox.setBackground(new Background(new BackgroundFill(Color.GREY, new CornerRadii(3), Insets.EMPTY)));
 
         int buttonHeight = 20;
         int buttonAmount = 1;
