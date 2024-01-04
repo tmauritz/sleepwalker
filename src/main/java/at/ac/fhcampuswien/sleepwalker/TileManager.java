@@ -45,7 +45,6 @@ public class TileManager {
         tileX.put(" x-x", "32");
 
         tileY.put("    ", "96");
-        tileY.put("x   ", "96");
         tileY.put("-   ", "320");
         tileY.put(" -  ", "0");
         tileY.put("  - ", "0");
@@ -95,16 +94,16 @@ public class TileManager {
         if(ROW > 0){
             tiles = levelData[ROW - 1].toCharArray();
             neighbours.append(tiles[COL] == '-' ? '-' : ' ');
-        } else neighbours.append("x");
+        } else neighbours.append(" ");
 
         tiles = levelData[ROW].toCharArray();
         if(COL > 0){
             neighbours.append(tiles[COL - 1] == '-' ? '-' : ' ');
-        } else neighbours.append("x");
+        } else neighbours.append("-");
 
         if(COL + 1 < tiles.length){
             neighbours.append(tiles[COL + 1] == '-' ? '-' : ' ');
-        } else neighbours.append("x");
+        } else neighbours.append("-");
 
         if(ROW + 1 < levelData.length){
             tiles = levelData[ROW + 1].toCharArray();
