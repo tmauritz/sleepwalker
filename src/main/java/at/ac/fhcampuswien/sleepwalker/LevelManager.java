@@ -176,7 +176,7 @@ public class LevelManager {
                     return;
                 }
             }
-            //Player looses one life if it touches a spike and respawns at the spawn
+            //Player looses one life if it touches a spike and respawns at the spawn. Camera follows to spawn
             for (Node spike : spikes) {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
                     setHealth(getHealth() - 1);
