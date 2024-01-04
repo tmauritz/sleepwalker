@@ -395,6 +395,8 @@ public class LevelManager {
         collectibles.clear();
 
         Pane levelRoot = new Pane();
+        Pane bgRoot = new Pane ();
+        Pane GUIRoot = new Pane ();
         levelRoot.getChildren().add(debugInfo);
         debugInfo.setVisible(false);
         levelRoot.getChildren().add(GUI);
