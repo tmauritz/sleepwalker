@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -60,6 +59,20 @@ public class LevelManager {
     private int health = 6;
     private int xFail;
     private int yFail;
+
+    HashMap<String, String> tileY = new HashMap<>();
+    HashMap<String, String> tileX = new HashMap<>();
+
+    public LevelManager(){
+        pressedKeys = new HashMap<>();
+        platforms = new ArrayList<>();
+        spikes = new ArrayList<>();
+        collectibles = new ArrayList<>();
+        playerVelocity = new Point2D(0, 0);
+        playerCanJump = true;
+        loadXYHashmaps();
+    }
+
     /*
     Set the health of the player
      */
@@ -80,15 +93,6 @@ public class LevelManager {
         }
     }
 
-
-    public LevelManager(){
-        pressedKeys = new HashMap<>();
-        platforms = new ArrayList<>();
-        spikes = new ArrayList<>();
-        collectibles = new ArrayList<>();
-        playerVelocity = new Point2D(0, 0);
-        playerCanJump = true;
-    }
 
     /**
      * finds out if a key is currently presses or not.
@@ -272,13 +276,10 @@ public class LevelManager {
         return neighbours.toString();
 
     }
-
-    /**
-     * Translates tile ID into X and Y coordinates respectively
-     */
-    private int getTileX(String tileID) {
-        HashMap<String, String> tileX = new HashMap<>();
-
+    /*
+    * Loads X & Y hashmaps (in the future)
+    */
+    private void loadXYHashmaps() {
 
         tileX.put("x   ", "128");
         tileX.put("    ", "128");
@@ -307,15 +308,6 @@ public class LevelManager {
         tileX.put(" -xx", "32");
         tileX.put(" x-x", "32");
 
-        if (tileX.containsKey(tileID)) {
-            System.out.println("As is: " + tileX.get(tileID));
-            System.out.println("Parse int: " + parseInt(tileX.get(tileID)));
-            return parseInt(tileX.get(tileID));
-        } else return 0;
-    }
-
-    private int getTileY(String tileID) {
-        HashMap<String, String> tileY = new HashMap<>();
 
         tileY.put("    ", "96");
         tileY.put("x   ", "96");
@@ -345,6 +337,21 @@ public class LevelManager {
         tileY.put(" x-x", "0");
         tileY.put(" -xx", "0");
 
+
+    }
+
+
+
+    /**
+     * Translates tile ID into X and Y coordinates respectively
+     */
+    private int getTileX(String tileID) {
+        if (tileX.containsKey(tileID)) {
+            return parseInt(tileX.get(tileID));
+        } else return 0;
+    }
+
+    private int getTileY(String tileID) {
         if (tileY.containsKey(tileID)) {
             return parseInt(tileY.get(tileID));
         } else return 0;
