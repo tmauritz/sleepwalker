@@ -14,48 +14,48 @@
          <image>
             <Image url="@../img/placeholder_image2.jpg" />
          </image></ImageView>
-      <Button fx:id="BackToMainMenu" layoutX="77.0" layoutY="530.0" mnemonicParsing="false" onAction="#showBackToMainMenu" text="Back To Main Menu" />
-      <Label alignment="TOP_CENTER" layoutX="82.0" layoutY="31.0" text="Controls" textFill="WHITE">
+      <Button fx:id="BackToMainMenu" layoutX="43.0" layoutY="360.0" mnemonicParsing="false" onAction="#showBackToMainMenu" text="Back To Main Menu" />
+      <Label alignment="TOP_CENTER" layoutX="53.0" layoutY="14.0" text="Controls" textFill="WHITE">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Text fill="WHITE" layoutX="7.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; Move Right">
+      <Text fill="WHITE" layoutX="7.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; Move Right">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="7.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; Move Left">
+      <Text fill="WHITE" layoutX="1.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; Move Left">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="7.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; Move Up">
+      <Text fill="WHITE" layoutX="5.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; Move Up">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="5.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; Move Down">
+      <Text fill="WHITE" layoutX="5.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; Move Down">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="155.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="155.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
          <image>
             <Image url="@../img/arrow-key_image.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="155.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="154.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
          <image>
             <Image url="@../img/arrow-key_image.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="154.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="154.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/arrow-key_image.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="154.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="154.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
          <image>
             <Image url="@../img/arrow-key_image.jpg" />
          </image>

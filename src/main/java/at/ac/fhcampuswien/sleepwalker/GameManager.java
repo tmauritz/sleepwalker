@@ -1,8 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,9 +24,11 @@ public class GameManager {
     private static MediaPlayer backgroundMusic;
 
     private static GameManager gameManager;
+    private LevelManager levelManager;
 
     private GameManager(Stage stageRoot) {
         this.stageRoot = stageRoot;
+        levelManager = new LevelManager();
     }
 
     public static GameManager getInstance() {
@@ -89,6 +89,8 @@ public class GameManager {
         }
         stageRoot.setScene(mainMenu);
         stageRoot.show();
+        Media mainTheme = MediaManager.loadMedia("audio/maintheme.mp3");
+        GameManager.playBackgroundMusic(mainTheme);
     }
     public void showHowToPlay() {
         Scene tutorialScene;
@@ -120,17 +122,17 @@ public class GameManager {
             Button loadLevel1 = new Button("Level 1"); // TODO: automatically generate Buttons based on level number
             loadLevel1.setLayoutX(100);
             loadLevel1.setLayoutY(100);
-            loadLevel1.setOnAction(t -> getInstance().loadLevel(1));//lambdas again
+            loadLevel1.setOnAction(t -> getInstance().playLevel(1));//lambdas again
 
             Button loadLevel2 = new Button("Level 2");
             loadLevel2.setLayoutX(200);
             loadLevel2.setLayoutY(100);
-            loadLevel2.setOnAction(e -> getInstance().loadLevel(2));
+            loadLevel2.setOnAction(e -> getInstance().playLevel(2));
 
             Button loadLevel3 = new Button("Level 3");
             loadLevel3.setLayoutX(300);
             loadLevel3.setLayoutY(100);
-            loadLevel3.setOnAction(e -> getInstance().loadLevel(3));
+            loadLevel3.setOnAction(e -> getInstance().playLevel(3));
 
             Button loadLevel4 = new Button("Level 4");
             loadLevel4.setLayoutX(100);
@@ -145,13 +147,16 @@ public class GameManager {
         stageRoot.show();
     }
 
-    public void loadLevel(int levelId) {
-        LevelManager lm = new LevelManager();
+    /**
+     * Loads and starts the level.
+     * @param levelId the level to be played
+     */
+    public void playLevel(int levelId) {
         stopBackgroundMusic();
-        stageRoot.setScene(lm.loadLevel(levelId));
+        stageRoot.setScene(levelManager.loadLevel(levelId));
         stageRoot.show();
         try {
-            lm.startLevel();
+            levelManager.startLevel();
         } catch (LevelNotLoadedException e) {
             //TODO: figure out what to do
             throw new RuntimeException(e);

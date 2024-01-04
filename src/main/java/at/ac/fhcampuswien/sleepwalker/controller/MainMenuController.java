@@ -52,15 +52,11 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Media mainTheme = MediaManager.loadMedia("audio/maintheme.mp3");
         Image background = MediaManager.loadImage("img/placeholder_image1.jpg");
 
-        if (mainTheme != null && background != null) {
-            formatMenu();
+        formatMenu();
+        if (background != null) {
             backgroundView.setImage(background);
-            GameManager.playBackgroundMusic(mainTheme);
-        } else {
-
         }
     }
 
