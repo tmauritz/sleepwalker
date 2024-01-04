@@ -484,42 +484,6 @@ public class LevelManager {
             }
         }
 
-        /*Gets the actual position of the player and defines the half screen hight
-        double playerY = player.getTranslateY();
-        double halfScreenHeight = GameProperties.HEIGHT / 2.0;
-
-        double verticalThresholdUp = GameProperties.HEIGHT * 0.4;
-        double verticalThresholdDown = GameProperties.HEIGHT * 0.2;
-
-        // when the player jumps high enough the camera moves upwards with him
-        if (playerY < halfScreenHeight - verticalThresholdUp) {
-            double distanceToMove = halfScreenHeight - playerY;
-            for (Node platform : platforms) {
-                platform.setTranslateY(platform.getTranslateY() + distanceToMove);
-            }
-            for (Node collectible : collectibles) {
-                collectible.setTranslateY(collectible.getTranslateY() + distanceToMove);
-            }
-            for (Node spike : spikes) {
-                spike.setTranslateY(spike.getTranslateY() + distanceToMove);
-            }
-            player.setTranslateY(halfScreenHeight);
-        }
-        // when the player moves down the camera follows him downwards
-        else if (playerVelocity.getY() > 0 && playerY > halfScreenHeight + verticalThresholdDown) {
-            double distanceToMove = playerVelocity.getY();
-            for (Node platform : platforms) {
-                platform.setTranslateY(platform.getTranslateY() - distanceToMove);
-            }
-            for (Node collectible : collectibles) {
-                collectible.setTranslateY(collectible.getTranslateY() - distanceToMove);
-            }
-            for (Node spike : spikes) {
-                spike.setTranslateY(spike.getTranslateY() - distanceToMove);
-            }
-            player.setTranslateY(halfScreenHeight);
-        }
-*/
         enforceFrameBounds();
         updateHealthPicture();
 
