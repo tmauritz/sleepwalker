@@ -15,17 +15,26 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class Player extends Rectangle {
+    ImagePattern idleLeft = new ImagePattern(MediaManager.loadImage("animation/player/Idle_left.gif"));
+    ImagePattern idleRight = new ImagePattern(MediaManager.loadImage("animation/player/Idle_right.gif"));
 
+    public ImagePattern getIdleLeft() {
+        return idleLeft;
+    }
 
-    public Image idleAnimation() {
-        return MediaManager.loadImage("animation/player/IdleNoSlingshot.gif");
+    public ImagePattern getIdleRight() {
+        return idleRight;
+    }
+
+    public void setCharTexture(ImagePattern texture) {
+        this.setFill(texture);
     }
 
     public Player(int height, int width) {
         super();
         setWidth(width);
         setHeight(height);
-        this.setFill(new ImagePattern(idleAnimation()));
+        setCharTexture(idleRight);
 
 
     }

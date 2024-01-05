@@ -57,6 +57,7 @@ public class LevelManager {
     private int health = 6;
     private int xFail;
     private int yFail;
+    boolean wasMovingRight = true;
 
 
     public LevelManager() {
@@ -137,6 +138,21 @@ public class LevelManager {
                     }
                 }
             }
+
+            //Checks player orientation for texture
+            if (movingRight) {
+                if (!wasMovingRight) {
+                    player.setCharTexture(player.getIdleRight());
+                    wasMovingRight = true;
+                } else wasMovingRight = false;
+            } else {
+                if (wasMovingRight) {
+                    player.setCharTexture(player.getIdleLeft());
+                    wasMovingRight = false;
+                } else wasMovingRight = true;
+            }
+
+
             if (levelFinish.getBoundsInParent().intersects(player.getBoundsInParent())) {
                 if (levelFinished()) {
                     if (movingRight) {
@@ -386,7 +402,7 @@ public class LevelManager {
             int offset = newValue.intValue();
             if (offset > 300 && offset < GameProperties.WIDTH) {
                 levelRootCamera.setLayoutX(-(offset - 300));
-            }else if (offset <= 300) {
+            } else if (offset <= 300) {
                 levelRootCamera.setLayoutX(0);
             } else {
                 levelRootCamera.setLayoutX(-(GameProperties.WIDTH - 600));
@@ -398,7 +414,7 @@ public class LevelManager {
             int maxYOffset = GameProperties.HEIGHT - 600;
             if (offset > 300 && offset < GameProperties.HEIGHT) {
                 levelRootCamera.setLayoutY(-(offset - 300));
-            }else if (offset <= 300) {
+            } else if (offset <= 300) {
                 levelRootCamera.setLayoutY(0);
             } else {
                 levelRootCamera.setLayoutY(-maxYOffset);
