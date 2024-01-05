@@ -59,6 +59,9 @@ public class LevelManager {
     private int xFail;
     private int yFail;
     boolean wasMovingRight = true;
+    private Timeline timerTimeline;
+    private long startTime;
+    private Label timerLabel;
 
 
     public LevelManager() {
@@ -166,6 +169,7 @@ public class LevelManager {
                     Image image0 = MediaManager.loadImage("level/5Coins.png");
                     currentCollectibles.setImage(image0);
                     levelFinish.finishLevel();
+                    timerTimeline.stop();
                 }
             }
             player.setTranslateX(player.getTranslateX() + (movingRight ? 1 : -1));
@@ -223,6 +227,7 @@ public class LevelManager {
                     Image image0 = MediaManager.loadImage("level/5Coins.png");
                     currentCollectibles.setImage(image0);
                     levelFinish.finishLevel();
+                    timerTimeline.stop();
                 }
             }
             player.setTranslateY(player.getTranslateY() + (movingDown ? 1 : -1));
@@ -271,6 +276,7 @@ public class LevelManager {
                 break;
         }
     }
+
     /*
     Updates the Collectibles Graphic
      */
@@ -410,6 +416,18 @@ public class LevelManager {
                 }
             }
         }
+        startTime = System.currentTimeMillis();
+        timerLabel = new Label();
+        timerLabel.setFont(new Font(20));
+        timerLabel.setLayoutX(10);
+        timerLabel.setLayoutY(10);
+        timerLabel.setTextFill(Color.WHITE);
+        GUIRoot.getChildren().add(timerLabel);
+
+        // Update timer every second
+        timerTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
+        timerTimeline.setCycleCount(Timeline.INDEFINITE);
+        timerTimeline.play();
         //game Over exit
         failLevel = new LevelFail(
                 xFail,
@@ -432,7 +450,6 @@ public class LevelManager {
         GUIRoot.getChildren().add(currentCollectibles);
         GUIRoot.getChildren().add(currentHearts);
         levelRootCamera = levelRoot;
-
 
 
         Pane mainPane = new Pane();
@@ -507,14 +524,31 @@ public class LevelManager {
         updateTimeline = new Timeline(updateFrame);
         updateTimeline.setCycleCount(Animation.INDEFINITE);
         updateTimeline.play();
-
     }
+
+    /*
+    Timer Calculation
+
+     */
+
+    private void updateTimer() {
+        long currentTime = System.currentTimeMillis();
+        long elapsedSeconds = (currentTime - startTime) / 1000;
+        long minutes = elapsedSeconds / 60;
+        long seconds = elapsedSeconds % 60;
+
+        // Format time as MM:SS
+        String formattedTime = String.format("Time: %02d:%02d", minutes, seconds);
+        timerLabel.setText(formattedTime);
+    }
+
 
     /*
     Is showing GameOver Screen
      */
     private void loadGameOver() {
         failLevel.failLevel();
+        timerTimeline.stop();
     }
 
     private void enforceFrameBounds() {
@@ -594,7 +628,7 @@ public class LevelManager {
     /**
      * Displays a Dialog pane.
      *
-     * @param options    Buttons for dialog options must have EventHandlers
+     * @param options Buttons for dialog options must have EventHandlers
      */
     public void showDialog(Button... options) {
 
@@ -643,7 +677,7 @@ public class LevelManager {
     /**
      * Displays a Dialog pane.
      *
-     * @param options    Buttons for dialog options must have EventHandlers
+     * @param options Buttons for dialog options must have EventHandlers
      */
     public void showDialogDead(Button... options) {
 
