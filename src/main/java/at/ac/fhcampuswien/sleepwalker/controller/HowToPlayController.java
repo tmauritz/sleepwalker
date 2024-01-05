@@ -1,7 +1,9 @@
 package at.ac.fhcampuswien.sleepwalker.controller;
 
 import at.ac.fhcampuswien.sleepwalker.GameManager;
+import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

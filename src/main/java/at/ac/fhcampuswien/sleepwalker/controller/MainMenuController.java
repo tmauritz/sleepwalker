@@ -52,7 +52,7 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Image background = MediaManager.loadImage("img/placeholder_image1.jpg");
+        Image background = MediaManager.loadImage("level/background/background_layer_2.png");
 
         formatMenu();
         if (background != null) {
