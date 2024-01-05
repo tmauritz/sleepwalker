@@ -51,6 +51,7 @@ public class LevelManager {
     private boolean playerCanJump;
     private Scene loadedLevel;
     private ImageView currentHearts;
+    private ImageView currentCollectibles;
     // Instances for respawning : spawnPositionX and spawnPositionY
     private int spawnPositionX;
     private int spawnPositionY;
@@ -129,6 +130,8 @@ public class LevelManager {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
                     setHealth(getHealth() - 1);
                     if (getHealth() == 0) {
+                        Image image0 = MediaManager.loadImage("level/0hearts.png");
+                        currentHearts.setImage(image0);
                         failLevel.failLevel();
                     } else {
                         player.setTranslateX(spawnPositionX);
@@ -160,6 +163,8 @@ public class LevelManager {
                     } else {
                         player.setTranslateX(player.getTranslateX() + 1);
                     }
+                    Image image0 = MediaManager.loadImage("level/5Coins.png");
+                    currentCollectibles.setImage(image0);
                     levelFinish.finishLevel();
                 }
             }
@@ -197,6 +202,8 @@ public class LevelManager {
                 if (player.getBoundsInParent().intersects(spike.getBoundsInParent())) {
                     setHealth(getHealth() - 1);
                     if (getHealth() == 0) {
+                        Image image0 = MediaManager.loadImage("level/0hearts.png");
+                        currentHearts.setImage(image0);
                         failLevel.failLevel();
                     } else {
                         player.setTranslateX(spawnPositionX);
@@ -213,6 +220,8 @@ public class LevelManager {
                     } else {
                         player.setTranslateX(player.getTranslateX() + 1);
                     }
+                    Image image0 = MediaManager.loadImage("level/5Coins.png");
+                    currentCollectibles.setImage(image0);
                     levelFinish.finishLevel();
                 }
             }
@@ -226,6 +235,7 @@ public class LevelManager {
      *  --> half-heart = 1 life
      */
     private void updateHealthPicture() {
+        Image image0 = MediaManager.loadImage("level/0hearts.png");
         Image image1 = MediaManager.loadImage("level/1hearts.png");
         Image image2 = MediaManager.loadImage("level/2hearts.png");
         Image image3 = MediaManager.loadImage("level/3hearts.png");
@@ -234,6 +244,7 @@ public class LevelManager {
         Image image6 = MediaManager.loadImage("level/6hearts.png");
         switch (health) {
             case 0:
+                currentHearts.setImage(image0);
                 loadGameOver();
                 break;
             case 1:
@@ -255,7 +266,43 @@ public class LevelManager {
                 currentHearts.setImage(image6);
                 break;
             default:
-                // Behandlung für andere mögliche Werte von health
+                // Handling for other potential values of health:
+                // Implement desired behavior or error handling here.
+                break;
+        }
+    }
+    /*
+    Uptades the Collectibles Grafic
+     */
+    public void updateCollectiblePicture() {
+        Image image0 = MediaManager.loadImage("level/0Coins.png");
+        Image image1 = MediaManager.loadImage("level/1Coins.png");
+        Image image2 = MediaManager.loadImage("level/2Coins.png");
+        Image image3 = MediaManager.loadImage("level/3Coins.png");
+        Image image4 = MediaManager.loadImage("level/4Coins.png");
+        Image image5 = MediaManager.loadImage("level/5Coins.png");
+        switch (collectibles.size()) {
+            case 0:
+                currentCollectibles.setImage(image5);
+                break;
+            case 1:
+                currentCollectibles.setImage(image4);
+                break;
+            case 2:
+                currentCollectibles.setImage(image3);
+                break;
+            case 3:
+                currentCollectibles.setImage(image2);
+                break;
+            case 4:
+                currentCollectibles.setImage(image1);
+                break;
+            case 5:
+                currentCollectibles.setImage(image0);
+                break;
+            default:
+                // Handling for other potential values of collectibles:
+                // Implement desired behavior or error handling here.
                 break;
         }
     }
@@ -370,14 +417,23 @@ public class LevelManager {
                 this);
         levelRoot.getChildren().add(failLevel);
         //create Health-Bar
-        Image image = new Image(String.valueOf(Sleepwalker.class.getResource("level/6hearts.png")));
+        Image image = MediaManager.loadImage("level/6hearts.png");
         currentHearts = new ImageView(image);
 
         currentHearts.setLayoutX(GameProperties.WIDTH - 120);
         currentHearts.setLayoutY(0);
 
+        Image imageCoin = MediaManager.loadImage("level/0Coins.png");
+        currentCollectibles = new ImageView(imageCoin);
+
+        currentCollectibles.setLayoutX(GameProperties.WIDTH - 170);
+        currentCollectibles.setLayoutY(GameProperties.HEIGHT - 80);
+
+        GUIRoot.getChildren().add(currentCollectibles);
         GUIRoot.getChildren().add(currentHearts);
         levelRootCamera = levelRoot;
+
+
 
         Pane mainPane = new Pane();
         mainPane.getChildren().addAll(bgRoot, levelRoot, GUIRoot);
@@ -516,7 +572,7 @@ public class LevelManager {
                 }
             }
         }
-
+        updateCollectiblePicture();
         enforceFrameBounds();
         updateHealthPicture();
 
