@@ -272,7 +272,7 @@ public class LevelManager {
         }
     }
     /*
-    Uptades the Collectibles Grafic
+    Updates the Collectibles Graphic
      */
     public void updateCollectiblePicture() {
         Image image0 = MediaManager.loadImage("level/0Coins.png");
@@ -594,20 +594,21 @@ public class LevelManager {
     /**
      * Displays a Dialog pane.
      *
-     * @param dialogText Text to be displayed in the dialog
      * @param options    Buttons for dialog options must have EventHandlers
      */
-    public void showDialog(String dialogText, Button... options) {
+    public void showDialog(Button... options) {
 
         //TODO: fix formatting pls i can't deal with this
         dialogBox.getChildren().clear();
         dialogBox.setMinHeight(200);
         dialogBox.setMinWidth(400);
-        Label message = new Label(dialogText);
-        dialogBox.getChildren().add(message);
         dialogBox.setMinWidth(400);
         dialogBox.setMinHeight(200);
-        dialogBox.setBackground(new Background(new BackgroundFill(Color.GREY, new CornerRadii(3), Insets.EMPTY)));
+        BackgroundImage backgroundImg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/LevelFinished.png"))),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImg);
+        dialogBox.setBackground(background);
 
         int buttonHeight = 20;
         int buttonAmount = 1;
@@ -619,15 +620,10 @@ public class LevelManager {
             option.setMinHeight(buttonHeight);
             option.setAlignment(Pos.CENTER);
             option.setLayoutX((dialogBox.getWidth() / 2) - (option.getPrefWidth() / 2));
-            option.setLayoutY(20 + (buttonHeight + spacing) * buttonAmount++);
+            option.setLayoutY(110 + (buttonHeight + spacing) * buttonAmount++);
 
             dialogBox.getChildren().add(option);
         }
-
-        message.setFont(Font.font(20));
-        message.setAlignment(Pos.CENTER);
-        message.setLayoutX((dialogBox.getWidth() / 2) - (message.getWidth() / 2));
-        message.setPrefWidth(200);
 
         dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - (dialogBox.getWidth() / 2));
         dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - (dialogBox.getHeight() / 2));
@@ -647,20 +643,21 @@ public class LevelManager {
     /**
      * Displays a Dialog pane.
      *
-     * @param dialogText Text to be displayed in the dialog
      * @param options    Buttons for dialog options must have EventHandlers
      */
-    public void showDialogDead(String dialogText, Button... options) {
+    public void showDialogDead(Button... options) {
 
         //TODO: fix formatting pls i can't deal with this
         dialogBox.getChildren().clear();
         dialogBox.setMinHeight(200);
         dialogBox.setMinWidth(400);
-        Label message = new Label(dialogText);
-        dialogBox.getChildren().add(message);
         dialogBox.setMinWidth(400);
         dialogBox.setMinHeight(200);
-        dialogBox.setBackground(new Background(new BackgroundFill(Color.GREY, new CornerRadii(3), Insets.EMPTY)));
+        BackgroundImage backgroundImg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/GameOver.png"))),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImg);
+        dialogBox.setBackground(background);
 
         int buttonHeight = 20;
         int buttonAmount = 1;
@@ -672,15 +669,11 @@ public class LevelManager {
             option.setMinHeight(buttonHeight);
             option.setAlignment(Pos.CENTER);
             option.setLayoutX((dialogBox.getWidth() / 2) - (option.getPrefWidth() / 2));
-            option.setLayoutY(20 + (buttonHeight + spacing) * buttonAmount++);
+            option.setLayoutY(105 + (buttonHeight + spacing) * buttonAmount++);
 
             dialogBox.getChildren().add(option);
         }
 
-        message.setFont(Font.font(20));
-        message.setAlignment(Pos.CENTER);
-        message.setLayoutX((dialogBox.getWidth() / 2) - (message.getWidth() / 2));
-        message.setPrefWidth(200);
 
         dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - (dialogBox.getWidth() / 2));
         dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - (dialogBox.getHeight() / 2));

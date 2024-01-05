@@ -28,13 +28,12 @@ public class LevelFail extends Rectangle {
      */
     public void failLevel() {
 
-        String win = "Game Over!";
         Button backToMenu = new Button("Back to Main Menu");
         backToMenu.setOnAction(event -> GameManager.getInstance().showMainMenu());
 
         Button retryLevel = new Button("Retry Level");
         retryLevel.setOnAction(event -> GameManager.getInstance().playLevel(currentLevelID));
-        levelManager.showDialogDead(win, retryLevel, backToMenu);
+        levelManager.showDialogDead(retryLevel, backToMenu);
 
 
     }
