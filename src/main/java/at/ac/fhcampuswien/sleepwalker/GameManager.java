@@ -60,7 +60,7 @@ public class GameManager {
         }
         backgroundMusic = new MediaPlayer(media);
         backgroundMusic.setOnEndOfMedia(() -> playBackgroundMusic(backgroundMusic.getMedia()));
-        backgroundMusic.setVolume(40);
+        backgroundMusic.setVolume(0);
         backgroundMusic.play();
     }
 
