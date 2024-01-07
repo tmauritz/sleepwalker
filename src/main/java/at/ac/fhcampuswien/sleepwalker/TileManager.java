@@ -14,6 +14,8 @@ public class TileManager {
 
     private static final HashMap<String, String> tileY = new HashMap<>();
     private static final HashMap<String, String> tileX = new HashMap<>();
+    private static final HashMap<String, String> decoHeight = new HashMap<>();
+    private static final HashMap<String, String> decoWidth = new HashMap<>();
 
     static{
         // initialize tile mapping
@@ -70,7 +72,21 @@ public class TileManager {
         tileY.put(" x-x", "0");
         tileY.put(" -xx", "0");
 
+        //deco tiles
+        tileX.put("t", "693");
+        tileY.put("t", "608");
+        decoHeight.put("t", "138");
+        decoWidth.put("t", "120");
+
+        tileX.put("T", "832");
+        tileY.put("T", "608");
+        decoHeight.put("T", "162");
+        decoWidth.put("T", "153");
+
+
     }
+
+
 
     public static ImagePattern getTile(String[] levelData, int x, int y){
         String neighbors = getTileID(levelData, x, y);
@@ -114,7 +130,6 @@ public class TileManager {
 
     }
 
-
     /**
      * Translates tile ID into X coordinates
      */
@@ -124,7 +139,6 @@ public class TileManager {
         } else return 0;
     }
 
-
     /**
      * Translates tile ID into Y coordinates
      */
@@ -133,6 +147,19 @@ public class TileManager {
             return parseInt(tileY.get(tileID));
         } else return 0;
     }
+
+    private static int getDecoHeight(String tileID) {
+        if (decoHeight.containsKey(tileID)) {
+            return parseInt(decoHeight.get(tileID));
+        } else return 0;
+    }
+
+    private static int getDecoWidth(String tileID) {
+        if (decoWidth.containsKey(tileID)) {
+            return parseInt(decoWidth.get(tileID));
+        } else return 0;
+    }
+
 
 
 }
