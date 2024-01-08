@@ -178,7 +178,6 @@ public class LevelManager {
         }
 
     }
-
     /**
      * Moves the Player along the Y Axis and checks for collision
      * if a collision is detected (overlap), player is moved back 1 unit.
