@@ -38,6 +38,7 @@ public class LevelManager {
     private final List<Node> platforms;
     private final List<Node> spikes;
     private final List<Node> collectibles;
+    private final List<Node> deco;
     private Timeline updateTimeline;
     private LevelFinish levelFinish = null;
     private LevelFail failLevel = null;
@@ -69,6 +70,7 @@ public class LevelManager {
         platforms = new ArrayList<>();
         spikes = new ArrayList<>();
         collectibles = new ArrayList<>();
+        deco = new ArrayList<>();
         playerVelocity = new Point2D(0, 0);
         playerCanJump = true;
     }
@@ -335,8 +337,11 @@ public class LevelManager {
         platforms.clear();
         spikes.clear();
         collectibles.clear();
+        deco.clear();
+
 
         Pane levelRoot = new Pane();
+        Pane decoRoot = new Pane();
         Pane bgRoot = new Pane();
         Pane GUIRoot = new Pane();
 
@@ -355,15 +360,18 @@ public class LevelManager {
         bgRoot.setBackground(new Background(bg));
 
         levelRoot.setBackground(Background.EMPTY);
+        levelRoot.getChildren().add(decoRoot);
         GUIRoot.setBackground(Background.EMPTY);
 
         String[] levelData = LevelData.Levels.getOrDefault(levelId, null);
+        String[] decoData = LevelData.Levels.getOrDefault(levelId*100, null);
         if (levelData == null) return null;
         levelRoot.setMinWidth(GameProperties.WIDTH);
         levelRoot.setMinHeight(GameProperties.HEIGHT);
         //process each line and make platforms
         for (int i = 0; i < levelData.length; i++) {
             char[] tiles = levelData[i].toCharArray();
+            char[] decoTiles = decoData[i].toCharArray();
             for (int j = 0; j < tiles.length; j++) {
                 switch (tiles[j]) {
                     case '-': //platform
@@ -414,6 +422,14 @@ public class LevelManager {
                         levelRoot.getChildren().add(levelFinish);
                         break;
                 }
+
+                if (decoTiles[j] != ' ') {
+                    String decoID = String.valueOf(decoTiles[j]);
+                    Deco decoration = TileManager.getDeco(decoID, j, i);
+                    deco.add(decoration);
+                    decoRoot.getChildren().add(decoration);
+                }
+
             }
         }
         startTime = System.currentTimeMillis();
@@ -450,7 +466,6 @@ public class LevelManager {
         GUIRoot.getChildren().add(currentCollectibles);
         GUIRoot.getChildren().add(currentHearts);
         levelRootCamera = levelRoot;
-
 
         Pane mainPane = new Pane();
         mainPane.getChildren().addAll(bgRoot, levelRoot, GUIRoot);

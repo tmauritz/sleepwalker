@@ -13,6 +13,7 @@ public class Platform extends Rectangle {
         setTranslateY(y);
         setWidth(width);
         setHeight(height);
+        setSmooth(false);
         setFill(tile);
     }
 

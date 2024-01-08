@@ -14,9 +14,14 @@ public class LevelData {
 
     public static final Map<Integer, String[]> Levels = new HashMap<>();
 
-    /* - walkway
+    /**
+     * - walkway
      * s player
      * F finish
+     * ^ mines
+     * c coins
+     * Deco is underneath each level, key = level# * 100
+     * For deco: b B bushes, t T trees, C scarecrow, h hay, f barrel, g grass, s S sunflowers, r R rocks
      */
 
     static{
@@ -25,17 +30,34 @@ public class LevelData {
                 "                    ",
                 "     ^^     c--     ",
                 "                    ",
-                "   -c--       ",
-                "    ---    c       ",
-                "   ---     -           ",
-                "          ---     ",
-                "      -              ",
-                "        -c   -        ",
-                "        ----      F  ",
-                " --  s    -    c       ",
+                "   -c--             ",
+                "    ---    c        ",
+                "   ---     -        ",
+                "          ---       ",
+                "      -             ",
+                "        -c   -      ",
+                "        ----      F ",
+                " --  s    -    c    ",
                 "        -           ",
                 "--------------------",
         });
+        Levels.put(100, new String[]{
+                "                    ",
+                "                    ",
+                "                    ",
+                "        ggg         ",
+                "                    ",
+                "                    ",
+                "           Ss         ",
+                "    h                ",
+                "                    ",
+                "              C      ",
+                "t                   ",
+                "                    ",
+                " f r Ch        R    ",
+                "--------------------",
+        });
+
         Levels.put(2, new String[]{
                 "       c            ",
                 "      ---           ",
@@ -51,9 +73,26 @@ public class LevelData {
                 "  - --              ",
                 "           -        ",
                 "          c         ",
-                "   s      ---        ",
+                "   s      ---       ",
                 "--------------------",
         });
+        Levels.put(200, new String[]{
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "--------------------",
+        });
+
         Levels.put(3, new String[]{
                 "                     ",
                 "               F     ",
@@ -76,6 +115,23 @@ public class LevelData {
                 " ccccccccccccccccccc ",
                 "---------------------",
         });
+        Levels.put(300, new String[]{
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "                    ",
+                "--------------------",
+        });
+
         Levels.put(4, new String[]{
                 "                                ",
                 "                                ",
@@ -90,6 +146,22 @@ public class LevelData {
                 "                  -- ----  -    ",
                 "                   -      ----  ",
                 "                 c -  s    -  c ",
+                "--------------------------------",
+        });
+        Levels.put(400, new String[]{
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
+                "                                ",
                 "--------------------------------",
         });
     }

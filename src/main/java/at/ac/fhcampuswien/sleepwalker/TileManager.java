@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker;
 
+import at.ac.fhcampuswien.sleepwalker.entities.Deco;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -74,15 +75,69 @@ public class TileManager {
 
         //deco tiles
         tileX.put("t", "693");
-        tileY.put("t", "608");
-        decoHeight.put("t", "138");
+        tileY.put("t", "459");
+        decoHeight.put("t", "148");
         decoWidth.put("t", "120");
 
         tileX.put("T", "832");
-        tileY.put("T", "608");
-        decoHeight.put("T", "162");
+        tileY.put("T", "445");
+        decoHeight.put("T", "172");
         decoWidth.put("T", "153");
 
+        tileX.put("g", "421");
+        tileY.put("g", "459");
+        decoHeight.put("g", "21");
+        decoWidth.put("g", "23");
+
+        tileX.put("b", "356");
+        tileY.put("b", "569");
+        decoHeight.put("b", "40");
+        decoWidth.put("b", "57");
+
+        tileX.put("B", "452");
+        tileY.put("B", "563");
+        decoHeight.put("B", "46");
+        decoWidth.put("B", "89");
+
+        tileX.put("f", "195");
+        tileY.put("f", "19");
+        decoHeight.put("f", "44");
+        decoWidth.put("f", "27");
+
+        tileX.put("h", "193");
+        tileY.put("h", "245");
+        decoHeight.put("h", "38");
+        decoWidth.put("h", "62");
+
+        tileX.put("C", "704");
+        tileY.put("C", "221");
+        decoHeight.put("C", "99");
+        decoWidth.put("C", "64");
+
+        tileX.put("s", "870");
+        tileY.put("s", "253");
+        decoHeight.put("s", "67");
+        decoWidth.put("s", "22");
+
+        tileX.put("S", "900");
+        tileY.put("S", "248");
+        decoHeight.put("S", "71");
+        decoWidth.put("S", "26");
+
+        tileX.put("r", "816");
+        tileY.put("r", "355");
+        decoHeight.put("r", "28");
+        decoWidth.put("r", "33");
+
+        tileX.put("R", "874");
+        tileY.put("R", "348");
+        decoHeight.put("R", "35");
+        decoWidth.put("R", "46");
+
+        tileX.put("", "");
+        tileY.put("", "");
+        decoHeight.put("", "");
+        decoWidth.put("", "");
 
     }
 
@@ -92,12 +147,41 @@ public class TileManager {
         String neighbors = getTileID(levelData, x, y);
         int tileX = getTileX(neighbors);
         int tileY = getTileY(neighbors);
-        Image image =MediaManager.loadImage("level/TX Tileset Ground.png");
+        Image image = MediaManager.loadImage("level/TX Tileset Ground.png");
         ImageView imageView = new ImageView(image);
+        imageView.setSmooth(false);
         imageView.setViewport(new javafx.geometry.Rectangle2D(tileX, tileY, GameProperties.TILE_UNIT, GameProperties.TILE_UNIT));
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
         return new ImagePattern(imageView.snapshot(params, null));
+    }
+
+    /**
+     * Since Deco tiles aren't bound by conventional tile sizes, everything concerning their creation is here.
+     * (custom height & widths, especially height has to get subtracted, so it's on the correct spot)
+     */
+    private static ImagePattern getDecoTile(String decoID){
+        int tileX = getTileX(decoID);
+        int tileY = getTileY(decoID);
+        Image image = MediaManager.loadImage("level/TX Village Props.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setStyle("-fx-background-color: transparent;");
+        imageView.setSmooth(false);
+        imageView.setViewport(new javafx.geometry.Rectangle2D(tileX, tileY, getDecoWidth(decoID), getDecoHeight(decoID)));
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        return new ImagePattern(imageView.snapshot(params, null));
+    }
+
+    public static Deco getDeco(String decoID, int x, int y) {
+        int width = getDecoWidth(decoID);
+        int height = getDecoHeight(decoID);
+        return new Deco(
+                x * GameProperties.TILE_UNIT,
+                (y + 1) * GameProperties.TILE_UNIT - height,
+                width,
+                height,
+                getDecoTile(decoID));
     }
 
     /**
