@@ -14,7 +14,7 @@ public class LevelData {
 
     public static final Map<Integer, String[]> Levels = new HashMap<>();
 
-    /**
+    /*
      * - walkway
      * s player
      * F finish
@@ -45,7 +45,7 @@ public class LevelData {
                 "                    ",
                 "                    ",
                 "                    ",
-                "        ggg         ",
+                "                    ",
                 "                    ",
                 "                    ",
                 "           Ss         ",
@@ -55,7 +55,7 @@ public class LevelData {
                 "t                   ",
                 "                    ",
                 " f r Ch        R    ",
-                "--------------------",
+                "                    ",
         });
 
         Levels.put(2, new String[]{
@@ -80,17 +80,17 @@ public class LevelData {
                 "                    ",
                 "                    ",
                 "                    ",
+                "                   ",
                 "                    ",
                 "                    ",
                 "                    ",
                 "                    ",
                 "                    ",
+                "          s         ",
                 "                    ",
                 "                    ",
                 "                    ",
                 "                    ",
-                "                    ",
-                "--------------------",
         });
 
         Levels.put(3, new String[]{
@@ -120,6 +120,7 @@ public class LevelData {
                 "                    ",
                 "                    ",
                 "                    ",
+                "              s      ",
                 "                    ",
                 "                    ",
                 "                    ",
@@ -129,7 +130,6 @@ public class LevelData {
                 "                    ",
                 "                    ",
                 "                    ",
-                "--------------------",
         });
 
         Levels.put(4, new String[]{
@@ -149,20 +149,20 @@ public class LevelData {
                 "--------------------------------",
         });
         Levels.put(400, new String[]{
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "                                ",
-                "--------------------------------",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "                                 ",
+                "              s                  ",
+                "                                 ",
+                "                                 ",
         });
     }
 }
