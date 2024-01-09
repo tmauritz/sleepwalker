@@ -330,6 +330,7 @@ public class LevelManager {
      * @return a Scene containing the loaded level or null if the level could not be loaded
      */
     public Scene loadLevel(int levelId) {
+        portalOpen = false;
         loadedLevelID = levelId;
         setHealth(6);
         //TODO: refine level loading
