@@ -41,6 +41,7 @@ public class LevelData {
                 "        -           ",
                 "--------------------",
         });
+
         Levels.put(100, new String[]{
                 "                    ",
                 "                    ",
@@ -76,6 +77,7 @@ public class LevelData {
                 "   s      ---       ",
                 "--------------------",
         });
+
         Levels.put(200, new String[]{
                 "                    ",
                 "                    ",
@@ -111,6 +113,7 @@ public class LevelData {
                 "^^^^^^^^^^^^^^^^^^^^",
                 "--------------------",
         });
+
         Levels.put(300, new String[]{
                 "                     ",
                 "                     ",
