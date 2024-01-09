@@ -12,15 +12,9 @@ public class LevelFail extends Rectangle {
     private LevelManager levelManager;
     private int currentLevelID;
 
-    public LevelFail(double x, double y, LevelManager currentLevel) {
+    public LevelFail(LevelManager currentLevel) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
-        this.setX(x);
-        this.setY(y);
-        this.setWidth(GameProperties.TILE_UNIT);
-        this.setHeight(GameProperties.TILE_UNIT);
-        //TODO: graphics for exit
-        this.setVisible(false);
     }
 
     /**
