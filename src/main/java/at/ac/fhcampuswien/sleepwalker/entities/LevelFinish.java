@@ -35,13 +35,14 @@ public class LevelFinish extends Rectangle {
 
         Button backToMenu = new Button("Back to Main Menu");
         backToMenu.setOnAction(event -> GameManager.getInstance().showMainMenu());
+        boolean finished = true;
 
         if ((LevelData.Levels.size()/2) > currentLevelID) {
             Button nextLevel = new Button("Next Level");
             nextLevel.setOnAction(event -> GameManager.getInstance().playLevel(++currentLevelID));
-            levelManager.showDialog(nextLevel, backToMenu);
+            levelManager.showDialog(finished, nextLevel, backToMenu);
         } else {
-            levelManager.showDialog(backToMenu);
+            levelManager.showDialog(finished, backToMenu);
         }
 
     }

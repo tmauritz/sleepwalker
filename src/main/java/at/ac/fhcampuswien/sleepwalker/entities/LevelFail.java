@@ -27,7 +27,8 @@ public class LevelFail extends Rectangle {
 
         Button retryLevel = new Button("Retry Level");
         retryLevel.setOnAction(event -> GameManager.getInstance().playLevel(currentLevelID));
-        levelManager.showDialogDead(retryLevel, backToMenu);
+        boolean finished = false;
+        levelManager.showDialog(finished, retryLevel, backToMenu);
 
 
     }
