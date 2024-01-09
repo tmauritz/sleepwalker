@@ -139,10 +139,10 @@ public class LevelManager {
                         currentHearts.setImage(image0);
                         failLevel.failLevel();
                     } else {
-                        player.setTranslateX(spawnPositionX);
-                        player.setTranslateY(spawnPositionY);
                         levelRootCamera.setLayoutX(spawnPositionX);
                         levelRootCamera.setLayoutY(spawnPositionY);
+                        player.setTranslateX(spawnPositionX);
+                        player.setTranslateY(spawnPositionY);
                     }
                 }
             }
@@ -211,10 +211,10 @@ public class LevelManager {
                         currentHearts.setImage(image0);
                         failLevel.failLevel();
                     } else {
-                        player.setTranslateX(spawnPositionX);
-                        player.setTranslateY(spawnPositionY);
                         levelRootCamera.setLayoutX(spawnPositionX);
                         levelRootCamera.setLayoutY(spawnPositionY);
+                        player.setTranslateX(spawnPositionX);
+                        player.setTranslateY(spawnPositionY);
                     }
                 }
             }
