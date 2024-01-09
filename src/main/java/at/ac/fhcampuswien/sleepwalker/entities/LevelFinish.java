@@ -1,11 +1,9 @@
 package at.ac.fhcampuswien.sleepwalker.entities;
 
-import at.ac.fhcampuswien.sleepwalker.GameManager;
-import at.ac.fhcampuswien.sleepwalker.GameProperties;
-import at.ac.fhcampuswien.sleepwalker.LevelData;
-import at.ac.fhcampuswien.sleepwalker.LevelManager;
+import at.ac.fhcampuswien.sleepwalker.*;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class LevelFinish extends Rectangle {
@@ -20,8 +18,11 @@ public class LevelFinish extends Rectangle {
         this.setY(y);
         this.setWidth(GameProperties.TILE_UNIT);
         this.setHeight(GameProperties.TILE_UNIT);
-        //TODO: graphics for exit
-        this.setFill(Color.LIGHTGREEN);
+        this.setFill(Color.BLUE);
+    }
+
+    public void openPortal() {
+        this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_idle.gif")));
     }
 
     /**

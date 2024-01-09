@@ -29,6 +29,10 @@ public class TileManager {
         tileX.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileX.ser"));
         decoHeight.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/DecoHeight.ser"));
         decoWidth.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/DecoWidth.ser"));
+        tileY.put("-- -", "288");
+        tileX.put("-- -", "480");
+        serializeMap(tileX, "src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileX.ser");
+        serializeMap(tileY, "src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileY.ser");
     }
 
     public static void serializeMap(HashMap<String, String> currentMap, String filename){

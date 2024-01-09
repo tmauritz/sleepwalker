@@ -306,6 +306,7 @@ public class LevelManager {
                 break;
             case 5:
                 currentCollectibles.setImage(image0);
+                levelFinish.openPortal();
                 break;
             default:
                 // Handling for other potential values of collectibles:

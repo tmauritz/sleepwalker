@@ -45,17 +45,17 @@ public class LevelData {
         Levels.put(100, new String[]{
                 "                    ",
                 "                    ",
+                "             g      ",
                 "                    ",
                 "                    ",
                 "                    ",
                 "                    ",
-                "           Ss         ",
-                "    h                ",
                 "                    ",
-                "              C      ",
-                "t                   ",
                 "                    ",
-                " f r Ch        R    ",
+                "           f        ",
+                " r                  ",
+                "                    ",
+                "  Ss Ch             ",
                 "                    ",
         });
 
