@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+
 public class LevelFinish extends Rectangle {
 
     private LevelManager levelManager;
@@ -16,12 +17,14 @@ public class LevelFinish extends Rectangle {
         currentLevelID = levelManager.getLoadedLevelID();
         this.setX(x);
         this.setY(y);
-        this.setWidth(GameProperties.TILE_UNIT);
-        this.setHeight(GameProperties.TILE_UNIT);
-        this.setFill(Color.BLUE);
+        this.setWidth(GameProperties.TILE_UNIT*2);
+        this.setHeight(GameProperties.TILE_UNIT*2);
+        this.setFill(Color.TRANSPARENT);
     }
 
     public void openPortal() {
+        this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_start.gif")));
+
         this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_idle.gif")));
     }
 

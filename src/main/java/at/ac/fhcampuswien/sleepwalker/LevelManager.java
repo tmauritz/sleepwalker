@@ -63,6 +63,7 @@ public class LevelManager {
     private Timeline timerTimeline;
     private long startTime;
     private Label timerLabel;
+    private boolean portalOpen = false;
 
 
     public LevelManager() {
@@ -306,7 +307,6 @@ public class LevelManager {
                 break;
             case 5:
                 currentCollectibles.setImage(image0);
-                levelFinish.openPortal();
                 break;
             default:
                 // Handling for other potential values of collectibles:
@@ -622,6 +622,10 @@ public class LevelManager {
             }
         }
         updateCollectiblePicture();
+        if (!portalOpen && levelFinished()) {
+            levelFinish.openPortal();
+            portalOpen = true;
+        }
         enforceFrameBounds();
         updateHealthPicture();
 

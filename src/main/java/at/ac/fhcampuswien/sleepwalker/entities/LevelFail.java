@@ -20,7 +20,7 @@ public class LevelFail extends Rectangle {
         this.setWidth(GameProperties.TILE_UNIT);
         this.setHeight(GameProperties.TILE_UNIT);
         //TODO: graphics for exit
-        this.setFill(Color.LIGHTGREEN);
+        this.setVisible(false);
     }
 
     /**
