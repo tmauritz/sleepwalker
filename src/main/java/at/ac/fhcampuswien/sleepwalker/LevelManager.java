@@ -446,10 +446,7 @@ public class LevelManager {
         timerTimeline.setCycleCount(Timeline.INDEFINITE);
         timerTimeline.play();
         //game Over exit
-        failLevel = new LevelFail(
-                xFail,
-                yFail,
-                this);
+        failLevel = new LevelFail(this);
         levelRoot.getChildren().add(failLevel);
         //create Health-Bar
         Image image = MediaManager.loadImage("level/6hearts.png");
