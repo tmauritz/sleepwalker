@@ -155,7 +155,7 @@ public class GameManager {
             x.getChildren().add(background);
             x.getChildren().addAll(backToMainMenu, loadLevel1, loadLevel2, loadLevel3, loadLevel4);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
-            worldMap.getStylesheets().add("at/ac/fhcampuswien/sleepwalker/ui/styles.css");
+            worldMap.getStylesheets().add(String.valueOf(Sleepwalker.class.getResource("ui/styles.css")));
             sceneLibrary.put("worldMap", worldMap);
         }
         stageRoot.setScene(worldMap);
