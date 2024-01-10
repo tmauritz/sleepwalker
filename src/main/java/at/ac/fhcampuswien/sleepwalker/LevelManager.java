@@ -446,10 +446,7 @@ public class LevelManager {
         timerTimeline.setCycleCount(Timeline.INDEFINITE);
         timerTimeline.play();
         //game Over exit
-        failLevel = new LevelFail(
-                xFail,
-                yFail,
-                this);
+        failLevel = new LevelFail(this);
         levelRoot.getChildren().add(failLevel);
         //create Health-Bar
         Image image = MediaManager.loadImage("level/6hearts.png");
@@ -650,7 +647,7 @@ public class LevelManager {
      *
      * @param options Buttons for dialog options must have EventHandlers
      */
-    public void showDialog(Button... options) {
+    public void showDialog(boolean finished, Button... options) {
 
         //TODO: fix formatting pls i can't deal with this
         dialogBox.getChildren().clear();
@@ -658,11 +655,19 @@ public class LevelManager {
         dialogBox.setMinWidth(400);
         dialogBox.setMinWidth(400);
         dialogBox.setMinHeight(200);
-        BackgroundImage backgroundImg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/LevelFinished.png"))),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundImg);
-        dialogBox.setBackground(background);
+        if (finished){
+            BackgroundImage backgroundImg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/LevelFinished.png"))),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            Background background = new Background(backgroundImg);
+            dialogBox.setBackground(background);
+        } else {
+            BackgroundImage backgroundImg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/GameOver.png"))),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            Background background = new Background(backgroundImg);
+            dialogBox.setBackground(background);
+        }
 
         int buttonHeight = 20;
         int buttonAmount = 1;
@@ -692,56 +697,6 @@ public class LevelManager {
     public void hideDialog() {
         dialogBox.setVisible(false);
         dialogBox.getChildren().clear();
-    }
-
-    /**
-     * Displays a Dialog pane.
-     *
-     * @param options Buttons for dialog options must have EventHandlers
-     */
-    public void showDialogDead(Button... options) {
-
-        //TODO: fix formatting pls i can't deal with this
-        dialogBox.getChildren().clear();
-        dialogBox.setMinHeight(200);
-        dialogBox.setMinWidth(400);
-        dialogBox.setMinWidth(400);
-        dialogBox.setMinHeight(200);
-        BackgroundImage backgroundImg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/GameOver.png"))),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundImg);
-        dialogBox.setBackground(background);
-
-        int buttonHeight = 20;
-        int buttonAmount = 1;
-        int spacing = 10;
-
-        for (Button option : options) {
-
-            option.setPrefWidth(200);
-            option.setMinHeight(buttonHeight);
-            option.setAlignment(Pos.CENTER);
-            option.setLayoutX((dialogBox.getWidth() / 2) - (option.getPrefWidth() / 2));
-            option.setLayoutY(105 + (buttonHeight + spacing) * buttonAmount++);
-
-            dialogBox.getChildren().add(option);
-        }
-
-
-        dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - (dialogBox.getWidth() / 2));
-        dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - (dialogBox.getHeight() / 2));
-        dialogBox.toFront();
-        dialogBox.setVisible(true);
-
-    }
-
-    /*
-    hide Dialog for gameOver
-     */
-    public void hideDialogDead() {
-        dialogBoxDead.setVisible(false);
-        dialogBoxDead.getChildren().clear();
     }
 
 }
