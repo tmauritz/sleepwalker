@@ -1,6 +1,10 @@
-package at.ac.fhcampuswien.sleepwalker.entities;
+package at.ac.fhcampuswien.sleepwalker.level.entities;
 
-import at.ac.fhcampuswien.sleepwalker.*;
+import at.ac.fhcampuswien.sleepwalker.GameManager;
+import at.ac.fhcampuswien.sleepwalker.GameProperties;
+import at.ac.fhcampuswien.sleepwalker.MediaManager;
+import at.ac.fhcampuswien.sleepwalker.level.LevelData;
+import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -9,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 
 public class LevelFinish extends Rectangle {
 
-    private LevelManager levelManager;
+    private final LevelManager levelManager;
     private int currentLevelID;
 
     public LevelFinish(double x, double y, LevelManager currentLevel) {

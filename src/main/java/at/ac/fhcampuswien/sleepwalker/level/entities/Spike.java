@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.sleepwalker.entities;
+package at.ac.fhcampuswien.sleepwalker.level.entities;
 
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import javafx.scene.image.Image;

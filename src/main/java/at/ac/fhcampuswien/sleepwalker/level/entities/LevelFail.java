@@ -1,11 +1,8 @@
-package at.ac.fhcampuswien.sleepwalker.entities;
+package at.ac.fhcampuswien.sleepwalker.level.entities;
 
 import at.ac.fhcampuswien.sleepwalker.GameManager;
-import at.ac.fhcampuswien.sleepwalker.GameProperties;
-import at.ac.fhcampuswien.sleepwalker.LevelData;
-import at.ac.fhcampuswien.sleepwalker.LevelManager;
+import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class LevelFail extends Rectangle {

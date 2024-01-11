@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.sleepwalker.entities;
+package at.ac.fhcampuswien.sleepwalker.level.entities;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;

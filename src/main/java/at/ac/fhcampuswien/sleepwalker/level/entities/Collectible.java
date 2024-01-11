@@ -1,7 +1,6 @@
-package at.ac.fhcampuswien.sleepwalker.entities;
+package at.ac.fhcampuswien.sleepwalker.level.entities;
 
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 

@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker;
 
-import at.ac.fhcampuswien.sleepwalker.entities.Deco;
+import at.ac.fhcampuswien.sleepwalker.level.entities.Deco;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

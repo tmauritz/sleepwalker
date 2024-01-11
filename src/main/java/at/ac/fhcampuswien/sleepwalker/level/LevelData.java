@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.sleepwalker;
+package at.ac.fhcampuswien.sleepwalker.level;
 
 import java.util.HashMap;
 import java.util.Map;
