@@ -77,10 +77,18 @@ public class Level {
         return goal;
     }
 
+    /**
+     *
+     * @return the level width in on-screen pixels
+     */
     public int getWidth(){
         return width;
     }
 
+    /**
+     *
+     * @return the level height in on-screen pixels
+     */
     public int getHeight(){
         return height;
     }
