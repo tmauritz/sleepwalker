@@ -11,10 +11,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class LevelStatus extends Rectangle {
-    private LevelManager levelManager;
+    private final LevelManager levelManager;
     private int currentLevelID;
-    public LevelStatus(double x, double y, LevelManager currentLevel, boolean finished) {
-        if (finished) {
+    public LevelStatus(double x, double y, LevelManager currentLevel) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
         this.setX(x);
@@ -22,10 +21,10 @@ public class LevelStatus extends Rectangle {
         this.setWidth(GameProperties.TILE_UNIT*2);
         this.setHeight(GameProperties.TILE_UNIT*2);
         this.setFill(Color.TRANSPARENT);
-        } else {
-            this.levelManager = currentLevel;
-            currentLevelID = levelManager.getLoadedLevelID();
-        }
+    }
+    public LevelStatus(LevelManager currentLevel) {
+        this.levelManager = currentLevel;
+        currentLevelID = levelManager.getLoadedLevelID();
     }
 
     public void openPortal() {

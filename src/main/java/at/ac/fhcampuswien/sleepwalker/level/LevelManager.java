@@ -333,7 +333,7 @@ public class LevelManager {
         timerTimeline.setCycleCount(Timeline.INDEFINITE);
         timerTimeline.play();
         //game Over exit
-        failLevel = new LevelStatus(0,0, this, false); // double 0 just there for method condition
+        failLevel = new LevelStatus(this);
         currentLevel.getLevelRoot().getChildren().add(failLevel);
         //create Health-Bar
         Image image = MediaManager.loadImage("level/6hearts.png");

@@ -126,7 +126,7 @@ public class Level {
                         collectibles.add(coin);
                         break;
                     case 'F': //level exit
-                        goal = new LevelStatus(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, manager, true);
+                        goal = new LevelStatus(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, manager);
                         levelRoot.getChildren().add(goal);
                         break;
                 }
