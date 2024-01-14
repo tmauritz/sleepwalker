@@ -5,7 +5,7 @@ import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.entities.Collectible;
-import at.ac.fhcampuswien.sleepwalker.level.entities.LevelFail;
+import at.ac.fhcampuswien.sleepwalker.level.entities.LevelStatus;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -43,7 +43,7 @@ public class LevelManager {
     private final Map<KeyCode, Boolean> pressedKeys;
     private Level currentLevel;
     private Timeline updateTimeline;
-    private LevelFail failLevel = null;
+    private LevelStatus failLevel = null;
     private final Pane dialogBox = new Pane();
     private Pane GUIRoot;
     private Pane levelRootCamera;
@@ -333,7 +333,7 @@ public class LevelManager {
         timerTimeline.setCycleCount(Timeline.INDEFINITE);
         timerTimeline.play();
         //game Over exit
-        failLevel = new LevelFail(this);
+        failLevel = new LevelStatus(0,0, this, false); // double 0 just there for method condition
         currentLevel.getLevelRoot().getChildren().add(failLevel);
         //create Health-Bar
         Image image = MediaManager.loadImage("level/6hearts.png");

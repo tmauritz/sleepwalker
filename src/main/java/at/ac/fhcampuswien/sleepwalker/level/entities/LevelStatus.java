@@ -10,13 +10,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-
-public class LevelFinish extends Rectangle {
-
-    private final LevelManager levelManager;
+public class LevelStatus extends Rectangle {
+    private LevelManager levelManager;
     private int currentLevelID;
-
-    public LevelFinish(double x, double y, LevelManager currentLevel) {
+    public LevelStatus(double x, double y, LevelManager currentLevel, boolean finished) {
+        if (finished) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
         this.setX(x);
@@ -24,6 +22,10 @@ public class LevelFinish extends Rectangle {
         this.setWidth(GameProperties.TILE_UNIT*2);
         this.setHeight(GameProperties.TILE_UNIT*2);
         this.setFill(Color.TRANSPARENT);
+        } else {
+            this.levelManager = currentLevel;
+            currentLevelID = levelManager.getLoadedLevelID();
+        }
     }
 
     public void openPortal() {
@@ -51,4 +53,19 @@ public class LevelFinish extends Rectangle {
 
     }
 
+    /**
+     * Is ending the level.
+     */
+    public void failLevel() {
+
+        Button backToMenu = new Button("Back to Main Menu");
+        backToMenu.setOnAction(event -> GameManager.getInstance().showMainMenu());
+
+        Button retryLevel = new Button("Retry Level");
+        retryLevel.setOnAction(event -> GameManager.getInstance().playLevel(currentLevelID));
+        boolean finished = false;
+        levelManager.showDialog(finished, retryLevel, backToMenu);
+
+
+    }
 }

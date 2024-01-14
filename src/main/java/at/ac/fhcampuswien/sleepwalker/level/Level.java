@@ -24,7 +24,7 @@ public class Level {
     private Pane bgRoot = new Pane();
     private Point2D spawn;
     private Player player;
-    private LevelFinish goal;
+    private LevelStatus goal;
 
     public Level(int levelID, LevelManager manager) throws LevelNotLoadedException{
         this.manager = manager;
@@ -71,7 +71,7 @@ public class Level {
         return spawn;
     }
 
-    public LevelFinish Finish(){
+    public LevelStatus Finish(){
         return goal;
     }
 
@@ -126,7 +126,7 @@ public class Level {
                         collectibles.add(coin);
                         break;
                     case 'F': //level exit
-                        goal = new LevelFinish(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, manager);
+                        goal = new LevelStatus(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, manager, true);
                         levelRoot.getChildren().add(goal);
                         break;
                 }
