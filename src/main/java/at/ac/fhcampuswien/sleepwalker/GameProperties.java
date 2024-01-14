@@ -5,7 +5,7 @@ import javafx.scene.input.KeyCode;
 /**
  * GameProperties class stores various constants in one place.
  */
-public class GameProperties {
+public abstract class GameProperties {
     public static final String TITLE = "Sleepwalker";
     public static final String DESCRIPTION = "a TeamTwo platformer";
     public static final double GAME_VERSION = 0.1;
