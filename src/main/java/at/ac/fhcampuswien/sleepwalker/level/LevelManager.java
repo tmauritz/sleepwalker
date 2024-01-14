@@ -532,7 +532,6 @@ public class LevelManager {
         dialogBox.getChildren().clear();
         dialogBox.toFront();
         dialogBox.setVisible(true);
-        //TODO: fix formatting pls i can't deal with this
         dialogBox.setMinHeight(200);
         dialogBox.setMinWidth(400);
         dialogBox.setMinWidth(400);
