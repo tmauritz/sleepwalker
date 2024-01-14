@@ -11,4 +11,5 @@ module at.ac.fhcampuswien.sleepwalker {
     opens at.ac.fhcampuswien.sleepwalker.exceptions to javafx.fxml;
     exports at.ac.fhcampuswien.sleepwalker.level;
     opens at.ac.fhcampuswien.sleepwalker.level to javafx.fxml;
+    exports at.ac.fhcampuswien.sleepwalker.level.entities;
 }

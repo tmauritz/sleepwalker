@@ -25,6 +25,8 @@ public class Level {
     private Point2D spawn;
     private Player player;
     private LevelStatus goal;
+    private int width;
+    private int height;
 
     public Level(int levelID, LevelManager manager) throws LevelNotLoadedException{
         this.manager = manager;
@@ -75,6 +77,14 @@ public class Level {
         return goal;
     }
 
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
     private void loadLevel(int levelId) throws LevelNotLoadedException{
         //TODO: refine level loading
 
@@ -93,10 +103,12 @@ public class Level {
 
         String[] levelData = LevelData.Levels.getOrDefault(levelId, null);
         String[] decoData = LevelData.Levels.getOrDefault(levelId * 100, null);
-        if(levelData == null) throw new LevelNotLoadedException("Unable to load Level " + levelId);
+        if(levelData == null || decoData == null) throw new LevelNotLoadedException("Unable to load Level " + levelId);
         levelRoot.setMinWidth(GameProperties.WIDTH);
         levelRoot.setMinHeight(GameProperties.HEIGHT);
         //process each line and make platforms
+        width = levelData[1].length() * GameProperties.TILE_UNIT;
+        height = levelData.length * GameProperties.TILE_UNIT;
         for(int i = 0; i < levelData.length; i++){
             char[] tiles = levelData[i].toCharArray();
             char[] decoTiles = decoData[i].toCharArray();
