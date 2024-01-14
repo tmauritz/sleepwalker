@@ -491,7 +491,7 @@ public class LevelManager {
         while(iterator.hasNext()){
             Collectible coin = (Collectible) iterator.next();
             if(coin.getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
-                coin.setVisible(false); //TODO: Handle Collected Coin
+                coin.setVisible(false);
                 iterator.remove();
             }
         }
@@ -530,19 +530,20 @@ public class LevelManager {
      * @param options Buttons for dialog options must have EventHandlers
      */
     public void showDialog(boolean finished, Button... options){
-
-        //TODO: fix formatting pls i can't deal with this
         dialogBox.getChildren().clear();
+        dialogBox.toFront();
+        dialogBox.setVisible(true);
+        //TODO: fix formatting pls i can't deal with this
         dialogBox.setMinHeight(200);
         dialogBox.setMinWidth(400);
         dialogBox.setMinWidth(400);
         dialogBox.setMinHeight(200);
         if(finished){
-            BackgroundImage backgroundImg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/LevelFinished.png"))), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("level/background/LevelFinished.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImg);
             dialogBox.setBackground(background);
         } else{
-            BackgroundImage backgroundImg = new BackgroundImage(new Image(String.valueOf(Sleepwalker.class.getResource("level/background/GameOver.png"))), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("level/background/GameOver.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImg);
             dialogBox.setBackground(background);
         }
@@ -556,16 +557,14 @@ public class LevelManager {
             option.setPrefWidth(200);
             option.setMinHeight(buttonHeight);
             option.setAlignment(Pos.CENTER);
-            option.setLayoutX((dialogBox.getWidth() / 2) - (option.getPrefWidth() / 2));
+            option.setLayoutX(100);
             option.setLayoutY(110 + (buttonHeight + spacing) * buttonAmount++);
 
             dialogBox.getChildren().add(option);
         }
 
-        dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - (dialogBox.getWidth() / 2));
-        dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - (dialogBox.getHeight() / 2));
-        dialogBox.toFront();
-        dialogBox.setVisible(true);
+        dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - 200);
+        dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - 100);
 
     }
 
