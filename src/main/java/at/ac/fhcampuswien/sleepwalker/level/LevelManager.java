@@ -123,7 +123,6 @@ public class LevelManager {
             //Player looses one life if it touches a spike and respawns at the spawn
             for(Node spike : currentLevel.Spikes()){
                 if(currentLevel.Player().getBoundsInParent().intersects(spike.getBoundsInParent())){
-                    setHealth(getHealth() - 1);
                     if(getHealth() > 0){
                         currentLevel.Player().die();
                     }
