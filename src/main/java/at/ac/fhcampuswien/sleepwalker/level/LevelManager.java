@@ -124,11 +124,7 @@ public class LevelManager {
             for(Node spike : currentLevel.Spikes()){
                 if(currentLevel.Player().getBoundsInParent().intersects(spike.getBoundsInParent())){
                     setHealth(getHealth() - 1);
-                    if(getHealth() == 0){
-                        Image image0 = MediaManager.loadImage("level/0hearts.png");
-                        currentHearts.setImage(image0);
-                        failLevel.failLevel();
-                    } else{
+                    if(getHealth() > 0){
                         currentLevel.Player().die();
                     }
                     return;
@@ -194,11 +190,7 @@ public class LevelManager {
             for(Node spike : currentLevel.Spikes()){
                 if(currentLevel.Player().getBoundsInParent().intersects(spike.getBoundsInParent())){
                     setHealth(getHealth() - 1);
-                    if(getHealth() == 0){
-                        Image image0 = MediaManager.loadImage("level/0hearts.png");
-                        currentHearts.setImage(image0);
-                        failLevel.failLevel();
-                    } else{
+                    if(getHealth() > 0){
                         currentLevel.Player().die();
                     }
                     return;
