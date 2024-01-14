@@ -129,11 +129,9 @@ public class LevelManager {
                         currentHearts.setImage(image0);
                         failLevel.failLevel();
                     } else{
-                        levelRootCamera.setLayoutX(currentLevel.getSpawn().getX());
-                        levelRootCamera.setLayoutY(currentLevel.getSpawn().getY());
-                        currentLevel.Player().setTranslateX(currentLevel.getSpawn().getX());
-                        currentLevel.Player().setTranslateY(currentLevel.getSpawn().getY());
+                        currentLevel.Player().die();
                     }
+                    return;
                 }
             }
 
@@ -201,11 +199,9 @@ public class LevelManager {
                         currentHearts.setImage(image0);
                         failLevel.failLevel();
                     } else{
-                        levelRootCamera.setLayoutX(currentLevel.getSpawn().getX());
-                        levelRootCamera.setLayoutY(currentLevel.getSpawn().getY());
-                        currentLevel.Player().setTranslateX(currentLevel.getSpawn().getX());
-                        currentLevel.Player().setTranslateY(currentLevel.getSpawn().getY());
+                        currentLevel.Player().die();
                     }
+                    return;
                 }
             }
             if(currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
@@ -458,7 +454,6 @@ public class LevelManager {
      */
     private void loadGameOver(){
         failLevel.failLevel();
-        timerTimeline.stop();
     }
 
     private void enforceFrameBounds(){
@@ -526,8 +521,6 @@ public class LevelManager {
 
         //TODO: keep player from exiting frame (Player can fall down)
         //TODO: scrolling
-        //TODO: finish conditions
-
     }
 
     public boolean levelFinished(){
@@ -582,6 +575,33 @@ public class LevelManager {
         dialogBox.toFront();
         dialogBox.setVisible(true);
 
+    }
+
+    /**
+     * Pauses the level update cycle.
+     */
+    public void pause(){
+        updateTimeline.pause();
+        timerTimeline.pause();
+    }
+
+    /**
+     * Resumes the level update cycle.
+     */
+    public void resume(){
+        updateTimeline.play();
+        timerTimeline.play();
+    }
+
+    /**
+     * Respawns the player at the original spawn point.
+     */
+    public void respawn(){
+        levelRootCamera.setLayoutX(currentLevel.getSpawn().getX());
+        levelRootCamera.setLayoutY(currentLevel.getSpawn().getY());
+        currentLevel.Player().setTranslateX(currentLevel.getSpawn().getX());
+        currentLevel.Player().setTranslateY(currentLevel.getSpawn().getY());
+        resume();
     }
 
     /**

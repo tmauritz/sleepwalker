@@ -108,7 +108,7 @@ public class Level {
                         levelRoot.getChildren().add(platform);
                         break;
                     case 's': //player spawn
-                        player = new Player(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10);
+                        player = new Player(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, manager);
                         //set spawn for player
                         player.setTranslateX(GameProperties.TILE_UNIT * j);
                         player.setTranslateY(GameProperties.TILE_UNIT * i);
