@@ -2,14 +2,12 @@ package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.animation.FadeTransition;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -23,9 +21,9 @@ import java.util.Map;
  */
 public class GameManager {
     private static final Map<String, Scene> sceneLibrary = new HashMap<>();
-    private Stage stageRoot;
+    private final Stage stageRoot;
     private static GameManager gameManager;
-    private LevelManager levelManager;
+    private final LevelManager levelManager;
 
     private GameManager(Stage stageRoot) {
         this.stageRoot = stageRoot;
@@ -134,13 +132,15 @@ public class GameManager {
      * @param levelId the level to be played
      */
     public void playLevel(int levelId) {
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), stageRoot.getScene().getRoot());
+        Scene previousScene = stageRoot.getScene();
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), previousScene.getRoot());
         fadeOut.setFromValue(100);
         fadeOut.setToValue(0);
         fadeOut.setOnFinished(t -> {
             try{
                 levelManager.setGameOverStatus(false);
                 stageRoot.setScene(levelManager.loadLevel(levelId));
+                previousScene.getRoot().setOpacity(100); //reset Opacity of previous Root Node
                 MediaManager.playMusic("audio/level.mp3");
                 levelManager.startLevel();
             } catch(LevelNotLoadedException e){
