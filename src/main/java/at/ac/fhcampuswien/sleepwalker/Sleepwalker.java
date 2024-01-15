@@ -12,7 +12,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class Sleepwalker extends Application {
@@ -21,7 +20,7 @@ public class Sleepwalker extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
         String windowTitle = GameProperties.TITLE + " v" + GameProperties.GAME_VERSION;
         primaryStage.setTitle(windowTitle);
         primaryStage.setMaxWidth(GameProperties.WIDTH);
@@ -47,7 +46,7 @@ public class Sleepwalker extends Application {
         primaryStage.setScene(videoIntro);
         fadeOut.setFromValue(100);
         fadeOut.setToValue(0);
-        videoPlayer.setOnEndOfMedia(() -> fadeOut.play());
+        videoPlayer.setOnEndOfMedia(fadeOut::play);
         fadeOut.setOnFinished(t -> GameManager.getInstance(primaryStage).showMainMenu());
         primaryStage.show();
         videoPlayer.play();

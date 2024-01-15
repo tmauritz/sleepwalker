@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class GameManager {
     private static final Map<String, Scene> sceneLibrary = new HashMap<>();
-    private static Stage stageRoot;
+    private Stage stageRoot;
     private static MediaPlayer backgroundMusic;
 
     private static GameManager gameManager;
@@ -113,7 +113,7 @@ public class GameManager {
      * if the world map has been initialized before, the same world map will be displayed
      * to prevent multiple world maps existing at once
      */
-    public static void showWorldMap() {
+    public void showWorldMap() {
         Scene worldMap = sceneLibrary.get("worldMap");
         if (worldMap == null) {
             //load world map if not present
