@@ -2,7 +2,6 @@ package at.ac.fhcampuswien.sleepwalker;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;

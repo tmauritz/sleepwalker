@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -162,19 +164,24 @@ public class GameManager {
     }
 
     /**
-     * Loads and starts the level.
-     *
+     * Loads and starts the level with a fade in/out transition.
      * @param levelId the level to be played
      */
     public void playLevel(int levelId) {
         stopBackgroundMusic();
-        try{
-            stageRoot.setScene(levelManager.loadLevel(levelId));
-            stageRoot.show();
-            levelManager.startLevel();
-        } catch (LevelNotLoadedException e) {
-            //TODO: figure out what to do
-            throw new RuntimeException(e);
-        }
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), stageRoot.getScene().getRoot());
+        fadeOut.setFromValue(100);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(t -> {
+            try{
+                stageRoot.setScene(levelManager.loadLevel(levelId));
+                levelManager.startLevel();
+            } catch(LevelNotLoadedException e){
+                throw new RuntimeException(e);
+            }
+        });
+
+        fadeOut.play();
+
     }
 }
