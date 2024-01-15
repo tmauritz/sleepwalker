@@ -26,9 +26,15 @@ public abstract class MediaManager {
         else MediaManager.sfxVolume = volume;
     }
 
+    /**
+     * Sets the global volume of music
+     * @param musicVolume music volume
+     */
     public static void setMusicVolume(double musicVolume){
-        MediaManager.musicVolume = musicVolume;
-        if(musicPlayer != null) musicPlayer.setVolume(musicVolume);
+        if(musicVolume > 100) MediaManager.musicVolume = 100;
+        else if (musicVolume < 0) MediaManager.musicVolume = 0;
+        else MediaManager.musicVolume = musicVolume;
+        if(musicPlayer != null) musicPlayer.setVolume(MediaManager.musicVolume);
     }
 
     /**
