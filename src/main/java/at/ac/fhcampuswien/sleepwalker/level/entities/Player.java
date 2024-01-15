@@ -34,6 +34,7 @@ public class Player extends Rectangle {
 
     public void die(){
         levelManager.pause();
+        MediaManager.playSound("audio/sound/impact.wav");
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), this);
         fadeTransition.setFromValue(100);
         fadeTransition.setToValue(0);
