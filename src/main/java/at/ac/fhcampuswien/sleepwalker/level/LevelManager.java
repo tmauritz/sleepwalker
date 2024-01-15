@@ -38,7 +38,6 @@ import java.util.Map;
 public class LevelManager {
 
     private final Label debugInfo = new Label();
-    private final Label GUI = new Label("TOP GUI");
     private final Map<KeyCode, Boolean> pressedKeys;
     private Level currentLevel;
     private Timeline updateTimeline;
@@ -314,7 +313,6 @@ public class LevelManager {
         dialogBox.setVisible(false);
         debugInfo.setVisible(false);
         GUIRoot.getChildren().add(debugInfo);
-        GUIRoot.getChildren().add(GUI);
         GUIRoot.getChildren().add(dialogBox);
 
         currentLevel = new Level(levelId, this);
@@ -399,8 +397,6 @@ public class LevelManager {
         debugInfo.setTextFill(Color.WHITE);
         debugInfo.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        GUI.setLayoutX((double) GameProperties.WIDTH / 2);
-        GUI.setLayoutY(10);
         debugInfo.setTextFill(Color.WHITE);
         debugInfo.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
@@ -472,8 +468,6 @@ public class LevelManager {
      */
     private void update(){
         debugInfo.setText("FRAME: " + frameCounter++ + System.lineSeparator() + "Player: (" + currentLevel.Player().getTranslateX() + " | " + currentLevel.Player().getTranslateY() + ")" + System.lineSeparator() + "VELOCITY: " + playerVelocity.toString());
-
-        GUI.setText("Collectibles left: " + currentLevel.Collectibles().size());
 
         //TODO: fix collision bugs
         //process player input
