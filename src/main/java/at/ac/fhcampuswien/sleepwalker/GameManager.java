@@ -24,8 +24,6 @@ import java.util.Map;
 public class GameManager {
     private static final Map<String, Scene> sceneLibrary = new HashMap<>();
     private Stage stageRoot;
-    private static MediaPlayer backgroundMusic;
-
     private static GameManager gameManager;
     private LevelManager levelManager;
 
@@ -41,37 +39,6 @@ public class GameManager {
     public static GameManager getInstance(Stage stageRoot) {
         if (gameManager == null) gameManager = new GameManager(stageRoot);
         return gameManager;
-    }
-
-    /**
-     * Exposes the background media player for volume control, muting etc.
-     *
-     * @return MediaPlayer
-     */
-    public static MediaPlayer getBackgroundMusic() {
-        return backgroundMusic;
-    }
-
-    /**
-     * Plays background media (music) in a loop.
-     *
-     * @param media media to be played in the background
-     */
-    public static void playBackgroundMusic(Media media) {
-        if (backgroundMusic != null) {
-            backgroundMusic.setMute(true);
-        }
-        backgroundMusic = new MediaPlayer(media);
-        backgroundMusic.setOnEndOfMedia(() -> playBackgroundMusic(backgroundMusic.getMedia()));
-        backgroundMusic.setVolume(0);
-        backgroundMusic.play();
-    }
-
-    /**
-     * Stops the background media player.
-     */
-    public static void stopBackgroundMusic() {
-        backgroundMusic.stop();
     }
 
     /**
@@ -92,8 +59,7 @@ public class GameManager {
         }
         stageRoot.setScene(mainMenu);
         stageRoot.show();
-        Media mainTheme = MediaManager.loadMedia("audio/maintheme.mp3");
-        GameManager.playBackgroundMusic(mainTheme);
+        MediaManager.playMusic("audio/maintheme.mp3");
     }
 
     public void showHowToPlay() {
@@ -168,13 +134,13 @@ public class GameManager {
      * @param levelId the level to be played
      */
     public void playLevel(int levelId) {
-        stopBackgroundMusic();
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), stageRoot.getScene().getRoot());
         fadeOut.setFromValue(100);
         fadeOut.setToValue(0);
         fadeOut.setOnFinished(t -> {
             try{
                 stageRoot.setScene(levelManager.loadLevel(levelId));
+                MediaManager.playMusic("audio/level.mp3");
                 levelManager.startLevel();
             } catch(LevelNotLoadedException e){
                 throw new RuntimeException(e);

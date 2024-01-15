@@ -3,15 +3,18 @@ package at.ac.fhcampuswien.sleepwalker;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class MediaManager {
+public abstract class MediaManager {
     private static Map<String, Image> images = new HashMap<>();
     private static Map<String, Media> medias = new HashMap<>();
+    private static MediaPlayer musicPlayer;
     private static double sfxVolume = 50;
+    private static double musicVolume = 50;
 
     /**
      * Sets the global volume of all SFX.
@@ -23,15 +26,37 @@ public class MediaManager {
         else MediaManager.sfxVolume = volume;
     }
 
+    public static void setMusicVolume(double musicVolume){
+        MediaManager.musicVolume = musicVolume;
+        if(musicPlayer != null) musicPlayer.setVolume(musicVolume);
+    }
+
     /**
      * Plays an SFX sound at the global volume.
-     * @param name sound to be played
+     * @param name path to the sfx file
      */
     public static void playSoundFX(String name){
         Media sound = loadMedia(name);
         MediaPlayer soundPlayer = new MediaPlayer(sound);
         soundPlayer.setVolume(sfxVolume);
         soundPlayer.play();
+    }
+
+    /**
+     * Plays background music at the global music volume.
+     *
+     * @param name path to the music file
+     */
+    public static void playMusic(String name){
+        Media music = loadMedia(name);
+        if(musicPlayer != null) musicPlayer.stop();
+        musicPlayer = new MediaPlayer(music);
+        musicPlayer.setVolume(musicVolume);
+        musicPlayer.setOnEndOfMedia(() -> {
+            musicPlayer.seek(Duration.ZERO);
+            musicPlayer.play();
+        });
+        musicPlayer.play();
     }
 
     /**

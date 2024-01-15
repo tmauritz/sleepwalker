@@ -76,14 +76,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void onToggleMusic(ActionEvent actionEvent) {
-        MediaPlayer music = GameManager.getBackgroundMusic();
-        if (music.isMute()) {
-            music.setMute(false);
-            musicToggle.setText("Mute");
-        } else {
-            music.setMute(true);
-            musicToggle.setText("Unmute");
-        }
+        //TODO: Options Menu
     }
 
     public void showHowToPlay(ActionEvent actionEvent) {
