@@ -22,6 +22,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -48,6 +49,7 @@ public class LevelManager {
     private int loadedLevelID;
     private long frameCounter;
     private Point2D playerVelocity;
+    private Point2D enemyVelocity;
     private boolean playerCanJump;
     private Scene loadedLevel;
     private ImageView currentHearts;
@@ -57,22 +59,49 @@ public class LevelManager {
     private Timeline timerTimeline;
     private long startTime;
     private Label timerLabel;
+    private int enemyMovementControl;
+    private boolean enemyDirection = false;
     private boolean portalOpen = false;
+    private boolean gameOverStatus = false;
 
     public LevelManager(){
         pressedKeys = new HashMap<>();
         playerVelocity = new Point2D(0, 0);
+        enemyVelocity = new Point2D(0, 0);
         playerCanJump = true;
+    }
+    public boolean isGameOverStatus() {
+        return gameOverStatus;
+    }
+
+    public void setGameOverStatus(boolean gameOverStatus) {
+        this.gameOverStatus = gameOverStatus;
+    }
+
+    public boolean isEnemyDirection() {
+        return enemyDirection;
+    }
+
+    public void setEnemyDirection(boolean enemyDirection) {
+        this.enemyDirection = enemyDirection;
+    }
+
+    public int getEnemyMovementControl() {
+        return enemyMovementControl;
+    }
+
+    public void setEnemyMovementControl(int enemyMovementControl) {
+        this.enemyMovementControl = enemyMovementControl;
     }
 
     /*
-    Set the health of the player
+    Get the health of the player
      */
     public int getHealth(){
         return health;
     }
     /*
-    Get the health of the player
+    Set the health of the player
      */
 
     public void setHealth(int health){
@@ -115,15 +144,6 @@ public class LevelManager {
                         currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() - 1);
                     } else{
                         currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() + 1);
-                    }
-                    return;
-                }
-            }
-            //Player looses one life if it touches a spike and respawns at the spawn
-            for(Node spike : currentLevel.Spikes()){
-                if(currentLevel.Player().getBoundsInParent().intersects(spike.getBoundsInParent())){
-                    if(getHealth() > 0){
-                        currentLevel.Player().die();
                     }
                     return;
                 }
@@ -189,6 +209,16 @@ public class LevelManager {
                 if(currentLevel.Player().getBoundsInParent().intersects(spike.getBoundsInParent())){
                     setHealth(getHealth() - 1);
                     if(getHealth() > 0){
+                        currentLevel.Player().die();
+                    }
+                    return;
+                }
+            }
+            //Player losses one life if it touches an enemy and respawn at the spawn.
+            if (currentLevel.isEnemyExist()) {
+                if (currentLevel.Player().getBoundsInParent().intersects(currentLevel.Enemy().getBoundsInParent())) {
+                    setHealth(getHealth() - 1);
+                    if (getHealth() > 0) {
                         currentLevel.Player().die();
                     }
                     return;
@@ -307,6 +337,7 @@ public class LevelManager {
         portalOpen = false;
         loadedLevelID = levelId;
         setHealth(6);
+        setEnemyMovementControl(300);
 
         GUIRoot = new Pane();
         GUIRoot.setBackground(Background.EMPTY);
@@ -440,7 +471,31 @@ public class LevelManager {
     Is showing GameOver Screen
      */
     private void loadGameOver(){
+        setGameOverStatus(true);
+        //currentLevel.Enemy().setTranslateX(currentLevel.getEnemySpawn().getX());
+        //currentLevel.Enemy().setTranslateY(currentLevel.getEnemySpawn().getY());
         failLevel.failLevel();
+    }
+    private void moveEnemyX() {
+        if (!isGameOverStatus()) {
+            //EnemyDirection = true --> Moving Right
+            //EnemyDirection = false --> Moving Left
+            if (getEnemyMovementControl() == 0) {
+                setEnemyDirection(true);
+                currentLevel.Enemy().setCharTexture(currentLevel.Enemy().getIdleRight());
+            }
+            if (getEnemyMovementControl() == 300) {
+                setEnemyDirection(false);
+                currentLevel.Enemy().setCharTexture(currentLevel.Enemy().getIdleLeft());
+            }
+            if (isEnemyDirection()) {
+                currentLevel.Enemy().setTranslateX(currentLevel.Enemy().getTranslateX() + 1);
+                setEnemyMovementControl(getEnemyMovementControl() + 1);
+            } else {
+                currentLevel.Enemy().setTranslateX(currentLevel.Enemy().getTranslateX() - 1);
+                setEnemyMovementControl(getEnemyMovementControl() - 1);
+            }
+        }
     }
 
     private void enforceFrameBounds(){
@@ -501,6 +556,9 @@ public class LevelManager {
         if(!portalOpen && levelFinished()){
             currentLevel.Finish().openPortal();
             portalOpen = true;
+        }
+        if (currentLevel.isEnemyExist()) {
+            moveEnemyX();
         }
         enforceFrameBounds();
         updateHealthPicture();

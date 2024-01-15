@@ -24,9 +24,19 @@ public class Level {
     private Pane bgRoot = new Pane();
     private Point2D spawn;
     private Player player;
+    private Enemy enemy;
     private LevelStatus goal;
     private int width;
     private int height;
+    private boolean enemyExist;
+
+    public boolean isEnemyExist() {
+        return enemyExist;
+    }
+
+    public void setEnemyExist(boolean enemyExist) {
+        this.enemyExist = enemyExist;
+    }
 
     public Level(int levelID, LevelManager manager) throws LevelNotLoadedException{
         this.manager = manager;
@@ -67,6 +77,9 @@ public class Level {
 
     public Player Player(){
         return player;
+    }
+    public Enemy Enemy(){
+        return enemy;
     }
 
     public Point2D getSpawn(){
@@ -109,6 +122,8 @@ public class Level {
         levelRoot.setBackground(Background.EMPTY);
         levelRoot.getChildren().add(decoRoot);
 
+        setEnemyExist(false);
+
         String[] levelData = LevelData.Levels.getOrDefault(levelId, null);
         String[] decoData = LevelData.Levels.getOrDefault(levelId * 100, null);
         if(levelData == null || decoData == null) throw new LevelNotLoadedException("Unable to load Level " + levelId);
@@ -149,6 +164,15 @@ public class Level {
                         goal = new LevelStatus(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, manager);
                         levelRoot.getChildren().add(goal);
                         break;
+                    case 'e': //enemy spawn
+                        enemy = new Enemy(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, manager);
+                        //set spawn for enemy
+                        enemy.setTranslateX(GameProperties.TILE_UNIT * j);
+                        enemy.setTranslateY(GameProperties.TILE_UNIT * i);
+                        setEnemyExist(true);
+                        levelRoot.getChildren().add(enemy);
+                        break;
+
                 }
 
                 if(decoTiles[j] != ' '){

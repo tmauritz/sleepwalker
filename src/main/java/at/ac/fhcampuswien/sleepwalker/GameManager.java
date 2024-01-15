@@ -2,12 +2,12 @@ package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
-import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.animation.FadeTransition;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -139,6 +139,7 @@ public class GameManager {
         fadeOut.setToValue(0);
         fadeOut.setOnFinished(t -> {
             try{
+                levelManager.setGameOverStatus(false);
                 stageRoot.setScene(levelManager.loadLevel(levelId));
                 MediaManager.playMusic("audio/level.mp3");
                 levelManager.startLevel();
