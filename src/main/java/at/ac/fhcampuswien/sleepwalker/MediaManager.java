@@ -11,26 +11,26 @@ import java.util.Objects;
 public class MediaManager {
     private static Map<String, Image> images = new HashMap<>();
     private static Map<String, Media> medias = new HashMap<>();
-    private static double volume = 50;
+    private static double sfxVolume = 50;
 
     /**
      * Sets the global volume of all SFX.
      * @param volume SFX volume
      */
     public static void setSoundVolume(double volume){
-        if(volume > 100) MediaManager.volume = 100;
-        else if (volume < 0) MediaManager.volume = 0;
-        else MediaManager.volume = volume;
+        if(volume > 100) MediaManager.sfxVolume = 100;
+        else if (volume < 0) MediaManager.sfxVolume = 0;
+        else MediaManager.sfxVolume = volume;
     }
 
     /**
      * Plays an SFX sound at the global volume.
      * @param name sound to be played
      */
-    public static void playSound(String name){
+    public static void playSoundFX(String name){
         Media sound = loadMedia(name);
         MediaPlayer soundPlayer = new MediaPlayer(sound);
-        soundPlayer.setVolume(volume);
+        soundPlayer.setVolume(sfxVolume);
         soundPlayer.play();
     }
 

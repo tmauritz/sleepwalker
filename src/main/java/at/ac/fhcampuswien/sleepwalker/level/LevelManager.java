@@ -2,7 +2,6 @@ package at.ac.fhcampuswien.sleepwalker.level;
 
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
-import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.entities.Collectible;
 import at.ac.fhcampuswien.sleepwalker.level.entities.LevelStatus;
@@ -20,7 +19,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -84,7 +82,7 @@ public class LevelManager {
 
     private void jumpPlayer(){
         if(playerCanJump){
-            MediaManager.playSound("audio/sound/jump.wav");
+            MediaManager.playSoundFX("audio/sound/jump.wav");
             playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
             playerCanJump = false;
         }
@@ -492,7 +490,7 @@ public class LevelManager {
         while(iterator.hasNext()){
             Collectible coin = (Collectible) iterator.next();
             if(coin.getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
-                MediaManager.playSound("audio/sound/coin.wav");
+                MediaManager.playSoundFX("audio/sound/coin.wav");
                 coin.setVisible(false);
                 iterator.remove();
             }
