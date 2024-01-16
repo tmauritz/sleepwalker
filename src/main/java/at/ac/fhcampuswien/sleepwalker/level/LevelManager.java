@@ -8,6 +8,7 @@ import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.entities.Collectible;
 import at.ac.fhcampuswien.sleepwalker.level.entities.LevelStatus;
+import at.ac.fhcampuswien.sleepwalker.level.entities.PowerUpHealth;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -556,6 +557,21 @@ public class LevelManager {
                 MediaManager.playSoundFX("audio/sound/coin.wav");
                 coin.setVisible(false);
                 iterator.remove();
+            }
+        }
+
+        Iterator<Node> iteratorHealth = currentLevel.PowerUpHealth().iterator();
+        while(iteratorHealth.hasNext()){
+            PowerUpHealth powerUpHealth = (PowerUpHealth) iteratorHealth.next();
+            if(powerUpHealth.getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
+                MediaManager.playSoundFX("audio/sound/coin.wav");
+                if (getHealth() < 5) {
+                    setHealth(getHealth() + 2);
+                } else if (getHealth() == 5) {
+                    setHealth(getHealth() + 1);
+                }
+                powerUpHealth.setVisible(false);
+                iteratorHealth.remove();
             }
         }
 

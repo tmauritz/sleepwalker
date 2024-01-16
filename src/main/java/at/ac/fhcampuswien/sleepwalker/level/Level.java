@@ -18,6 +18,7 @@ public class Level {
     private final List<Node> platforms;
     private final List<Node> spikes;
     private final List<Node> collectibles;
+    private final List<Node> powerUpHealth;
     private final List<Node> decoration;
     private Pane levelRoot = new Pane();
     private Pane decoRoot = new Pane();
@@ -43,6 +44,7 @@ public class Level {
         platforms = new ArrayList<>();
         spikes = new ArrayList<>();
         collectibles = new ArrayList<>();
+        powerUpHealth = new ArrayList<>();
         decoration = new ArrayList<>();
         loadLevel(levelID);
     }
@@ -57,6 +59,10 @@ public class Level {
 
     public List<Node> Collectibles(){
         return collectibles;
+    }
+
+    public List<Node> PowerUpHealth(){
+        return powerUpHealth;
     }
 
     public List<Node> Decoration(){
@@ -159,6 +165,11 @@ public class Level {
                         Collectible coin = new Collectible(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, GameProperties.TILE_UNIT, GameProperties.TILE_UNIT);
                         levelRoot.getChildren().add(coin);
                         collectibles.add(coin);
+                        break;
+                    case 'h': //PowerUp - Health
+                        PowerUpHealth health = new PowerUpHealth(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, GameProperties.TILE_UNIT, GameProperties.TILE_UNIT);
+                        levelRoot.getChildren().add(health);
+                        powerUpHealth.add(health);
                         break;
                     case 'F': //level exit
                         goal = new LevelStatus(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, manager);
