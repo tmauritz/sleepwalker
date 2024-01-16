@@ -157,9 +157,14 @@ public class Level {
                         levelRoot.getChildren().add(player);
                         break;
                     case '^': //spikes
-                        Spike spike = new Spike(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, GameProperties.TILE_UNIT, GameProperties.TILE_UNIT);
+                        Spike spike = new Spike(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, GameProperties.TILE_UNIT, GameProperties.TILE_UNIT, false);
                         spikes.add(spike);
                         levelRoot.getChildren().add(spike);
+                        break;
+                    case 'w': //spikes
+                        Spike spike2 = new Spike(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, GameProperties.TILE_UNIT, GameProperties.TILE_UNIT, true);
+                        spikes.add(spike2);
+                        levelRoot.getChildren().add(spike2);
                         break;
                     case 'c': //coins
                         Collectible coin = new Collectible(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, GameProperties.TILE_UNIT, GameProperties.TILE_UNIT);

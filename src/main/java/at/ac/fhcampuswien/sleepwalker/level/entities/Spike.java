@@ -11,16 +11,21 @@ import javafx.scene.shape.Rectangle;
         * @param y
         * @param width
         * @param height
+        * Source wings: https://www.deviantart.com/luis-bello/art/Wings-for-Guihena-390558334
         */
 
 public class Spike extends Rectangle {
-    public Spike(double x, double y, double width, double height) {
+    public Spike(double x, double y, double width, double height, boolean wings) {
         super();
         setTranslateX(x);
         setTranslateY(y);
         setWidth(width);
         setHeight(height);
-        this.setFill(new ImagePattern(MediaManager.loadImage("level/Spike_Wings.gif")));
+        if (wings) {
+            this.setFill(new ImagePattern(MediaManager.loadImage("level/Spike_Wings.gif")));
+        } else {
+            this.setFill(new ImagePattern(MediaManager.loadImage("level/Spike.png")));
+        }
     }
 
 }

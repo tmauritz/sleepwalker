@@ -11,7 +11,6 @@ import javafx.scene.shape.Rectangle;
  * @param y
  * @param width
  * @param height
- * Source wings: https://www.deviantart.com/luis-bello/art/Wings-for-Guihena-390558334
  */
 
 public class PowerUpHealth extends Rectangle {
