@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker.level;
 
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
+import at.ac.fhcampuswien.sleepwalker.controller.MainMenuController;
 import at.ac.fhcampuswien.sleepwalker.level.Level;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
@@ -28,6 +29,8 @@ import javafx.scene.media.MediaPlayer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import static at.ac.fhcampuswien.sleepwalker.GameManager.getInstance;
 
 /**
  * LevelManager class <br>
@@ -64,6 +67,8 @@ public class LevelManager {
     private boolean enemyDirection = false;
     private boolean portalOpen = false;
     private boolean gameOverStatus = false;
+    private boolean isPaused =false;
+    private Pane pauseMenu;
 
     public LevelManager(){
         pressedKeys = new HashMap<>();
@@ -439,6 +444,12 @@ public class LevelManager {
                 toggleDebug();
             }
         });
+        loadedLevel.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                togglePause();
+            }
+            pressedKeys.put(keyEvent.getCode(), true);
+        });
         loadedLevel.setOnKeyReleased(keypress -> pressedKeys.put(keypress.getCode(), false));
 
         Duration FPS = Duration.millis((double) 1000 / GameProperties.FPS); //FPS
@@ -655,4 +666,39 @@ public class LevelManager {
         dialogBox.getChildren().clear();
     }
 
+    public void togglePause() {
+        isPaused = !isPaused;
+        if (isPaused) {
+            pause();
+            showPauseMenu();
+        } else {
+            hidePauseMenu();
+            resume();
+        }
+    }
+
+    private void showPauseMenu() {
+        pauseMenu = new Pane();
+        pauseMenu.setLayoutX(100);
+        pauseMenu.setLayoutY(100);
+
+        Button resumeButton = new Button("Resume");
+        resumeButton.setOnAction(e -> togglePause());
+        resumeButton.setLayoutX(50);
+        resumeButton.setLayoutY(20);
+
+        Button mainMenuButton = new Button("MainMenu");
+        mainMenuButton.setOnAction(e -> getInstance().showMainMenu());
+        mainMenuButton.setLayoutX(50);
+        mainMenuButton.setLayoutY(70);
+
+        pauseMenu.getChildren().addAll(resumeButton, mainMenuButton);
+
+        GUIRoot.getChildren().add(pauseMenu);
+
+    }
+    private void hidePauseMenu() {
+        GUIRoot.getChildren().remove(pauseMenu);
+
+    }
 }
