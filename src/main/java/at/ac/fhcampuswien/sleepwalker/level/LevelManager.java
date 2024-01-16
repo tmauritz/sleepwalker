@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker.level;
 
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
+import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import at.ac.fhcampuswien.sleepwalker.controller.MainMenuController;
 import at.ac.fhcampuswien.sleepwalker.level.Level;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
@@ -679,23 +680,34 @@ public class LevelManager {
 
     private void showPauseMenu() {
         pauseMenu = new Pane();
-        pauseMenu.setLayoutX(100);
-        pauseMenu.setLayoutY(100);
+        pauseMenu.setStyle("-fx-background-color: rgba(0,0,0,0.16);");
+        pauseMenu.setPrefSize(300, 200);
+        pauseMenu.setLayoutX((double) (GameProperties.WIDTH - 300) / 2);
+        pauseMenu.setLayoutY((double) (GameProperties.HEIGHT - 300) / 2);
+
+        VBox menuBox = new VBox(10);
+        menuBox.setAlignment(Pos.CENTER);
+        menuBox.setLayoutX(50);
+        menuBox.setLayoutY(50);
 
         Button resumeButton = new Button("Resume");
+        resumeButton.setPrefSize(200, 30);
+        resumeButton.getStyleClass().add("button");
         resumeButton.setOnAction(e -> togglePause());
         resumeButton.setLayoutX(50);
         resumeButton.setLayoutY(20);
 
         Button mainMenuButton = new Button("MainMenu");
+        mainMenuButton.setPrefSize(200, 30);
+        mainMenuButton.getStyleClass().add("button");
         mainMenuButton.setOnAction(e -> getInstance().showMainMenu());
         mainMenuButton.setLayoutX(50);
-        mainMenuButton.setLayoutY(70);
+        mainMenuButton.setLayoutY(120);
 
         pauseMenu.getChildren().addAll(resumeButton, mainMenuButton);
-
+        pauseMenu.getChildren().add(menuBox);
+        pauseMenu.getStylesheets().add((String.valueOf(Sleepwalker.class.getResource("ui/styles.css"))));
         GUIRoot.getChildren().add(pauseMenu);
-
     }
     private void hidePauseMenu() {
         GUIRoot.getChildren().remove(pauseMenu);
