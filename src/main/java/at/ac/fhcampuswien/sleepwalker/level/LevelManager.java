@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.sleepwalker.level;
 
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
+import at.ac.fhcampuswien.sleepwalker.level.Level;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.entities.Collectible;
@@ -400,19 +401,19 @@ public class LevelManager {
         //Camera movement X Y
         currentLevel.Player().translateXProperty().addListener((observable, oldValue, newValue) -> {
             int offset = newValue.intValue();
-            if(offset > 300 && offset < GameProperties.WIDTH){
+            if(offset > 300 && offset < currentLevel.getWidth()){
                 levelRootCamera.setLayoutX(-(offset - 300));
             } else if(offset <= 300){
                 levelRootCamera.setLayoutX(0);
             } else{
-                levelRootCamera.setLayoutX(-(GameProperties.WIDTH - 600));
+                levelRootCamera.setLayoutX(-(currentLevel.getWidth() - 600));
             }
 
         });
         currentLevel.Player().translateYProperty().addListener((observable, oldValue, newValue) -> {
             int offset = newValue.intValue();
-            int maxYOffset = GameProperties.HEIGHT - 600;
-            if(offset > 300 && offset < GameProperties.HEIGHT){
+            int maxYOffset = currentLevel.getHeight() - 600;
+            if(offset > 300 && offset < currentLevel.getHeight()){
                 levelRootCamera.setLayoutY(-(offset - 300));
             } else if(offset <= 300){
                 levelRootCamera.setLayoutY(0);
@@ -505,15 +506,15 @@ public class LevelManager {
         // Limit the player on the X-axis
         if(playerX < 0){
             currentLevel.Player().setTranslateX(0);
-        } else if(playerX > GameProperties.WIDTH - currentLevel.Player().getBoundsInParent().getWidth()){
-            currentLevel.Player().setTranslateX(GameProperties.WIDTH - currentLevel.Player().getBoundsInParent().getWidth());
+        } else if(playerX > currentLevel.getWidth() - currentLevel.Player().getBoundsInParent().getWidth()){
+            currentLevel.Player().setTranslateX(currentLevel.getWidth() - currentLevel.Player().getBoundsInParent().getWidth());
         }
 
         // Limit the player on the Y-axis
         if(playerY < 0){
             currentLevel.Player().setTranslateY(0);
-        } else if(playerY > GameProperties.HEIGHT - currentLevel.Player().getBoundsInParent().getHeight()){
-            currentLevel.Player().setTranslateY(GameProperties.HEIGHT - currentLevel.Player().getBoundsInParent().getHeight());
+        } else if(playerY > currentLevel.getHeight() - currentLevel.Player().getBoundsInParent().getHeight()){
+            currentLevel.Player().setTranslateY(currentLevel.getHeight() - currentLevel.Player().getBoundsInParent().getHeight());
             playerCanJump = true;  // The player can jump again when touching the ground
         }
     }

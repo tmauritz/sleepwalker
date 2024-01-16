@@ -116,9 +116,21 @@ public class GameManager {
             loadLevel4.setLayoutY(200);
             loadLevel4.setOnAction(e -> getInstance().playLevel(4));
 
+            Button loadLevel5 = new Button("Level 5");
+            loadLevel5.getStyleClass().add("button");
+            loadLevel5.setLayoutX(200);
+            loadLevel5.setLayoutY(200);
+            loadLevel5.setOnAction(e -> getInstance().playLevel(5));
+
+            Button loadLevel6 = new Button("Level 6");
+            loadLevel6.getStyleClass().add("button");
+            loadLevel6.setLayoutX(300);
+            loadLevel6.setLayoutY(200);
+            loadLevel6.setOnAction(e -> getInstance().playLevel(6));
+
             AnchorPane x = new AnchorPane();
             x.getChildren().add(background);
-            x.getChildren().addAll(backToMainMenu, loadLevel1, loadLevel2, loadLevel3, loadLevel4);
+            x.getChildren().addAll(backToMainMenu, loadLevel1, loadLevel2, loadLevel3, loadLevel4, loadLevel5, loadLevel6);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
             worldMap.getStylesheets().add(String.valueOf(Sleepwalker.class.getResource("ui/styles.css")));
             sceneLibrary.put("worldMap", worldMap);
