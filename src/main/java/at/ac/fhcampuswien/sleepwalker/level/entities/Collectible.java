@@ -21,6 +21,5 @@ public class Collectible extends Rectangle {
         setWidth(width);
         setHeight(height);
         this.setFill(new ImagePattern(MediaManager.loadImage("level/Coin.gif")));
-        //TODO:Image for the Coin
     }
 }
