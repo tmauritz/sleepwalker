@@ -9,6 +9,10 @@ Collect all collectibles and then leave the level through the portal.
 ## Health
 You have three Lives and you lose half a life each time you hit a spike.
 
+## Power-Ups
+### Health
+When you touch the Health Power-Up, you gain an additional 2 lives.
+
 ## Starting the game
 ### Step 1
 Clone the project on GitHub (copy the link).

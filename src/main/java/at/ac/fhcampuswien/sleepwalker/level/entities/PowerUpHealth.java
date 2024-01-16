@@ -4,6 +4,15 @@ import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+/*
+ * Power-Up-Health Class
+ *
+ * @param x
+ * @param y
+ * @param width
+ * @param height
+ */
+
 public class PowerUpHealth extends Rectangle {
     public PowerUpHealth(double x, double y, double width, double height) {
         super();

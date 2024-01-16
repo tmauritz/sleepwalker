@@ -559,7 +559,9 @@ public class LevelManager {
                 iterator.remove();
             }
         }
-
+        /*
+        With touching the Power Up Health, you will gain +2 health
+         */
         Iterator<Node> iteratorHealth = currentLevel.PowerUpHealth().iterator();
         while(iteratorHealth.hasNext()){
             PowerUpHealth powerUpHealth = (PowerUpHealth) iteratorHealth.next();
