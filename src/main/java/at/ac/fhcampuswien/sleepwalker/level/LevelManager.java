@@ -64,6 +64,7 @@ public class LevelManager {
     private Timeline timerTimeline;
     private long startTime;
     private Label timerLabel;
+    private long pauseStartTime;
     private int enemyMovementControl;
     private boolean enemyDirection = false;
     private boolean portalOpen = false;
@@ -636,6 +637,7 @@ public class LevelManager {
      * Pauses the level update cycle.
      */
     public void pause(){
+        pauseStartTime = System.currentTimeMillis();
         updateTimeline.pause();
         timerTimeline.pause();
     }
@@ -644,6 +646,8 @@ public class LevelManager {
      * Resumes the level update cycle.
      */
     public void resume(){
+        long pauseDuration = System.currentTimeMillis() - pauseStartTime;
+        startTime += pauseDuration;
         updateTimeline.play();
         timerTimeline.play();
     }
@@ -697,6 +701,13 @@ public class LevelManager {
         resumeButton.setLayoutX(50);
         resumeButton.setLayoutY(20);
 
+        Button muteBackground = new Button("Mute");
+        muteBackground.setPrefSize(200, 30);
+        muteBackground.getStyleClass().add("button");
+        muteBackground.setOnAction(e -> MediaManager.setMusicVolume(0));
+        muteBackground.setLayoutX(50);
+        muteBackground.setLayoutY(70);
+
         Button mainMenuButton = new Button("MainMenu");
         mainMenuButton.setPrefSize(200, 30);
         mainMenuButton.getStyleClass().add("button");
@@ -704,7 +715,7 @@ public class LevelManager {
         mainMenuButton.setLayoutX(50);
         mainMenuButton.setLayoutY(120);
 
-        pauseMenu.getChildren().addAll(resumeButton, mainMenuButton);
+        pauseMenu.getChildren().addAll(resumeButton, mainMenuButton, muteBackground);
         pauseMenu.getChildren().add(menuBox);
         pauseMenu.getStylesheets().add((String.valueOf(Sleepwalker.class.getResource("ui/styles.css"))));
         GUIRoot.getChildren().add(pauseMenu);
