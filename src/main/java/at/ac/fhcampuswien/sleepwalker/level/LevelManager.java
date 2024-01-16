@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker.level;
 
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
-import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import at.ac.fhcampuswien.sleepwalker.controller.MainMenuController;
 import at.ac.fhcampuswien.sleepwalker.level.Level;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
@@ -68,16 +67,15 @@ public class LevelManager {
     private boolean enemyDirection = false;
     private boolean portalOpen = false;
     private boolean gameOverStatus = false;
-    private boolean isPaused = false;
+    private boolean isPaused =false;
     private Pane pauseMenu;
 
-    public LevelManager() {
+    public LevelManager(){
         pressedKeys = new HashMap<>();
         playerVelocity = new Point2D(0, 0);
         enemyVelocity = new Point2D(0, 0);
         playerCanJump = true;
     }
-
     public boolean isGameOverStatus() {
         return gameOverStatus;
     }
@@ -105,19 +103,19 @@ public class LevelManager {
     /*
     Get the health of the player
      */
-    public int getHealth() {
+    public int getHealth(){
         return health;
     }
     /*
     Set the health of the player
      */
 
-    public void setHealth(int health) {
+    public void setHealth(int health){
         this.health = health;
     }
 
-    private void jumpPlayer() {
-        if (playerCanJump) {
+    private void jumpPlayer(){
+        if(playerCanJump){
             MediaManager.playSoundFX("audio/sound/jump.wav");
             playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
             playerCanJump = false;
@@ -130,7 +128,7 @@ public class LevelManager {
      * @param key KeyCode
      * @return true if key is pressed, false if not
      */
-    private boolean isPressed(KeyCode key) {
+    private boolean isPressed(KeyCode key){
         return pressedKeys.getOrDefault(key, false);
     }
 
@@ -141,16 +139,16 @@ public class LevelManager {
      *
      * @param amount how far the player is moved
      */
-    private void movePlayerX(int amount) {
+    private void movePlayerX(int amount){
         boolean movingRight = amount > 0;
 
-        for (int i = 1; i <= Math.abs(amount); i++) {
-            for (Node platform : currentLevel.Platforms()) {
-                if (currentLevel.Player().getBoundsInParent().intersects(platform.getBoundsInParent())) {
+        for(int i = 1; i <= Math.abs(amount); i++){
+            for(Node platform : currentLevel.Platforms()){
+                if(currentLevel.Player().getBoundsInParent().intersects(platform.getBoundsInParent())){
                     //collision detected
-                    if (movingRight) {
+                    if(movingRight){
                         currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() - 1);
-                    } else {
+                    } else{
                         currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() + 1);
                     }
                     return;
@@ -158,23 +156,23 @@ public class LevelManager {
             }
 
             //Checks player orientation for texture
-            if (movingRight) {
-                if (!wasMovingRight) {
+            if(movingRight){
+                if(!wasMovingRight){
                     currentLevel.Player().setCharTexture(currentLevel.Player().getIdleRight());
                     wasMovingRight = true;
                 } else wasMovingRight = false;
-            } else {
-                if (wasMovingRight) {
+            } else{
+                if(wasMovingRight){
                     currentLevel.Player().setCharTexture(currentLevel.Player().getIdleLeft());
                     wasMovingRight = false;
                 } else wasMovingRight = true;
             }
 
-            if (currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())) {
-                if (levelFinished()) {
-                    if (movingRight) {
+            if(currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
+                if(levelFinished()){
+                    if(movingRight){
                         currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() - 1);
-                    } else {
+                    } else{
                         currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() + 1);
                     }
                     Image image0 = MediaManager.loadImage("level/5Coins.png");
@@ -195,17 +193,17 @@ public class LevelManager {
      *
      * @param amount how far the player is moved
      */
-    private void movePlayerY(int amount) {
+    private void movePlayerY(int amount){
         boolean movingDown = amount > 0;
 
-        for (int i = 1; i <= Math.abs(amount); i++) {
-            for (Node platform : currentLevel.Platforms()) {
-                if (currentLevel.Player().getBoundsInParent().intersects(platform.getBoundsInParent())) {
+        for(int i = 1; i <= Math.abs(amount); i++){
+            for(Node platform : currentLevel.Platforms()){
+                if(currentLevel.Player().getBoundsInParent().intersects(platform.getBoundsInParent())){
                     //collision detected
-                    if (movingDown) {
+                    if(movingDown){
                         currentLevel.Player().setTranslateY(currentLevel.Player().getTranslateY() - 1);
                         playerCanJump = true;
-                    } else {
+                    } else{
                         currentLevel.Player().setTranslateY(currentLevel.Player().getTranslateY() + 1);
                         playerVelocity = playerVelocity.add(0, -playerVelocity.getY()); //reset jump velocity
                     }
@@ -213,10 +211,10 @@ public class LevelManager {
                 }
             }
             //Player looses one life if it touches a spike and respawns at the spawn. Camera follows to spawn
-            for (Node spike : currentLevel.Spikes()) {
-                if (currentLevel.Player().getBoundsInParent().intersects(spike.getBoundsInParent())) {
+            for(Node spike : currentLevel.Spikes()){
+                if(currentLevel.Player().getBoundsInParent().intersects(spike.getBoundsInParent())){
                     setHealth(getHealth() - 1);
-                    if (getHealth() > 0) {
+                    if(getHealth() > 0){
                         currentLevel.Player().die();
                     }
                     return;
@@ -232,11 +230,11 @@ public class LevelManager {
                     return;
                 }
             }
-            if (currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())) {
-                if (levelFinished()) {
-                    if (movingDown) {
+            if(currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
+                if(levelFinished()){
+                    if(movingDown){
                         currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() - 1);
-                    } else {
+                    } else{
                         currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() + 1);
                     }
                     Image image0 = MediaManager.loadImage("level/5Coins.png");
@@ -254,7 +252,7 @@ public class LevelManager {
      *  Updates the HealthBar to the actual lives
      *  --> half-heart = 1 life
      */
-    private void updateHealthPicture() {
+    private void updateHealthPicture(){
         Image image0 = MediaManager.loadImage("level/0hearts.png");
         Image image1 = MediaManager.loadImage("level/1hearts.png");
         Image image2 = MediaManager.loadImage("level/2hearts.png");
@@ -262,7 +260,7 @@ public class LevelManager {
         Image image4 = MediaManager.loadImage("level/4hearts.png");
         Image image5 = MediaManager.loadImage("level/5hearts.png");
         Image image6 = MediaManager.loadImage("level/6hearts.png");
-        switch (health) {
+        switch(health){
             case 0:
                 currentHearts.setImage(image0);
                 loadGameOver();
@@ -295,14 +293,14 @@ public class LevelManager {
     /*
     Updates the Collectibles Graphic
      */
-    public void updateCollectiblePicture() {
+    public void updateCollectiblePicture(){
         Image image0 = MediaManager.loadImage("level/0Coins.png");
         Image image1 = MediaManager.loadImage("level/1Coins.png");
         Image image2 = MediaManager.loadImage("level/2Coins.png");
         Image image3 = MediaManager.loadImage("level/3Coins.png");
         Image image4 = MediaManager.loadImage("level/4Coins.png");
         Image image5 = MediaManager.loadImage("level/5Coins.png");
-        switch (currentLevel.Collectibles().size()) {
+        switch(currentLevel.Collectibles().size()){
             case 0:
                 currentCollectibles.setImage(image5);
                 break;
@@ -331,7 +329,7 @@ public class LevelManager {
     /**
      * Toggles debug info visibility.
      */
-    private void toggleDebug() {
+    private void toggleDebug(){
         debugInfo.setVisible(!debugInfo.isVisible());
     }
 
@@ -341,7 +339,7 @@ public class LevelManager {
      * @param levelId ID of the level to be loaded
      * @return a Scene containing the loaded level or null if the level could not be loaded
      */
-    public Scene loadLevel(int levelId) throws LevelNotLoadedException {
+    public Scene loadLevel(int levelId) throws LevelNotLoadedException{
         portalOpen = false;
         loadedLevelID = levelId;
         setHealth(6);
@@ -399,8 +397,8 @@ public class LevelManager {
     /**
      * starts the Level update cycle
      */
-    public void startLevel() throws LevelNotLoadedException {
-        if (loadedLevel == null) throw new LevelNotLoadedException("No Level loaded.");
+    public void startLevel() throws LevelNotLoadedException{
+        if(loadedLevel == null) throw new LevelNotLoadedException("No Level loaded.");
 
         playerVelocity = new Point2D(0, 0);
         pressedKeys.clear();
@@ -408,11 +406,11 @@ public class LevelManager {
         //Camera movement X Y
         currentLevel.Player().translateXProperty().addListener((observable, oldValue, newValue) -> {
             int offset = newValue.intValue();
-            if (offset > 300 && offset < currentLevel.getWidth()) {
+            if(offset > 300 && offset < currentLevel.getWidth()){
                 levelRootCamera.setLayoutX(-(offset - 300));
-            } else if (offset <= 300) {
+            } else if(offset <= 300){
                 levelRootCamera.setLayoutX(0);
-            } else {
+            } else{
                 levelRootCamera.setLayoutX(-(currentLevel.getWidth() - 600));
             }
 
@@ -420,11 +418,11 @@ public class LevelManager {
         currentLevel.Player().translateYProperty().addListener((observable, oldValue, newValue) -> {
             int offset = newValue.intValue();
             int maxYOffset = currentLevel.getHeight() - 600;
-            if (offset > 300 && offset < currentLevel.getHeight()) {
+            if(offset > 300 && offset < currentLevel.getHeight()){
                 levelRootCamera.setLayoutY(-(offset - 300));
-            } else if (offset <= 300) {
+            } else if(offset <= 300){
                 levelRootCamera.setLayoutY(0);
-            } else {
+            } else{
                 levelRootCamera.setLayoutY(-maxYOffset);
             }
 
@@ -442,7 +440,7 @@ public class LevelManager {
         //add listeners for key presses
         loadedLevel.setOnKeyPressed(keypress -> {
             pressedKeys.put(keypress.getCode(), true);
-            if (keypress.getCode().equals(GameProperties.DEBUGVIEW)) {
+            if(keypress.getCode().equals(GameProperties.DEBUGVIEW)){
                 toggleDebug();
             }
         });
@@ -459,7 +457,7 @@ public class LevelManager {
             update();
         });
 
-        if (updateTimeline != null) updateTimeline.stop(); //stop timeline if previous level was loaded
+        if(updateTimeline != null) updateTimeline.stop(); //stop timeline if previous level was loaded
         updateTimeline = new Timeline(updateFrame);
         updateTimeline.setCycleCount(Animation.INDEFINITE);
         updateTimeline.play();
@@ -470,7 +468,7 @@ public class LevelManager {
 
      */
 
-    private void updateTimer() {
+    private void updateTimer(){
         long currentTime = System.currentTimeMillis();
         long elapsedSeconds = (currentTime - startTime) / 1000;
         long minutes = elapsedSeconds / 60;
@@ -481,17 +479,15 @@ public class LevelManager {
         timerLabel.setText(formattedTime);
     }
 
-
     /*
     Is showing GameOver Screen
      */
-    private void loadGameOver() {
+    private void loadGameOver(){
         setGameOverStatus(true);
         //currentLevel.Enemy().setTranslateX(currentLevel.getEnemySpawn().getX());
         //currentLevel.Enemy().setTranslateY(currentLevel.getEnemySpawn().getY());
         failLevel.failLevel();
     }
-
     private void moveEnemyX() {
         if (!isGameOverStatus()) {
             //EnemyDirection = true --> Moving Right
@@ -514,21 +510,21 @@ public class LevelManager {
         }
     }
 
-    private void enforceFrameBounds() {
+    private void enforceFrameBounds(){
         double playerX = currentLevel.Player().getTranslateX();
         double playerY = currentLevel.Player().getTranslateY();
 
         // Limit the player on the X-axis
-        if (playerX < 0) {
+        if(playerX < 0){
             currentLevel.Player().setTranslateX(0);
-        } else if (playerX > currentLevel.getWidth() - currentLevel.Player().getBoundsInParent().getWidth()) {
+        } else if(playerX > currentLevel.getWidth() - currentLevel.Player().getBoundsInParent().getWidth()){
             currentLevel.Player().setTranslateX(currentLevel.getWidth() - currentLevel.Player().getBoundsInParent().getWidth());
         }
 
         // Limit the player on the Y-axis
-        if (playerY < 0) {
+        if(playerY < 0){
             currentLevel.Player().setTranslateY(0);
-        } else if (playerY > currentLevel.getHeight() - currentLevel.Player().getBoundsInParent().getHeight()) {
+        } else if(playerY > currentLevel.getHeight() - currentLevel.Player().getBoundsInParent().getHeight()){
             currentLevel.Player().setTranslateY(currentLevel.getHeight() - currentLevel.Player().getBoundsInParent().getHeight());
             playerCanJump = true;  // The player can jump again when touching the ground
         }
@@ -537,39 +533,39 @@ public class LevelManager {
     /**
      * updates the level every frame
      */
-    private void update() {
+    private void update(){
         debugInfo.setText("FRAME: " + frameCounter++ + System.lineSeparator() + "Player: (" + currentLevel.Player().getTranslateX() + " | " + currentLevel.Player().getTranslateY() + ")" + System.lineSeparator() + "VELOCITY: " + playerVelocity.toString());
 
         //TODO: fix collision bugs
         //process player input
-        if (isPressed(GameProperties.LEFT)) movePlayerX(-GameProperties.PLAYER_SPEED);
-        if (isPressed(GameProperties.RIGHT)) movePlayerX(GameProperties.PLAYER_SPEED);
-        if (isPressed(GameProperties.JUMP)) jumpPlayer();
+        if(isPressed(GameProperties.LEFT)) movePlayerX(-GameProperties.PLAYER_SPEED);
+        if(isPressed(GameProperties.RIGHT)) movePlayerX(GameProperties.PLAYER_SPEED);
+        if(isPressed(GameProperties.JUMP)) jumpPlayer();
         //assess the gravity of the situation
-        if (playerVelocity.getY() < GameProperties.TERMINAL_VELOCITY) {
+        if(playerVelocity.getY() < GameProperties.TERMINAL_VELOCITY){
             playerVelocity = playerVelocity.add(0, GameProperties.GRAVITY);
         }
         movePlayerY((int) playerVelocity.getY());
 
         Iterator<Node> iterator = currentLevel.Collectibles().iterator();
-        while (iterator.hasNext()) {
+        while(iterator.hasNext()){
             Collectible coin = (Collectible) iterator.next();
-            if (coin.getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())) {
+            if(coin.getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
                 MediaManager.playSoundFX("audio/sound/coin.wav");
                 coin.setVisible(false);
                 iterator.remove();
             }
         }
 
-        if (playerVelocity.getY() == 0) {
-            if (levelFinished()) {
-                if (currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())) {
+        if(playerVelocity.getY() == 0){
+            if(levelFinished()){
+                if(currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
                     currentLevel.Finish().finishLevel();
                 }
             }
         }
         updateCollectiblePicture();
-        if (!portalOpen && levelFinished()) {
+        if(!portalOpen && levelFinished()){
             currentLevel.Finish().openPortal();
             portalOpen = true;
         }
@@ -583,12 +579,12 @@ public class LevelManager {
         //TODO: scrolling
     }
 
-    public boolean levelFinished() {
+    public boolean levelFinished(){
         //TODO: check for collectibles
         return currentLevel.Collectibles().isEmpty();
     }
 
-    public int getLoadedLevelID() {
+    public int getLoadedLevelID(){
         return loadedLevelID;
     }
 
@@ -597,7 +593,7 @@ public class LevelManager {
      *
      * @param options Buttons for dialog options must have EventHandlers
      */
-    public void showDialog(boolean finished, Button... options) {
+    public void showDialog(boolean finished, Button... options){
         dialogBox.getChildren().clear();
         dialogBox.toFront();
         dialogBox.setVisible(true);
@@ -605,11 +601,11 @@ public class LevelManager {
         dialogBox.setMinWidth(400);
         dialogBox.setMinWidth(400);
         dialogBox.setMinHeight(200);
-        if (finished) {
+        if(finished){
             BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("level/background/LevelFinished.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImg);
             dialogBox.setBackground(background);
-        } else {
+        } else{
             BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("level/background/GameOver.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImg);
             dialogBox.setBackground(background);
@@ -619,7 +615,7 @@ public class LevelManager {
         int buttonAmount = 1;
         int spacing = 10;
 
-        for (Button option : options) {
+        for(Button option : options){
 
             option.setPrefWidth(200);
             option.setMinHeight(buttonHeight);
@@ -654,7 +650,7 @@ public class LevelManager {
     /**
      * Respawns the player at the original spawn point.
      */
-    public void respawn() {
+    public void respawn(){
         levelRootCamera.setLayoutX(currentLevel.getSpawn().getX());
         levelRootCamera.setLayoutY(currentLevel.getSpawn().getY());
         currentLevel.Player().setTranslateX(currentLevel.getSpawn().getX());
@@ -665,7 +661,7 @@ public class LevelManager {
     /**
      * Hides the dialog pane.
      */
-    public void hideDialog() {
+    public void hideDialog(){
         dialogBox.setVisible(false);
         dialogBox.getChildren().clear();
     }
@@ -676,43 +672,31 @@ public class LevelManager {
             pause();
             showPauseMenu();
         } else {
-            resume();
             hidePauseMenu();
+            resume();
         }
     }
 
     private void showPauseMenu() {
         pauseMenu = new Pane();
-        pauseMenu.setStyle("-fx-background-color: rgba(0,0,0,0.16);");
-        pauseMenu.setPrefSize(300, 200);
-        pauseMenu.setLayoutX((double) (GameProperties.WIDTH - 300) / 2);
-        pauseMenu.setLayoutY((double) (GameProperties.HEIGHT - 300) / 2);
-
-        VBox menuBox = new VBox(10);
-        menuBox.setAlignment(Pos.CENTER);
-        menuBox.setLayoutX(50);
-        menuBox.setLayoutY(50);
+        pauseMenu.setLayoutX(100);
+        pauseMenu.setLayoutY(100);
 
         Button resumeButton = new Button("Resume");
-        resumeButton.setPrefSize(200, 30);
-        resumeButton.getStyleClass().add("button");
         resumeButton.setOnAction(e -> togglePause());
         resumeButton.setLayoutX(50);
         resumeButton.setLayoutY(20);
 
         Button mainMenuButton = new Button("MainMenu");
-        mainMenuButton.setPrefSize(200, 30);
-        mainMenuButton.getStyleClass().add("button");
         mainMenuButton.setOnAction(e -> getInstance().showMainMenu());
         mainMenuButton.setLayoutX(50);
-        mainMenuButton.setLayoutY(120);
+        mainMenuButton.setLayoutY(70);
 
         pauseMenu.getChildren().addAll(resumeButton, mainMenuButton);
-        pauseMenu.getChildren().add(menuBox);
-        pauseMenu.getStylesheets().add((String.valueOf(Sleepwalker.class.getResource("ui/styles.css"))));
-        GUIRoot.getChildren().add(pauseMenu);
-    }
 
+        GUIRoot.getChildren().add(pauseMenu);
+
+    }
     private void hidePauseMenu() {
         GUIRoot.getChildren().remove(pauseMenu);
 
