@@ -538,8 +538,6 @@ public class LevelManager {
      */
     private void update(){
         debugInfo.setText("FRAME: " + frameCounter++ + System.lineSeparator() + "Player: (" + currentLevel.Player().getTranslateX() + " | " + currentLevel.Player().getTranslateY() + ")" + System.lineSeparator() + "VELOCITY: " + playerVelocity.toString());
-
-        //TODO: fix collision bugs
         //process player input
         if(isPressed(GameProperties.LEFT)) movePlayerX(-GameProperties.PLAYER_SPEED);
         if(isPressed(GameProperties.RIGHT)) movePlayerX(GameProperties.PLAYER_SPEED);
@@ -594,9 +592,6 @@ public class LevelManager {
         }
         enforceFrameBounds();
         updateHealthPicture();
-
-        //TODO: keep player from exiting frame (Player can fall down)
-        //TODO: scrolling
     }
 
     public boolean levelFinished(){
