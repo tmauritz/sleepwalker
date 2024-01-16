@@ -406,12 +406,13 @@ public class LevelManager {
         //Camera movement X Y
         currentLevel.Player().translateXProperty().addListener((observable, oldValue, newValue) -> {
             int offset = newValue.intValue();
-            if(offset > 300 && offset < currentLevel.getWidth()){
-                levelRootCamera.setLayoutX(-(offset - 300));
-            } else if(offset <= 300){
+            int margin = GameProperties.TILE_UNIT * 10;
+            if(offset > margin && offset < currentLevel.getWidth() - margin){
+                levelRootCamera.setLayoutX(-(offset - margin));
+            } else if(offset <= margin){
                 levelRootCamera.setLayoutX(0);
             } else{
-                levelRootCamera.setLayoutX(-(currentLevel.getWidth() - 600));
+                levelRootCamera.setLayoutX(-(currentLevel.getWidth() - margin * 2));
             }
 
         });
