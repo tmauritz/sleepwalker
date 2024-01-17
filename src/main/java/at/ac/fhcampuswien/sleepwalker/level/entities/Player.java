@@ -4,7 +4,8 @@ import at.ac.fhcampuswien.sleepwalker.GameProperties;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.level.Level;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
-import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.ImagePattern;
@@ -16,6 +17,7 @@ public class Player extends Rectangle {
     private Level level;
     private final ImagePattern idleLeft = new ImagePattern(MediaManager.loadImage("animation/player/Idle_left.gif"));
     private final ImagePattern idleRight = new ImagePattern(MediaManager.loadImage("animation/player/Idle_right.gif"));
+    private final Timeline deathAnimation;
     private int health;
     private final int maxHealth;
     private boolean playerCanJump;
@@ -44,6 +46,7 @@ public class Player extends Rectangle {
         this.maxHealth = 6;
         this.health = maxHealth;
         this.playerVelocity = new Point2D(0, 0);
+        deathAnimation = getDeathAnimation();
         setWidth(width);
         setHeight(height);
         setCharTexture(idleRight);
@@ -198,13 +201,18 @@ public class Player extends Rectangle {
     public void die(){
         levelManager.pause();
         MediaManager.playSoundFX("audio/sound/impact.wav");
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), this);
-        fadeTransition.setFromValue(100);
-        fadeTransition.setToValue(0);
-        fadeTransition.setOnFinished(e -> {
-            setOpacity(100);
+        deathAnimation.setOnFinished(t -> {
+            setCharTexture(idleRight);
             levelManager.respawn();
         });
-        fadeTransition.play();
+        deathAnimation.play();
+    }
+
+    private Timeline getDeathAnimation(){
+        KeyFrame deathGif = new KeyFrame(Duration.ZERO, t -> {
+            setCharTexture(new ImagePattern(MediaManager.loadImage("animation/player/Death.gif")));
+        });
+        KeyFrame waitTime = new KeyFrame(Duration.seconds(1));
+        return new Timeline(deathGif, waitTime);
     }
 }
