@@ -152,7 +152,7 @@ public class GameManager {
                 levelManager.setGameOverStatus(false);
                 stageRoot.setScene(levelManager.loadLevel(levelId));
                 previousScene.getRoot().setOpacity(100); //reset Opacity of previous Root Node
-                MediaManager.playMusic("audio/level.mp3");
+                MediaManager.playMusic("audio/level.mpeg");
                 levelManager.startLevel();
             } catch(LevelNotLoadedException e){
                 throw new RuntimeException(e);

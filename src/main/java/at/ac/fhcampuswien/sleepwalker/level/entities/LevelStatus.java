@@ -3,12 +3,17 @@ package at.ac.fhcampuswien.sleepwalker.level.entities;
 import at.ac.fhcampuswien.sleepwalker.GameManager;
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
+import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.LevelData;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import static at.ac.fhcampuswien.sleepwalker.GameManager.getInstance;
 
@@ -30,15 +35,27 @@ public class LevelStatus extends Rectangle {
     }
 
     public void openPortal() {
-        this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_start.gif")));
-
-        this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_idle.gif")));
+        KeyFrame openingGif = new KeyFrame(Duration.ZERO, t -> {
+            this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_start.gif")));
+        });
+        KeyFrame waitTime = new KeyFrame(Duration.seconds(0.5));
+        Timeline openingTimeline = new Timeline(openingGif, waitTime);
+        openingTimeline.setOnFinished(t->{
+            this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_idle.gif")));
+        });
+        openingTimeline.play();
     }
 
     /**
      * Finishes the level.
      */
     public void finishLevel() {
+        levelManager.getCurrentLevel().Player().setVisible(false);
+
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), this);
+        fadeOut.setFromValue(100);
+        fadeOut.setToValue(0);
+        fadeOut.play();
 
         Button backToMenu = new Button("Back to Main Menu");
         backToMenu.setOnAction(event -> GameManager.getInstance().showMainMenu());
