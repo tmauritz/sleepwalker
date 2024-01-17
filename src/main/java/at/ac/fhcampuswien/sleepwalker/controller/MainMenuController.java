@@ -40,6 +40,8 @@ public class MainMenuController implements Initializable {
     private Button musicToggle;
     @FXML
     private Button howToPlayButton;
+    @FXML
+    private Button settingsButton;
 
     /**
      * Formats the main Menu at runtime.
@@ -66,6 +68,9 @@ public class MainMenuController implements Initializable {
     public void onPlayButtonClick() {
         //switch to WorldMap Scene
         GameManager.getInstance().showWorldMap();
+    }
+    public void showSettingsButton() {
+
     }
 
     /**
