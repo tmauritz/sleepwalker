@@ -57,7 +57,7 @@ public class GameManager {
         }
         stageRoot.setScene(mainMenu);
         stageRoot.show();
-        MediaManager.playMusic("audio/maintheme.mp3");
+        MediaManager.playMusic("audio/maintheme.mpeg");
     }
 
     public void showHowToPlay() {
