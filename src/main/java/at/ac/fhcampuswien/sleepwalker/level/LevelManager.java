@@ -2,8 +2,6 @@ package at.ac.fhcampuswien.sleepwalker.level;
 
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
 import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
-import at.ac.fhcampuswien.sleepwalker.controller.MainMenuController;
-import at.ac.fhcampuswien.sleepwalker.level.Level;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.entities.Collectible;
@@ -26,7 +24,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import javafx.scene.media.MediaPlayer;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -54,9 +51,7 @@ public class LevelManager {
     private Pane levelRootCamera;
     private int loadedLevelID;
     private long frameCounter;
-    private Point2D playerVelocity;
     private Point2D enemyVelocity;
-    private boolean playerCanJump;
     private Scene loadedLevel;
     private ImageView currentHearts;
     private ImageView currentCollectibles;
@@ -73,9 +68,7 @@ public class LevelManager {
 
     public LevelManager(){
         pressedKeys = new HashMap<>();
-        playerVelocity = new Point2D(0, 0);
         enemyVelocity = new Point2D(0, 0);
-        playerCanJump = true;
     }
 
     public Level getCurrentLevel(){
@@ -268,7 +261,6 @@ public class LevelManager {
     public void startLevel() throws LevelNotLoadedException{
         if(loadedLevel == null) throw new LevelNotLoadedException("No Level loaded.");
 
-        playerVelocity = new Point2D(0, 0);
         pressedKeys.clear();
         currentLevel.Player().init();
 
@@ -322,9 +314,7 @@ public class LevelManager {
         loadedLevel.setOnKeyReleased(keypress -> pressedKeys.put(keypress.getCode(), false));
 
         Duration FPS = Duration.millis((double) 1000 / GameProperties.FPS); //FPS
-        KeyFrame updateFrame = new KeyFrame(FPS, event -> {
-            update();
-        });
+        KeyFrame updateFrame = new KeyFrame(FPS, event -> update());
 
         if(updateTimeline != null) updateTimeline.stop(); //stop timeline if previous level was loaded
         updateTimeline = new Timeline(updateFrame);
@@ -394,7 +384,6 @@ public class LevelManager {
             currentLevel.Player().setTranslateY(0);
         } else if(playerY > currentLevel.getHeight() - currentLevel.Player().getBoundsInParent().getHeight()){
             currentLevel.Player().setTranslateY(currentLevel.getHeight() - currentLevel.Player().getBoundsInParent().getHeight());
-            playerCanJump = true;  // The player can jump again when touching the ground
         }
     }
 
@@ -402,7 +391,7 @@ public class LevelManager {
      * updates the level every frame
      */
     private void update(){
-        debugInfo.setText("FRAME: " + frameCounter++ + System.lineSeparator() + "Player: (" + currentLevel.Player().getTranslateX() + " | " + currentLevel.Player().getTranslateY() + ")" + System.lineSeparator() + "VELOCITY: " + playerVelocity.toString());
+        debugInfo.setText("FRAME: " + frameCounter++ + System.lineSeparator() + "Player: (" + currentLevel.Player().getTranslateX() + " | " + currentLevel.Player().getTranslateY() + ")" + System.lineSeparator() + "VELOCITY: " + currentLevel.Player().getPlayerVelocity().toString());
         //process player input
         if(isPressed(GameProperties.LEFT)) currentLevel.Player().moveX(-GameProperties.PLAYER_SPEED);
         if(isPressed(GameProperties.RIGHT)) currentLevel.Player().moveX(GameProperties.PLAYER_SPEED);
@@ -432,13 +421,6 @@ public class LevelManager {
             }
         }
 
-        if(playerVelocity.getY() == 0){
-            if(levelFinished()){
-                if(currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
-                    currentLevel.Finish().finishLevel();
-                }
-            }
-        }
         updateCollectiblePicture();
         if(!portalOpen && levelFinished()){
             currentLevel.Finish().openPortal();
@@ -530,14 +512,6 @@ public class LevelManager {
         currentLevel.Player().setTranslateX(currentLevel.getSpawn().getX());
         currentLevel.Player().setTranslateY(currentLevel.getSpawn().getY());
         resume();
-    }
-
-    /**
-     * Hides the dialog pane.
-     */
-    public void hideDialog(){
-        dialogBox.setVisible(false);
-        dialogBox.getChildren().clear();
     }
 
     public void togglePause() {

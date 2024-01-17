@@ -70,6 +70,10 @@ public class Player extends Rectangle {
         moveY((int) playerVelocity.getY());
     }
 
+    public Point2D getPlayerVelocity(){
+        return playerVelocity;
+    }
+
     /**
      * Moves the Player along the X Axis and checks for collision
      * if a collision is detected (overlap), player is moved back 1 unit.
