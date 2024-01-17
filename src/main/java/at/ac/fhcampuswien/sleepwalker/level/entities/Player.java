@@ -52,6 +52,7 @@ public class Player extends Rectangle {
 
     public void init(){
         this.level = levelManager.getCurrentLevel();
+        this.health = maxHealth;
     }
 
     public void jump(){
@@ -153,12 +154,14 @@ public class Player extends Rectangle {
             for(Node spike : level.Spikes()){
                 if(level.Player().getBoundsInParent().intersects(spike.getBoundsInParent())){
                     takeDamage(1);
+                    return;
                 }
             }
             //Player losses one life if it touches an enemy and respawn at the spawn.
             if(level.isEnemyExist()){
                 if(level.Player().getBoundsInParent().intersects(level.Enemy().getBoundsInParent())){
                     takeDamage(1);
+                    return;
                 }
             }
             if(level.Finish().getBoundsInParent().intersects(level.Player().getBoundsInParent())){
@@ -183,7 +186,8 @@ public class Player extends Rectangle {
      */
     public void takeDamage(int amount){
         this.health -= amount;
-        die();
+        if (health > 0) die();
+        else level.fail();
     }
 
     public void heal(int amount){

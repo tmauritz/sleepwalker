@@ -41,7 +41,7 @@ public class LevelStatus extends Rectangle {
         Button backToMenu = new Button("Back to Main Menu");
         backToMenu.setOnAction(event -> GameManager.getInstance().showMainMenu());
         boolean finished = true;
-
+        levelManager.pause();
         if ((LevelData.Levels.size()/2) > currentLevelID) {
             Button nextLevel = new Button("Next Level");
             nextLevel.setOnAction(event -> GameManager.getInstance().playLevel(++currentLevelID));
@@ -63,8 +63,8 @@ public class LevelStatus extends Rectangle {
         Button retryLevel = new Button("Retry Level");
         retryLevel.setOnAction(event -> GameManager.getInstance().playLevel(currentLevelID));
         boolean finished = false;
+        levelManager.pause();
         levelManager.showDialog(finished, retryLevel, backToMenu);
-
 
     }
 }

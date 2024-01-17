@@ -207,14 +207,14 @@ public class Level {
      * Wins the Level.
      */
     public void win(){
-
+        goal.finishLevel();
     }
 
     /**
      * Fails the Level.
      */
     public void fail(){
-
+        goal.failLevel();
     }
 
 }

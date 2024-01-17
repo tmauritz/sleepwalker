@@ -119,6 +119,7 @@ public class LevelManager {
         Image image4 = MediaManager.loadImage("level/4hearts.png");
         Image image5 = MediaManager.loadImage("level/5hearts.png");
         Image image6 = MediaManager.loadImage("level/6hearts.png");
+        System.out.println(currentLevel.Player().getHealth());
         switch(currentLevel.Player().getHealth()){
             case 0:
                 currentHearts.setImage(image0);
