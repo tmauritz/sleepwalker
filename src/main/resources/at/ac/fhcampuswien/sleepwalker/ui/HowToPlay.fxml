@@ -14,7 +14,7 @@
          <image>
             <Image url="@../level/background/background_layer_2.png" />
          </image></ImageView>
-      <Button fx:id="BackToMainMenu" layoutX="237.0" layoutY="363.0" mnemonicParsing="false" onAction="#showBackToMainMenu" styleClass="button" text="Back To Main Menu">
+      <Button fx:id="BackToMainMenu" layoutX="220.0" layoutY="367.0" mnemonicParsing="false" onAction="#showBackToMainMenu" styleClass="button" text="Back To Main Menu">
          <font>
             <Font name="PixCon" size="12.0" />
          </font></Button>
@@ -23,22 +23,42 @@
             <Font name="PixCon" size="28.0" />
          </font>
       </Label>
-      <Text fill="#61536d" layoutX="208.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left">
+      <Text fill="#61536d" layoutX="228.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left">
          <font>
             <Font name="PixCon" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="208.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right">
+      <Text fill="#61536d" layoutX="228.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right">
          <font>
             <Font name="PixCon" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="208.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jump">
+      <Text fill="#61536d" layoutX="228.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jump">
          <font>
             <Font name="PixCon" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="208.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pause">
+      <Text fill="#61536d" layoutX="228.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pause">
+         <font>
+            <Font name="PixCon" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#61536d" layoutX="379.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;">
+         <font>
+            <Font name="PixCon" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#61536d" layoutX="379.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt;">
+         <font>
+            <Font name="PixCon" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#61536d" layoutX="358.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esc">
+         <font>
+            <Font name="PixCon" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#61536d" layoutX="379.0" layoutY="267.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt;">
          <font>
             <Font name="PixCon" size="18.0" />
          </font>

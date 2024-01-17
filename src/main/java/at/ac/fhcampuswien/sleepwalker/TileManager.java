@@ -29,12 +29,9 @@ public class TileManager {
         tileX.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileX.ser"));
         decoHeight.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/DecoHeight.ser"));
         decoWidth.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/DecoWidth.ser"));
-        tileY.put("-- -", "288");
-        tileX.put("-- -", "480");
-        serializeMap(tileX, "src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileX.ser");
-        serializeMap(tileY, "src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileY.ser");
     }
 
+    // In case tiles have to be changed
     public static void serializeMap(HashMap<String, String> currentMap, String filename){
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(filename)))) {
             oos.writeObject(currentMap);
@@ -45,6 +42,7 @@ public class TileManager {
         }
     }
 
+    // Loads data from HashMaps
     public static HashMap<String, String> deserializeMap(String filepath){
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath))) {
             @SuppressWarnings("unchecked")

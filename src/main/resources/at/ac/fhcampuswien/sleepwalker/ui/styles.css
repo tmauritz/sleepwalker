@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/pixcon');
+
 .button {
     -fx-background-color: #C8A2C8;
     -fx-text-fill: #FFFFFF;
@@ -20,9 +22,8 @@
 
 @font-face {
     font-family: 'PixCon';
-    src: url('fonts/PixCon.ttf');
 }
 
-.menu-text {
+.label {
     -fx-font-family: 'PixCon';
 }

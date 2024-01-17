@@ -46,6 +46,7 @@ public class LevelManager {
     private Timeline updateTimeline;
     private LevelStatus failLevel = null;
     private final Pane dialogBox = new Pane();
+    private final Pane decoBox = new Pane();
     private Pane GUIRoot;
     private Pane levelRootCamera;
     private int loadedLevelID;
@@ -206,9 +207,11 @@ public class LevelManager {
         GUIRoot = new Pane();
         GUIRoot.setBackground(Background.EMPTY);
         dialogBox.setVisible(false);
+        decoBox.setVisible(false);
         debugInfo.setVisible(false);
         GUIRoot.getChildren().add(debugInfo);
         GUIRoot.getChildren().add(dialogBox);
+        GUIRoot.getChildren().add(decoBox);
 
         currentLevel = new Level(levelId, this);
 
@@ -445,19 +448,30 @@ public class LevelManager {
      */
     public void showDialog(boolean finished, Button... options){
         dialogBox.getChildren().clear();
+        decoBox.getChildren().clear();
         dialogBox.toFront();
         dialogBox.setVisible(true);
         dialogBox.setMinHeight(300);
         dialogBox.setMinWidth(400);
+        decoBox.setMinHeight(137);
+        decoBox.setMinWidth(560);
+        decoBox.setVisible(true);
+        decoBox.toFront();
 
         if(finished){
-            BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("level/background/LevelFinished.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("ui/gui/LevelComplete.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImg);
             dialogBox.setBackground(background);
+            BackgroundImage sparklesImg = new BackgroundImage(MediaManager.loadImage("ui/gui/Sparkles.gif"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            Background sparkles = new Background(sparklesImg);
+            decoBox.setBackground(sparkles);
         } else{
-            BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("level/background/GameOver.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("ui/gui/GameOver.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImg);
             dialogBox.setBackground(background);
+            BackgroundImage loserImg = new BackgroundImage(MediaManager.loadImage("ui/gui/Unfortunate.gif"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            Background loser = new Background(loserImg);
+            decoBox.setBackground(loser);
         }
 
         int buttonHeight = 34;
@@ -478,9 +492,10 @@ public class LevelManager {
 
             dialogBox.getChildren().add(option);
         }
-
         dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - 200);
         dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - 150);
+        decoBox.setLayoutX((double) (GameProperties.WIDTH / 2) - 295);
+        decoBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - 130);
 
     }
 
