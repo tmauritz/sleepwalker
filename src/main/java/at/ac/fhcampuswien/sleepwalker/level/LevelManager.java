@@ -447,10 +447,9 @@ public class LevelManager {
         dialogBox.getChildren().clear();
         dialogBox.toFront();
         dialogBox.setVisible(true);
-        dialogBox.setMinHeight(200);
+        dialogBox.setMinHeight(300);
         dialogBox.setMinWidth(400);
-        dialogBox.setMinWidth(400);
-        dialogBox.setMinHeight(200);
+
         if(finished){
             BackgroundImage backgroundImg = new BackgroundImage(MediaManager.loadImage("level/background/LevelFinished.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             Background background = new Background(backgroundImg);
@@ -461,23 +460,27 @@ public class LevelManager {
             dialogBox.setBackground(background);
         }
 
-        int buttonHeight = 20;
+        int buttonHeight = 34;
         int buttonAmount = 1;
         int spacing = 10;
 
+        dialogBox.getStylesheets().add((String.valueOf(Sleepwalker.class.getResource("ui/styles.css"))));
+
         for(Button option : options){
 
+            option.getStyleClass().add("button");
             option.setPrefWidth(200);
             option.setMinHeight(buttonHeight);
             option.setAlignment(Pos.CENTER);
             option.setLayoutX(100);
+            option.setStyle("-fx-padding: 5, 20, 5, 20");
             option.setLayoutY(110 + (buttonHeight + spacing) * buttonAmount++);
 
             dialogBox.getChildren().add(option);
         }
 
         dialogBox.setLayoutX((double) (GameProperties.WIDTH / 2) - 200);
-        dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - 100);
+        dialogBox.setLayoutY((double) (GameProperties.HEIGHT / 2) - 150);
 
     }
 

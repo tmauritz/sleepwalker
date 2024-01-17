@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+import static at.ac.fhcampuswien.sleepwalker.GameManager.getInstance;
+
 public class LevelStatus extends Rectangle {
     private final LevelManager levelManager;
     private int currentLevelID;
@@ -58,9 +60,14 @@ public class LevelStatus extends Rectangle {
     public void failLevel() {
 
         Button backToMenu = new Button("Back to Main Menu");
+        backToMenu.getStyleClass().add("button");
+        backToMenu.setPrefSize(200, 30);
+        backToMenu.setLayoutX(50);
+        backToMenu.setLayoutY(120);
         backToMenu.setOnAction(event -> GameManager.getInstance().showMainMenu());
 
         Button retryLevel = new Button("Retry Level");
+        retryLevel.getStyleClass().add("button");
         retryLevel.setOnAction(event -> GameManager.getInstance().playLevel(currentLevelID));
         boolean finished = false;
         levelManager.showDialog(finished, retryLevel, backToMenu);

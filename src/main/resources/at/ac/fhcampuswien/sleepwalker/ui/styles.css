@@ -17,3 +17,12 @@
 .button:pressed {
     -fx-background-color: #7D528A;
 }
+
+@font-face {
+    font-family: 'PixCon';
+    src: url('fonts/PixCon.ttf');
+}
+
+.menu-text {
+    -fx-font-family: 'PixCon';
+}
