@@ -595,7 +595,6 @@ public class LevelManager {
     }
 
     public boolean levelFinished(){
-        //TODO: check for collectibles
         return currentLevel.Collectibles().isEmpty();
     }
 

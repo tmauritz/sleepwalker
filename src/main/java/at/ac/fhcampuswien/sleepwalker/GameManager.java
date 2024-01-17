@@ -81,7 +81,6 @@ public class GameManager {
         Scene worldMap = sceneLibrary.get("worldMap");
         if (worldMap == null) {
             //load world map if not present
-            //TODO: implement proper World Map
             ImageView background = new ImageView(MediaManager.loadImage(GameProperties.BACKGROUND_IMAGE_PATH));
             background.setFitWidth(GameProperties.WIDTH);
             background.setFitHeight(GameProperties.HEIGHT);
