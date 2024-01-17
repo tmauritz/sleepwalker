@@ -51,7 +51,6 @@ public class LevelManager {
     private Pane levelRootCamera;
     private int loadedLevelID;
     private long frameCounter;
-    private Point2D enemyVelocity;
     private Scene loadedLevel;
     private ImageView currentHearts;
     private ImageView currentCollectibles;
@@ -68,7 +67,6 @@ public class LevelManager {
 
     public LevelManager(){
         pressedKeys = new HashMap<>();
-        enemyVelocity = new Point2D(0, 0);
     }
 
     public Level getCurrentLevel(){
