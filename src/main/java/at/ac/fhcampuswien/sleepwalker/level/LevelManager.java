@@ -60,8 +60,6 @@ public class LevelManager {
     private Scene loadedLevel;
     private ImageView currentHearts;
     private ImageView currentCollectibles;
-    private int health = 6;
-    boolean wasMovingRight = true;
     private Timeline timerTimeline;
     private long startTime;
     private Label timerLabel;
@@ -79,6 +77,11 @@ public class LevelManager {
         enemyVelocity = new Point2D(0, 0);
         playerCanJump = true;
     }
+
+    public Level getCurrentLevel(){
+        return currentLevel;
+    }
+
     public boolean isGameOverStatus() {
         return gameOverStatus;
     }
@@ -103,28 +106,6 @@ public class LevelManager {
         this.enemyMovementControl = enemyMovementControl;
     }
 
-    /*
-    Get the health of the player
-     */
-    public int getHealth(){
-        return health;
-    }
-    /*
-    Set the health of the player
-     */
-
-    public void setHealth(int health){
-        this.health = health;
-    }
-
-    private void jumpPlayer(){
-        if(playerCanJump){
-            MediaManager.playSoundFX("audio/sound/jump.wav");
-            playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
-            playerCanJump = false;
-        }
-    }
-
     /**
      * finds out if a key is currently presses or not.
      *
@@ -135,121 +116,6 @@ public class LevelManager {
         return pressedKeys.getOrDefault(key, false);
     }
 
-    /**
-     * Moves the Player along the X Axis and checks for collision
-     * if a collision is detected (overlap), player is moved back 1 unit.
-     * Player can not move through platforms.
-     *
-     * @param amount how far the player is moved
-     */
-    private void movePlayerX(int amount){
-        boolean movingRight = amount > 0;
-
-        for(int i = 1; i <= Math.abs(amount); i++){
-            for(Node platform : currentLevel.Platforms()){
-                if(currentLevel.Player().getBoundsInParent().intersects(platform.getBoundsInParent())){
-                    //collision detected
-                    if(movingRight){
-                        currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() - 1);
-                    } else{
-                        currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() + 1);
-                    }
-                    return;
-                }
-            }
-
-            //Checks player orientation for texture
-            if(movingRight){
-                if(!wasMovingRight){
-                    currentLevel.Player().setCharTexture(currentLevel.Player().getIdleRight());
-                    wasMovingRight = true;
-                } else wasMovingRight = false;
-            } else{
-                if(wasMovingRight){
-                    currentLevel.Player().setCharTexture(currentLevel.Player().getIdleLeft());
-                    wasMovingRight = false;
-                } else wasMovingRight = true;
-            }
-
-            if(currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
-                if(levelFinished()){
-                    if(movingRight){
-                        currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() - 1);
-                    } else{
-                        currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() + 1);
-                    }
-                    Image image0 = MediaManager.loadImage("level/5Coins.png");
-                    currentCollectibles.setImage(image0);
-                    currentLevel.Finish().finishLevel();
-                    timerTimeline.stop();
-                }
-            }
-            currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() + (movingRight ? 1 : -1));
-        }
-
-    }
-
-    /**
-     * Moves the Player along the Y Axis and checks for collision
-     * if a collision is detected (overlap), player is moved back 1 unit.
-     * Player can not move through platforms
-     *
-     * @param amount how far the player is moved
-     */
-    private void movePlayerY(int amount){
-        boolean movingDown = amount > 0;
-
-        for(int i = 1; i <= Math.abs(amount); i++){
-            for(Node platform : currentLevel.Platforms()){
-                if(currentLevel.Player().getBoundsInParent().intersects(platform.getBoundsInParent())){
-                    //collision detected
-                    if(movingDown){
-                        currentLevel.Player().setTranslateY(currentLevel.Player().getTranslateY() - 1);
-                        playerCanJump = true;
-                    } else{
-                        currentLevel.Player().setTranslateY(currentLevel.Player().getTranslateY() + 1);
-                        playerVelocity = playerVelocity.add(0, -playerVelocity.getY()); //reset jump velocity
-                    }
-                    return;
-                }
-            }
-            //Player looses one life if it touches a spike and respawns at the spawn. Camera follows to spawn
-            for(Node spike : currentLevel.Spikes()){
-                if(currentLevel.Player().getBoundsInParent().intersects(spike.getBoundsInParent())){
-                    setHealth(getHealth() - 1);
-                    if(getHealth() > 0){
-                        currentLevel.Player().die();
-                    }
-                    return;
-                }
-            }
-            //Player losses one life if it touches an enemy and respawn at the spawn.
-            if (currentLevel.isEnemyExist()) {
-                if (currentLevel.Player().getBoundsInParent().intersects(currentLevel.Enemy().getBoundsInParent())) {
-                    setHealth(getHealth() - 1);
-                    if (getHealth() > 0) {
-                        currentLevel.Player().die();
-                    }
-                    return;
-                }
-            }
-            if(currentLevel.Finish().getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
-                if(levelFinished()){
-                    if(movingDown){
-                        currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() - 1);
-                    } else{
-                        currentLevel.Player().setTranslateX(currentLevel.Player().getTranslateX() + 1);
-                    }
-                    Image image0 = MediaManager.loadImage("level/5Coins.png");
-                    currentCollectibles.setImage(image0);
-                    currentLevel.Finish().finishLevel();
-                    timerTimeline.stop();
-                }
-            }
-            currentLevel.Player().setTranslateY(currentLevel.Player().getTranslateY() + (movingDown ? 1 : -1));
-        }
-
-    }
 
     /*
      *  Updates the HealthBar to the actual lives
@@ -263,7 +129,7 @@ public class LevelManager {
         Image image4 = MediaManager.loadImage("level/4hearts.png");
         Image image5 = MediaManager.loadImage("level/5hearts.png");
         Image image6 = MediaManager.loadImage("level/6hearts.png");
-        switch(health){
+        switch(currentLevel.Player().getHealth()){
             case 0:
                 currentHearts.setImage(image0);
                 loadGameOver();
@@ -345,7 +211,6 @@ public class LevelManager {
     public Scene loadLevel(int levelId) throws LevelNotLoadedException{
         portalOpen = false;
         loadedLevelID = levelId;
-        setHealth(6);
         setEnemyMovementControl(300);
 
         GUIRoot = new Pane();
@@ -405,6 +270,7 @@ public class LevelManager {
 
         playerVelocity = new Point2D(0, 0);
         pressedKeys.clear();
+        currentLevel.Player().init();
 
         //Camera movement X Y
         currentLevel.Player().translateXProperty().addListener((observable, oldValue, newValue) -> {
@@ -468,7 +334,6 @@ public class LevelManager {
 
     /*
     Timer Calculation
-
      */
 
     private void updateTimer(){
@@ -539,14 +404,10 @@ public class LevelManager {
     private void update(){
         debugInfo.setText("FRAME: " + frameCounter++ + System.lineSeparator() + "Player: (" + currentLevel.Player().getTranslateX() + " | " + currentLevel.Player().getTranslateY() + ")" + System.lineSeparator() + "VELOCITY: " + playerVelocity.toString());
         //process player input
-        if(isPressed(GameProperties.LEFT)) movePlayerX(-GameProperties.PLAYER_SPEED);
-        if(isPressed(GameProperties.RIGHT)) movePlayerX(GameProperties.PLAYER_SPEED);
-        if(isPressed(GameProperties.JUMP)) jumpPlayer();
-        //assess the gravity of the situation
-        if(playerVelocity.getY() < GameProperties.TERMINAL_VELOCITY){
-            playerVelocity = playerVelocity.add(0, GameProperties.GRAVITY);
-        }
-        movePlayerY((int) playerVelocity.getY());
+        if(isPressed(GameProperties.LEFT)) currentLevel.Player().moveX(-GameProperties.PLAYER_SPEED);
+        if(isPressed(GameProperties.RIGHT)) currentLevel.Player().moveX(GameProperties.PLAYER_SPEED);
+        if(isPressed(GameProperties.JUMP)) currentLevel.Player().jump();
+        currentLevel.Player().update();
 
         Iterator<Node> iterator = currentLevel.Collectibles().iterator();
         while(iterator.hasNext()){
@@ -565,11 +426,7 @@ public class LevelManager {
             PowerUpHealth powerUpHealth = (PowerUpHealth) iteratorHealth.next();
             if(powerUpHealth.getBoundsInParent().intersects(currentLevel.Player().getBoundsInParent())){
                 MediaManager.playSoundFX("audio/sound/coin.wav");
-                if (getHealth() < 5) {
-                    setHealth(getHealth() + 2);
-                } else if (getHealth() == 5) {
-                    setHealth(getHealth() + 1);
-                }
+                currentLevel.Player().heal(2);
                 powerUpHealth.setVisible(false);
                 iteratorHealth.remove();
             }
