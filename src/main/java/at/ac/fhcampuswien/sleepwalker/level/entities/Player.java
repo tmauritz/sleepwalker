@@ -4,6 +4,7 @@ import at.ac.fhcampuswien.sleepwalker.GameProperties;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.level.Level;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
@@ -201,11 +202,19 @@ public class Player extends Rectangle {
     public void die(){
         levelManager.pause();
         MediaManager.playSoundFX("audio/sound/impact.wav");
-        deathAnimation.setOnFinished(t -> {
-            setCharTexture(idleRight);
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), this);
+        fadeTransition.setFromValue(100);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(e -> {
+            setOpacity(100);
             levelManager.respawn();
         });
+        deathAnimation.setOnFinished(t -> {
+            setCharTexture(idleRight);
+        });
         deathAnimation.play();
+        fadeTransition.play();
     }
 
     private Timeline getDeathAnimation(){
