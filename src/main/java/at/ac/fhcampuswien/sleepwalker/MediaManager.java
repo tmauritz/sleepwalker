@@ -32,9 +32,14 @@ public abstract class MediaManager {
      */
     public static void setMusicVolume(double musicVolume){
         if(musicVolume > 100) MediaManager.musicVolume = 100;
+        else if (musicVolume == 0 && MediaManager.musicVolume == 0) MediaManager.musicVolume = 100;
         else if (musicVolume < 0) MediaManager.musicVolume = 0;
         else MediaManager.musicVolume = musicVolume;
         if(musicPlayer != null) musicPlayer.setVolume(MediaManager.musicVolume);
+    }
+
+    public static double getMusicVolume(){
+        return musicVolume;
     }
 
     /**
