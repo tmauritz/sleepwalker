@@ -115,14 +115,14 @@ public class Player extends Rectangle {
                 } else wasMovingRight = true;
             }
 
-            if(level.Finish().getBoundsInParent().intersects(level.Player().getBoundsInParent())){
+            if(level.Finish(true).getBoundsInParent().intersects(level.Player().getBoundsInParent())){
                 if(levelManager.levelFinished()){
                     if(movingRight){
                         level.Player().setTranslateX(level.Player().getTranslateX() - 1);
                     } else{
                         level.Player().setTranslateX(level.Player().getTranslateX() + 1);
                     }
-                    level.Finish().finishLevel();
+                    level.Finish(true).finishLevel();
                 }
             }
             level.Player().setTranslateX(level.Player().getTranslateX() + (movingRight ? 1 : -1));
@@ -168,14 +168,14 @@ public class Player extends Rectangle {
                     return;
                 }
             }
-            if(level.Finish().getBoundsInParent().intersects(level.Player().getBoundsInParent())){
+            if(level.Finish(true).getBoundsInParent().intersects(level.Player().getBoundsInParent())){
                 if(levelManager.levelFinished()){
                     if(movingDown){
                         level.Player().setTranslateX(level.Player().getTranslateX() - 1);
                     } else{
                         level.Player().setTranslateX(level.Player().getTranslateX() + 1);
                     }
-                    level.Finish().finishLevel();
+                    level.Finish(true).finishLevel();
                 }
             }
             level.Player().setTranslateY(level.Player().getTranslateY() + (movingDown ? 1 : -1));
