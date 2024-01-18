@@ -20,14 +20,17 @@ import static at.ac.fhcampuswien.sleepwalker.GameManager.getInstance;
 public class LevelStatus extends Rectangle {
     private final LevelManager levelManager;
     private int currentLevelID;
+    private Rectangle texture;
     public LevelStatus(double x, double y, LevelManager currentLevel) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
         this.setX(x);
         this.setY(y);
-        this.setWidth(GameProperties.TILE_UNIT*2);
-        this.setHeight(GameProperties.TILE_UNIT*2);
+        this.setWidth(GameProperties.TILE_UNIT);
+        this.setHeight(GameProperties.TILE_UNIT);
         this.setFill(Color.TRANSPARENT);
+        texture = new Rectangle(x,y,GameProperties.TILE_UNIT*2,GameProperties.TILE_UNIT*2);
+        texture.setFill(Color.TRANSPARENT);
     }
     public LevelStatus(LevelManager currentLevel) {
         this.levelManager = currentLevel;
