@@ -25,6 +25,9 @@ import static at.ac.fhcampuswien.sleepwalker.GameManager.getInstance;
 public class LevelStatus extends Rectangle {
     private final LevelManager levelManager;
     private int currentLevelID;
+    /**
+     Is getting the current LevelID of LevelManager
+     */
     public LevelStatus(double x, double y, boolean collision, LevelManager currentLevel) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
@@ -40,11 +43,16 @@ public class LevelStatus extends Rectangle {
         }
         this.setFill(Color.TRANSPARENT);
     }
+    /**
+    Is getting the current LevelID of LevelManager
+     */
     public LevelStatus(LevelManager currentLevel) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
     }
-
+    /**
+    Is opening the Portal to finish the level
+     */
     public void openPortal() {
         KeyFrame openingGif = new KeyFrame(Duration.ZERO, t -> {
             try {
