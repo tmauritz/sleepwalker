@@ -21,7 +21,7 @@ public class Player extends Rectangle {
     private final Timeline deathAnimation;
     private int health;
     private final int maxHealth;
-    private boolean playerCanJump;
+    private boolean playerOnGround;
     boolean wasMovingRight = true;
     private Point2D playerVelocity;
 
@@ -60,10 +60,10 @@ public class Player extends Rectangle {
     }
 
     public void jump(){
-        if(playerCanJump){
+        if(playerOnGround){
             MediaManager.playSoundFX("audio/sound/jump.wav");
             playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
-            playerCanJump = false;
+            playerOnGround = false;
         }
     }
 
@@ -73,6 +73,7 @@ public class Player extends Rectangle {
             playerVelocity = playerVelocity.add(0, GameProperties.GRAVITY);
         }
         moveY((int) playerVelocity.getY());
+        System.out.println(playerOnGround);
     }
 
     public Point2D getPlayerVelocity(){
@@ -117,12 +118,8 @@ public class Player extends Rectangle {
 
             if(level.Finish(true).getBoundsInParent().intersects(level.Player().getBoundsInParent())){
                 if(levelManager.levelFinished()){
-                    if(movingRight){
-                        level.Player().setTranslateX(level.Player().getTranslateX() - 1);
-                    } else{
-                        level.Player().setTranslateX(level.Player().getTranslateX() + 1);
-                    }
                     level.Finish(true).finishLevel();
+                    return;
                 }
             }
             level.Player().setTranslateX(level.Player().getTranslateX() + (movingRight ? 1 : -1));
@@ -146,7 +143,7 @@ public class Player extends Rectangle {
                     //collision detected
                     if(movingDown){
                         level.Player().setTranslateY(level.Player().getTranslateY() - 1);
-                        playerCanJump = true;
+                        playerOnGround = true;
                     } else{
                         level.Player().setTranslateY(level.Player().getTranslateY() + 1);
                         playerVelocity = playerVelocity.add(0, -playerVelocity.getY()); //reset jump velocity
@@ -170,12 +167,8 @@ public class Player extends Rectangle {
             }
             if(level.Finish(true).getBoundsInParent().intersects(level.Player().getBoundsInParent())){
                 if(levelManager.levelFinished()){
-                    if(movingDown){
-                        level.Player().setTranslateX(level.Player().getTranslateX() - 1);
-                    } else{
-                        level.Player().setTranslateX(level.Player().getTranslateX() + 1);
-                    }
                     level.Finish(true).finishLevel();
+                    return;
                 }
             }
             level.Player().setTranslateY(level.Player().getTranslateY() + (movingDown ? 1 : -1));
