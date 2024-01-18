@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.sleepwalker.level.entities;
 import at.ac.fhcampuswien.sleepwalker.GameManager;
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
+import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.LevelData;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
@@ -10,27 +11,34 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
+import java.io.IOException;
+import java.util.Objects;
 
 import static at.ac.fhcampuswien.sleepwalker.GameManager.getInstance;
 
 public class LevelStatus extends Rectangle {
     private final LevelManager levelManager;
     private int currentLevelID;
-    private Rectangle texture;
-    public LevelStatus(double x, double y, LevelManager currentLevel) {
+    public LevelStatus(double x, double y, boolean collision, LevelManager currentLevel) {
         this.levelManager = currentLevel;
         currentLevelID = levelManager.getLoadedLevelID();
-        this.setX(x);
         this.setY(y);
-        this.setWidth(GameProperties.TILE_UNIT);
-        this.setHeight(GameProperties.TILE_UNIT);
+        if (collision) {
+            this.setX(x + 15);
+            this.setWidth(GameProperties.TILE_UNIT*0.2);
+            this.setHeight(GameProperties.TILE_UNIT*2);
+        } else {
+            this.setX(x - 15);
+            this.setWidth(GameProperties.TILE_UNIT*2);
+            this.setHeight(GameProperties.TILE_UNIT*2);
+        }
         this.setFill(Color.TRANSPARENT);
-        texture = new Rectangle(x,y,GameProperties.TILE_UNIT*2,GameProperties.TILE_UNIT*2);
-        texture.setFill(Color.TRANSPARENT);
     }
     public LevelStatus(LevelManager currentLevel) {
         this.levelManager = currentLevel;
@@ -39,9 +47,13 @@ public class LevelStatus extends Rectangle {
 
     public void openPortal() {
         KeyFrame openingGif = new KeyFrame(Duration.ZERO, t -> {
-            this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_start.gif")));
+            try {
+                this.setFill(new ImagePattern(new Image(Objects.requireNonNull(Sleepwalker.class.getResource("level/Portal_start.gif")).openStream())));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
-        KeyFrame waitTime = new KeyFrame(Duration.seconds(0.5));
+        KeyFrame waitTime = new KeyFrame(Duration.seconds(0.8));
         Timeline openingTimeline = new Timeline(openingGif, waitTime);
         openingTimeline.setOnFinished(t->{
             this.setFill(new ImagePattern(MediaManager.loadImage("level/Portal_idle.gif")));

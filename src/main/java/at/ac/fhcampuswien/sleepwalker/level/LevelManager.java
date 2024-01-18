@@ -423,7 +423,7 @@ public class LevelManager {
 
         updateCollectiblePicture();
         if(!portalOpen && levelFinished()){
-            currentLevel.Finish().openPortal();
+            currentLevel.Finish(false).openPortal();
             portalOpen = true;
         }
         if (currentLevel.isEnemyExist()) {

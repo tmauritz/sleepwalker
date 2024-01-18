@@ -149,7 +149,6 @@ public class TileManager {
         if(neighbours.charAt(1) == '-' && neighbours.charAt(3) == '-' && diagonals.charAt(2) == '-') neighbours.append('l');
         if(neighbours.charAt(0) == '-' && neighbours.charAt(2) == '-' && diagonals.charAt(1) == '-') neighbours.append('R');
         if(neighbours.charAt(2) == '-' && neighbours.charAt(3) == '-' && diagonals.charAt(3) == '-') neighbours.append('r');
-        System.out.println(neighbours);
         return neighbours.toString();
 
     }

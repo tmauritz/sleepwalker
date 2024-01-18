@@ -27,6 +27,7 @@ public class Level {
     private Player player;
     private Enemy enemy;
     private LevelStatus goal;
+    private LevelStatus goalTexture;
     private int width;
     private int height;
     private boolean enemyExist;
@@ -92,8 +93,9 @@ public class Level {
         return spawn;
     }
 
-    public LevelStatus Finish(){
-        return goal;
+    public LevelStatus Finish(boolean collision){
+        if (collision) return goal;
+        else return goalTexture;
     }
 
     /**
@@ -177,8 +179,9 @@ public class Level {
                         powerUpHealth.add(health);
                         break;
                     case 'F': //level exit
-                        goal = new LevelStatus(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, manager);
-                        levelRoot.getChildren().add(goal);
+                        goal = new LevelStatus(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, true, manager);
+                        goalTexture = new LevelStatus(j * GameProperties.TILE_UNIT, i * GameProperties.TILE_UNIT, false, manager);
+                        levelRoot.getChildren().addAll(goalTexture, goal);
                         break;
                     case 'e': //enemy spawn
                         enemy = new Enemy(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, manager);
@@ -201,13 +204,6 @@ public class Level {
             }
         }
 
-    }
-
-    /**
-     * Wins the Level.
-     */
-    public void win(){
-        goal.finishLevel();
     }
 
     /**
