@@ -21,6 +21,7 @@ public class Player extends Rectangle {
     private final Timeline deathAnimation;
     private int health;
     private final int maxHealth;
+    private boolean playerCanJump;
     private boolean playerOnGround;
     boolean wasMovingRight = true;
     private Point2D playerVelocity;
@@ -60,9 +61,10 @@ public class Player extends Rectangle {
     }
 
     public void jump(){
-        if(playerOnGround){
+        if(playerCanJump){
             MediaManager.playSoundFX("audio/sound/jump.wav");
             playerVelocity = playerVelocity.add(0, -GameProperties.PLAYER_JUMP);
+            playerCanJump = false;
             playerOnGround = false;
         }
     }
@@ -72,7 +74,8 @@ public class Player extends Rectangle {
         if(playerVelocity.getY() < GameProperties.TERMINAL_VELOCITY){
             playerVelocity = playerVelocity.add(0, GameProperties.GRAVITY);
         }
-        moveY((int) playerVelocity.getY());
+
+        moveY((int) Math.floor(playerVelocity.getY()));
         System.out.println(playerOnGround);
     }
 
@@ -137,18 +140,25 @@ public class Player extends Rectangle {
     public void moveY(int amount){
         boolean movingDown = amount > 0;
 
-        for(int i = 1; i <= Math.abs(amount); i++){
+        for(int i = 0; i <= Math.abs(amount); i++){
+            playerOnGround = false;
             for(Node platform : level.Platforms()){
                 if(level.Player().getBoundsInParent().intersects(platform.getBoundsInParent())){
                     //collision detected
                     if(movingDown){
-                        level.Player().setTranslateY(level.Player().getTranslateY() - 1);
-                        playerOnGround = true;
+                        if(getTranslateY() + getHeight() == platform.getTranslateY()){
+                            level.Player().setTranslateY(level.Player().getTranslateY() - 1);
+                            playerCanJump = true;
+                            playerOnGround = true;
+                            return;
+                        }
                     } else{
-                        level.Player().setTranslateY(level.Player().getTranslateY() + 1);
-                        playerVelocity = playerVelocity.add(0, -playerVelocity.getY()); //reset jump velocity
+                        if(getTranslateY() == platform.getTranslateY() + GameProperties.TILE_UNIT){
+                            level.Player().setTranslateY(level.Player().getTranslateY() + 1);
+                            playerVelocity = new Point2D(0,0);
+                            return;
+                        }
                     }
-                    return;
                 }
             }
             //Player looses one life if it touches a spike and respawns at the spawn. Camera follows to spawn
@@ -171,7 +181,7 @@ public class Player extends Rectangle {
                     return;
                 }
             }
-            level.Player().setTranslateY(level.Player().getTranslateY() + (movingDown ? 1 : -1));
+            if (i > 0) level.Player().setTranslateY(level.Player().getTranslateY() + (movingDown ? 1 : -1));
         }
 
     }
