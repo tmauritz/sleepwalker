@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -64,6 +65,7 @@ public class LevelManager {
     private boolean gameOverStatus = false;
     private boolean isPaused =false;
     private Pane pauseMenu;
+    private boolean isMuted = false;
 
     public LevelManager(){
         pressedKeys = new HashMap<>();
@@ -562,12 +564,22 @@ public class LevelManager {
         resumeButton.setLayoutX(50);
         resumeButton.setLayoutY(20);
 
-        Button muteBackground = new Button("Mute");
-        muteBackground.setPrefSize(200, 30);
-        muteBackground.getStyleClass().add("button");
-        muteBackground.setOnAction(e -> MediaManager.setMusicVolume(0));
-        muteBackground.setLayoutX(50);
-        muteBackground.setLayoutY(70);
+        Button muteButton = new Button(isMuted ? "Unmute" : "Mute");
+        muteButton.setPrefSize(200, 30);
+        muteButton.getStyleClass().add("button");
+        muteButton.setOnAction(e -> {
+            if (isMuted) {
+                MediaManager.setMusicVolume(50);
+                muteButton.setText("Mute");
+                isMuted = false;
+            } else {
+                MediaManager.setMusicVolume(0);
+                muteButton.setText("Unmute");
+                isMuted = true;
+            }
+        });
+        muteButton.setLayoutX(50);
+        muteButton.setLayoutY(70);
 
         Button mainMenuButton = new Button("MainMenu");
         mainMenuButton.setPrefSize(200, 30);
@@ -576,7 +588,7 @@ public class LevelManager {
         mainMenuButton.setLayoutX(50);
         mainMenuButton.setLayoutY(120);
 
-        pauseMenu.getChildren().addAll(resumeButton, mainMenuButton, muteBackground);
+        pauseMenu.getChildren().addAll(resumeButton, mainMenuButton, muteButton);
         pauseMenu.getChildren().add(menuBox);
         pauseMenu.getStylesheets().add((String.valueOf(Sleepwalker.class.getResource("ui/styles.css"))));
         GUIRoot.getChildren().add(pauseMenu);
