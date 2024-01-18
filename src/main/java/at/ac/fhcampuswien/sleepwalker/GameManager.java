@@ -1,16 +1,15 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
+import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,11 +21,9 @@ import java.util.Map;
  */
 public class GameManager {
     private static final Map<String, Scene> sceneLibrary = new HashMap<>();
-    private static Stage stageRoot;
-    private static MediaPlayer backgroundMusic;
-
+    private final Stage stageRoot;
     private static GameManager gameManager;
-    private LevelManager levelManager;
+    private final LevelManager levelManager;
 
     private GameManager(Stage stageRoot) {
         this.stageRoot = stageRoot;
@@ -40,37 +37,6 @@ public class GameManager {
     public static GameManager getInstance(Stage stageRoot) {
         if (gameManager == null) gameManager = new GameManager(stageRoot);
         return gameManager;
-    }
-
-    /**
-     * Exposes the background media player for volume control, muting etc.
-     *
-     * @return MediaPlayer
-     */
-    public static MediaPlayer getBackgroundMusic() {
-        return backgroundMusic;
-    }
-
-    /**
-     * Plays background media (music) in a loop.
-     *
-     * @param media media to be played in the background
-     */
-    public static void playBackgroundMusic(Media media) {
-        if (backgroundMusic != null) {
-            backgroundMusic.setMute(true);
-        }
-        backgroundMusic = new MediaPlayer(media);
-        backgroundMusic.setOnEndOfMedia(() -> playBackgroundMusic(backgroundMusic.getMedia()));
-        backgroundMusic.setVolume(0);
-        backgroundMusic.play();
-    }
-
-    /**
-     * Stops the background media player.
-     */
-    public static void stopBackgroundMusic() {
-        backgroundMusic.stop();
     }
 
     /**
@@ -91,8 +57,7 @@ public class GameManager {
         }
         stageRoot.setScene(mainMenu);
         stageRoot.show();
-        Media mainTheme = MediaManager.loadMedia("audio/maintheme.mp3");
-        GameManager.playBackgroundMusic(mainTheme);
+        MediaManager.playMusic("audio/maintheme.mpeg");
     }
 
     public void showHowToPlay() {
@@ -112,11 +77,10 @@ public class GameManager {
      * if the world map has been initialized before, the same world map will be displayed
      * to prevent multiple world maps existing at once
      */
-    public static void showWorldMap() {
+    public void showWorldMap() {
         Scene worldMap = sceneLibrary.get("worldMap");
         if (worldMap == null) {
             //load world map if not present
-            //TODO: implement proper World Map
             ImageView background = new ImageView(MediaManager.loadImage(GameProperties.BACKGROUND_IMAGE_PATH));
             background.setFitWidth(GameProperties.WIDTH);
             background.setFitHeight(GameProperties.HEIGHT);
@@ -151,9 +115,21 @@ public class GameManager {
             loadLevel4.setLayoutY(200);
             loadLevel4.setOnAction(e -> getInstance().playLevel(4));
 
+            Button loadLevel5 = new Button("Level 5");
+            loadLevel5.getStyleClass().add("button");
+            loadLevel5.setLayoutX(200);
+            loadLevel5.setLayoutY(200);
+            loadLevel5.setOnAction(e -> getInstance().playLevel(5));
+
+            Button loadLevel6 = new Button("Level 6");
+            loadLevel6.getStyleClass().add("button");
+            loadLevel6.setLayoutX(300);
+            loadLevel6.setLayoutY(200);
+            loadLevel6.setOnAction(e -> getInstance().playLevel(6));
+
             AnchorPane x = new AnchorPane();
             x.getChildren().add(background);
-            x.getChildren().addAll(backToMainMenu, loadLevel1, loadLevel2, loadLevel3, loadLevel4);
+            x.getChildren().addAll(backToMainMenu, loadLevel1, loadLevel2, loadLevel3, loadLevel4, loadLevel5, loadLevel6);
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
             worldMap.getStylesheets().add(String.valueOf(Sleepwalker.class.getResource("ui/styles.css")));
             sceneLibrary.put("worldMap", worldMap);
@@ -163,19 +139,27 @@ public class GameManager {
     }
 
     /**
-     * Loads and starts the level.
-     *
+     * Loads and starts the level with a fade in/out transition.
      * @param levelId the level to be played
      */
     public void playLevel(int levelId) {
-        stopBackgroundMusic();
-        stageRoot.setScene(levelManager.loadLevel(levelId));
-        stageRoot.show();
-        try {
-            levelManager.startLevel();
-        } catch (LevelNotLoadedException e) {
-            //TODO: figure out what to do
-            throw new RuntimeException(e);
-        }
+        Scene previousScene = stageRoot.getScene();
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), previousScene.getRoot());
+        fadeOut.setFromValue(100);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(t -> {
+            try{
+                levelManager.setGameOverStatus(false);
+                stageRoot.setScene(levelManager.loadLevel(levelId));
+                previousScene.getRoot().setOpacity(100); //reset Opacity of previous Root Node
+                MediaManager.playMusic("audio/level.mpeg");
+                levelManager.startLevel();
+            } catch(LevelNotLoadedException e){
+                throw new RuntimeException(e);
+            }
+        });
+
+        fadeOut.play();
+
     }
 }

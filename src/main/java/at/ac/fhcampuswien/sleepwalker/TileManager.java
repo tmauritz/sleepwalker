@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.sleepwalker;
 
-import at.ac.fhcampuswien.sleepwalker.entities.Deco;
+import at.ac.fhcampuswien.sleepwalker.level.entities.Deco;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,33 +29,29 @@ public class TileManager {
         tileX.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileX.ser"));
         decoHeight.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/DecoHeight.ser"));
         decoWidth.putAll(deserializeMap("src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/DecoWidth.ser"));
-        tileY.put("-- -", "288");
-        tileX.put("-- -", "480");
-        serializeMap(tileX, "src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileX.ser");
-        serializeMap(tileY, "src/main/resources/at/ac/fhcampuswien/sleepwalker/level/HashMaps/TileY.ser");
     }
 
+    // In case tiles have to be changed
     public static void serializeMap(HashMap<String, String> currentMap, String filename){
-        try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(filename)))) {
+        try(ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(filename)))){
             oos.writeObject(currentMap);
             System.out.println("Serialization successful.");
 
-        } catch (Exception e) {
+        } catch(Exception e){
             System.out.println("Serialization failed. Exception: " + e.getMessage());
         }
     }
 
+    // Loads data from HashMaps
     public static HashMap<String, String> deserializeMap(String filepath){
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath))) {
-            @SuppressWarnings("unchecked")
-            HashMap<String, String> m = (HashMap<String, String>) ois.readObject();
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath))){
+            @SuppressWarnings("unchecked") HashMap<String, String> m = (HashMap<String, String>) ois.readObject();
             return m;
-        } catch (IOException | ClassNotFoundException e) {
+        } catch(IOException | ClassNotFoundException e){
             System.out.println("Loading " + filepath + " failed. Exception: " + e.getMessage());
             return null;
         }
     }
-
 
     public static ImagePattern getTile(String[] levelData, int x, int y){
         String neighbors = getTileID(levelData, x, y);
@@ -87,15 +83,10 @@ public class TileManager {
         return new ImagePattern(imageView.snapshot(params, null));
     }
 
-    public static Deco getDeco(String decoID, int x, int y) {
+    public static Deco getDeco(String decoID, int x, int y){
         int width = getDecoWidth(decoID);
         int height = getDecoHeight(decoID);
-        return new Deco(
-                x * GameProperties.TILE_UNIT,
-                (y + 1) * GameProperties.TILE_UNIT - height,
-                width,
-                height,
-                getDecoTile(decoID));
+        return new Deco(x * GameProperties.TILE_UNIT, (y + 1) * GameProperties.TILE_UNIT - height, width, height, getDecoTile(decoID));
     }
 
     /**
@@ -103,12 +94,27 @@ public class TileManager {
      */
     private static String getTileID(String[] levelData, final int ROW, final int COL){
         StringBuilder neighbours = new StringBuilder();
+        StringBuilder diagonals = new StringBuilder();
 
         char[] tiles;
         if(ROW > 0){
             tiles = levelData[ROW - 1].toCharArray();
             neighbours.append(tiles[COL] == '-' ? '-' : ' ');
-        } else neighbours.append(" ");
+
+            if(COL > 0){
+                diagonals.append(tiles[COL - 1] == '-' ? '-' : ' ');
+            }
+            else diagonals.append('-');
+
+            if(COL + 1 < tiles.length){
+                diagonals.append(tiles[COL + 1] == '-' ? '-' : ' ');
+            }
+            else diagonals.append('-');
+
+        } else{
+            neighbours.append("-");
+            diagonals.append("--");
+        }
 
         tiles = levelData[ROW].toCharArray();
         if(COL > 0){
@@ -119,11 +125,31 @@ public class TileManager {
             neighbours.append(tiles[COL + 1] == '-' ? '-' : ' ');
         } else neighbours.append("-");
 
+
         if(ROW + 1 < levelData.length){
             tiles = levelData[ROW + 1].toCharArray();
             neighbours.append(tiles[COL] == '-' ? '-' : ' ');
-        } else neighbours.append("x");
 
+            if(COL > 0){
+                diagonals.append(tiles[COL - 1] == '-' ? '-' : ' ');
+            }
+            else diagonals.append('-');
+
+            if(COL + 1 < tiles.length){
+                diagonals.append(tiles[COL + 1] == '-' ? '-' : ' ');
+            }
+            else diagonals.append('-');
+
+        } else {
+            neighbours.append("-");
+            diagonals.append("--");
+        }
+
+        if(neighbours.charAt(0) == '-' && neighbours.charAt(1) == '-' && diagonals.charAt(0) == '-') neighbours.append('L');
+        if(neighbours.charAt(1) == '-' && neighbours.charAt(3) == '-' && diagonals.charAt(2) == '-') neighbours.append('l');
+        if(neighbours.charAt(0) == '-' && neighbours.charAt(2) == '-' && diagonals.charAt(1) == '-') neighbours.append('R');
+        if(neighbours.charAt(2) == '-' && neighbours.charAt(3) == '-' && diagonals.charAt(3) == '-') neighbours.append('r');
+        System.out.println(neighbours);
         return neighbours.toString();
 
     }
@@ -131,8 +157,8 @@ public class TileManager {
     /**
      * Translates tile ID into X coordinates
      */
-    private static int getTileX(String tileID) {
-        if (tileX.containsKey(tileID)) {
+    private static int getTileX(String tileID){
+        if(tileX.containsKey(tileID)){
             return parseInt(tileX.get(tileID));
         } else return 0;
     }
@@ -140,24 +166,22 @@ public class TileManager {
     /**
      * Translates tile ID into Y coordinates
      */
-    private static int getTileY(String tileID) {
-        if (tileY.containsKey(tileID)) {
+    private static int getTileY(String tileID){
+        if(tileY.containsKey(tileID)){
             return parseInt(tileY.get(tileID));
         } else return 0;
     }
 
-    private static int getDecoHeight(String tileID) {
-        if (decoHeight.containsKey(tileID)) {
+    private static int getDecoHeight(String tileID){
+        if(decoHeight.containsKey(tileID)){
             return parseInt(decoHeight.get(tileID));
         } else return 0;
     }
 
-    private static int getDecoWidth(String tileID) {
-        if (decoWidth.containsKey(tileID)) {
+    private static int getDecoWidth(String tileID){
+        if(decoWidth.containsKey(tileID)){
             return parseInt(decoWidth.get(tileID));
         } else return 0;
     }
-
-
 
 }

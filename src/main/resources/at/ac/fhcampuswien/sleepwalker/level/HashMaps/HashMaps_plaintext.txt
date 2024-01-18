@@ -113,7 +113,137 @@
         decoHeight.put("R", "35");
         decoWidth.put("R", "46");
 
+tileX.put("--  L", "480");
+        tileY.put("--  L", "480");
+
+        tileX.put("-- -L", "480");
+        tileY.put("-- -L", "224");
+
+        tileX.put("-- -Ll", "64");
+        tileY.put("-- -Ll", "32");
+
+        tileX.put("-- -l", "480");
+        tileY.put("-- -l", "160");
+
+        tileX.put(" - -l", "64");
+        tileY.put(" - -l", "0");
+
+
+
+        tileX.put("- - R", "416");
+        tileY.put("- - R", "480");
+
+        tileX.put("- --R", "128");
+        tileY.put("- --R", "416");
+
+        tileX.put("- --Rr", "128");
+        tileY.put("- --Rr", "352");
+
+        tileX.put("- --r", "128");
+        tileY.put("- --r", "288");
+
+        tileX.put("  --r", "0");
+        tileY.put("  --r", "0");
+
+
+        tileX.put(" ---r", "320");
+        tileY.put(" ---r", "96");
+
+        tileX.put(" ---l", "416");
+        tileY.put(" ---l", "96");
+
+        tileX.put(" ---lr", "384");
+        tileY.put(" ---lr", "96");
+
+
+        tileX.put("--- R", "192");
+        tileY.put("--- R", "480");
+
+        tileX.put("--- L", "256");
+        tileY.put("--- L", "480");
+
+        tileX.put("--- LR", "224");
+        tileY.put("--- LR", "480");
+
+
+
+        tileX.put("----r", "416");
+        tileY.put("----r", "416");
+
+        tileX.put("----lr", "192");
+        tileY.put("----lr", "288");
+
+        tileX.put("----Lr", "256");
+        tileY.put("----Lr", "224");
+
+        tileX.put("----Rr", "320");
+        tileY.put("----Rr", "160");
+
+        tileX.put("----lRr", "320");
+        tileY.put("----lRr", "224");
+
+        tileX.put("----LRr", "192");
+        tileY.put("----LRr", "416");
+
+        tileX.put("----lLr", "416");
+        tileY.put("----lLr", "160");
+
+        tileX.put("----LlRr", "32");
+        tileY.put("----LlRr", "32");
+
+        //all variants with r ^
+
+        tileX.put("----l", "256");
+        tileY.put("----l", "160");
+
+        tileX.put("----lR", "256");
+        tileY.put("----lR", "288");
+
+        tileX.put("----Ll", "256");
+        tileY.put("----Ll", "416");
+
+        tileX.put("----LlR", "416");
+        tileY.put("----LlR", "224");
+
+        //everything with l but not r ^
+
+        tileX.put("----R", "192");
+        tileY.put("----R", "224");
+
+        tileX.put("----LR", "352");
+        tileY.put("----LR", "288");
+
+
+        //everything with R but not r/l ^
+
+        tileX.put("----L", "416");
+        tileY.put("----L", "288");
+
+
+    //LlRr
+
+        //FIX!!
+        tileX.put("--  ", "352");
+        tileY.put("--  ", "352");
+
+
+        tileX.put("----Llr", "416");
+        tileY.put("----Llr", "160");
+
+        tileX.put("----lRr", "320");
+        tileY.put("----lRr", "224");
+
+        tileX.put("--  ", "352");
+        tileY.put("--  ", "352");
+
+        tileX.put("    ", "128");
+        tileY.put("    ", "96");
+
+
+
+
         tileX.put("", "");
         tileY.put("", "");
         decoHeight.put("", "");
         decoWidth.put("", "");
+
