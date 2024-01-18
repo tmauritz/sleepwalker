@@ -1,11 +1,13 @@
 package at.ac.fhcampuswien.sleepwalker;
 
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
+import at.ac.fhcampuswien.sleepwalker.level.LevelData;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -103,45 +105,27 @@ public class GameManager {
             backToMainMenu.setLayoutY(GameProperties.HEIGHT - 100);
             backToMainMenu.setOnAction(t -> getInstance().showMainMenu()); //Look Mum, I'm using lambdas!
 
-            Button loadLevel1 = new Button("Level 1"); // TODO: automatically generate Buttons based on level number
-            loadLevel1.getStyleClass().add("button");
-            loadLevel1.setLayoutX(100);
-            loadLevel1.setLayoutY(100);
-            loadLevel1.setOnAction(t -> getInstance().playLevel(1));//lambdas again
-
-            Button loadLevel2 = new Button("Level 2");
-            loadLevel2.getStyleClass().add("button");
-            loadLevel2.setLayoutX(200);
-            loadLevel2.setLayoutY(100);
-            loadLevel2.setOnAction(e -> getInstance().playLevel(2));
-
-            Button loadLevel3 = new Button("Level 3");
-            loadLevel3.getStyleClass().add("button");
-            loadLevel3.setLayoutX(300);
-            loadLevel3.setLayoutY(100);
-            loadLevel3.setOnAction(e -> getInstance().playLevel(3));
-
-            Button loadLevel4 = new Button("Level 4");
-            loadLevel4.getStyleClass().add("button");
-            loadLevel4.setLayoutX(100);
-            loadLevel4.setLayoutY(200);
-            loadLevel4.setOnAction(e -> getInstance().playLevel(4));
-
-            Button loadLevel5 = new Button("Level 5");
-            loadLevel5.getStyleClass().add("button");
-            loadLevel5.setLayoutX(200);
-            loadLevel5.setLayoutY(200);
-            loadLevel5.setOnAction(e -> getInstance().playLevel(5));
-
-            Button loadLevel6 = new Button("Level 6");
-            loadLevel6.getStyleClass().add("button");
-            loadLevel6.setLayoutX(300);
-            loadLevel6.setLayoutY(200);
-            loadLevel6.setOnAction(e -> getInstance().playLevel(6));
-
+            Label levelSelect = new Label("Level select");
             AnchorPane x = new AnchorPane();
-            x.getChildren().add(background);
-            x.getChildren().addAll(backToMainMenu, loadLevel1, loadLevel2, loadLevel3, loadLevel4, loadLevel5, loadLevel6);
+            x.getChildren().addAll(background, backToMainMenu);
+
+            int counterX = 1, counterY = 1;
+            for (Integer levels: LevelData.Levels.keySet()) {
+                if (levels < 100) {
+                    Button loadLevel = new Button("Level " + levels);
+                    loadLevel.getStyleClass().add("button");
+                    loadLevel.setLayoutX(100 * counterX);
+                    loadLevel.setLayoutY(80 * counterY);
+                    counterX++;
+                    if (counterX == 4) {
+                        counterX = 1;
+                        counterY++;
+                    }
+                    loadLevel.setOnAction(t -> getInstance().playLevel(levels));
+                    x.getChildren().add(loadLevel);
+                }
+            }
+
             worldMap = new Scene(x, GameProperties.WIDTH, GameProperties.HEIGHT);
             worldMap.getStylesheets().add(String.valueOf(Sleepwalker.class.getResource("ui/styles.css")));
             sceneLibrary.put("worldMap", worldMap);
