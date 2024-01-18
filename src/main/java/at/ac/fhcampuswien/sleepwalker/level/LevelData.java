@@ -13,21 +13,20 @@ import java.util.Map;
  * 'w' Wing-Spike
  * 'c' collectibles
  * all other characters are treaded as "air" with nothing loaded
+ * Deco is underneath each level, key = level# * 100
+ * For deco:
+ * b B bushes
+ * t T trees
+ * C scarecrow
+ * h hay
+ * f barrel
+ * g grass
+ * s S sunflowers
+ * r R rocks
  */
 public class LevelData {
 
     public static final Map<Integer, String[]> Levels = new HashMap<>();
-
-    /*
-     * - walkway
-     * s player
-     * F finish
-     * ^ mines
-     * c coins
-     * Deco is underneath each level, key = level# * 100
-     * For deco: b B bushes, t T trees, C scarecrow, h hay, f barrel, g grass, s S sunflowers, r R rocks
-     */
-
     static{
         Levels.put(1, new String[]{
                 "-                                                                                                -",
