@@ -71,6 +71,18 @@ public class GameManager {
             throw new RuntimeException(e);
         }
     }
+    public void showSettings() {
+        Scene settingsScene;
+        FXMLLoader fxmlLoader = new FXMLLoader(Sleepwalker.class.getResource("ui/Settings.fxml"));
+        try {
+            settingsScene = new Scene(fxmlLoader.load(), GameProperties.WIDTH, GameProperties.HEIGHT);
+            stageRoot.setScene(settingsScene);
+            stageRoot.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * displays the world map

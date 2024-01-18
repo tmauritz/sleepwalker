@@ -70,6 +70,7 @@ public class MainMenuController implements Initializable {
         GameManager.getInstance().showWorldMap();
     }
     public void showSettingsButton(ActionEvent actionEvent) {
+        GameManager.getInstance().showSettings();
     }
 
     /**
