@@ -21,9 +21,10 @@ public abstract class MediaManager {
      * @param volume SFX volume
      */
     public static void setSoundVolume(double volume){
-        if(volume > 100) MediaManager.sfxVolume = 100;
-        else if (volume < 0) MediaManager.sfxVolume = 0;
-        else MediaManager.sfxVolume = volume;
+        musicVolume = volume;
+        if(musicPlayer != null) {
+            musicPlayer.setVolume(musicVolume / 100.0);
+        }
     }
 
     /**
