@@ -69,8 +69,7 @@ public class MainMenuController implements Initializable {
         //switch to WorldMap Scene
         GameManager.getInstance().showWorldMap();
     }
-    public void showSettingsButton() {
-
+    public void showSettingsButton(ActionEvent actionEvent) {
     }
 
     /**
