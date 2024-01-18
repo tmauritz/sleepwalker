@@ -50,7 +50,6 @@ public class Sleepwalker extends Application {
         fadeOut.setOnFinished(t -> GameManager.getInstance(primaryStage).showMainMenu());
         primaryStage.show();
         videoPlayer.play();
-
     }
 
 }
