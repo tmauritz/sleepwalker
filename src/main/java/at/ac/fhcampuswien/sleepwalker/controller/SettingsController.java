@@ -4,7 +4,7 @@ import at.ac.fhcampuswien.sleepwalker.GameManager;
 
 public class SettingsController {
 
-    public void showBackToMainMenu() {
+    public void handleBackToMainMenu() {
         GameManager.getInstance().showMainMenu();
     }
 }
