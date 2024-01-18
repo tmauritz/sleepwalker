@@ -108,7 +108,7 @@ public class LevelManager {
     }
 
 
-    /*
+    /**
      *  Updates the HealthBar to the actual lives
      *  --> half-heart = 1 life
      */
@@ -150,7 +150,7 @@ public class LevelManager {
         }
     }
 
-    /*
+    /**
     Updates the Collectibles Graphic
      */
     public void updateCollectiblePicture(){
@@ -322,7 +322,7 @@ public class LevelManager {
         updateTimeline.play();
     }
 
-    /*
+    /**
     Timer Calculation
      */
 
@@ -337,7 +337,7 @@ public class LevelManager {
         timerLabel.setText(formattedTime);
     }
 
-    /*
+    /**
     Is showing GameOver Screen
      */
     private void loadGameOver(){
@@ -346,6 +346,9 @@ public class LevelManager {
         //currentLevel.Enemy().setTranslateY(currentLevel.getEnemySpawn().getY());
         failLevel.failLevel();
     }
+    /**
+    Will move the enemy along the x-axis
+     */
     private void moveEnemyX() {
         if (!isGameOverStatus()) {
             //EnemyDirection = true --> Moving Right
@@ -407,7 +410,7 @@ public class LevelManager {
                 iterator.remove();
             }
         }
-        /*
+        /**
         With touching the Power Up Health, you will gain +2 health
          */
         Iterator<Node> iteratorHealth = currentLevel.PowerUpHealth().iterator();
