@@ -75,7 +75,7 @@ public class Player extends Rectangle {
             playerVelocity = playerVelocity.add(0, GameProperties.GRAVITY);
         }
 
-        moveY((int) Math.floor(playerVelocity.getY()));
+        moveY((int) playerVelocity.getY());
         System.out.println(playerOnGround);
     }
 
