@@ -1,8 +1,8 @@
 package at.ac.fhcampuswien.sleepwalker.level;
 
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
-import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
+import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
 import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.entities.Collectible;
 import at.ac.fhcampuswien.sleepwalker.level.entities.LevelStatus;
@@ -16,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -345,8 +344,6 @@ public class LevelManager {
      */
     private void loadGameOver(){
         setGameOverStatus(true);
-        //currentLevel.Enemy().setTranslateX(currentLevel.getEnemySpawn().getX());
-        //currentLevel.Enemy().setTranslateY(currentLevel.getEnemySpawn().getY());
         failLevel.failLevel();
     }
     /**
@@ -413,9 +410,8 @@ public class LevelManager {
                 iterator.remove();
             }
         }
-        /**
-        With touching the Power Up Health, you will gain +2 health
-         */
+
+        //With touching the Power Up Health, you will gain +2 health
         Iterator<Node> iteratorHealth = currentLevel.PowerUpHealth().iterator();
         while(iteratorHealth.hasNext()){
             PowerUpHealth powerUpHealth = (PowerUpHealth) iteratorHealth.next();
