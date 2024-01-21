@@ -268,25 +268,23 @@ public class LevelManager {
         //Camera movement X Y
         currentLevel.Player().translateXProperty().addListener((observable, oldValue, newValue) -> {
             int offset = newValue.intValue();
-            int maxXOffset = currentLevel.getWidth() -600;
-            if(offset > 300 && offset < currentLevel.getWidth()){
-                levelRootCamera.setLayoutX(-(offset - 300));
-            } else if(offset <= 300){
+            int margin = 300;
+            int maxXOffset = currentLevel.getWidth() - margin - GameProperties.TILE_UNIT;
+            if(offset > margin && offset < maxXOffset){
+                levelRootCamera.setLayoutX(-(offset - margin));
+            } else if(offset <= margin){
                 levelRootCamera.setLayoutX(0);
-            } else{
-                levelRootCamera.setLayoutX(-maxXOffset);
             }
 
         });
         currentLevel.Player().translateYProperty().addListener((observable, oldValue, newValue) -> {
             int offset = newValue.intValue();
-            int maxYOffset = currentLevel.getHeight() - 600;
-            if(offset > 300 && offset < currentLevel.getHeight()){
-                levelRootCamera.setLayoutY(-(offset - 300));
-            } else if(offset <= 300){
+            int margin = 300;
+            int maxYOffset = currentLevel.getHeight();
+            if(offset > margin && offset < maxYOffset){
+                levelRootCamera.setLayoutY(-(offset - margin));
+            } else if(offset <= margin){
                 levelRootCamera.setLayoutY(0);
-            } else{
-                levelRootCamera.setLayoutY(-maxYOffset);
             }
 
         });
