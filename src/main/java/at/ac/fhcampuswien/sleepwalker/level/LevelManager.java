@@ -192,6 +192,7 @@ public class LevelManager {
      */
     private void toggleDebug(){
         debugInfo.setVisible(!debugInfo.isVisible());
+        if(debugInfo.isVisible())debugInfo.toFront();
     }
 
     /**
@@ -304,12 +305,9 @@ public class LevelManager {
             if(keypress.getCode().equals(GameProperties.DEBUGVIEW)){
                 toggleDebug();
             }
-        });
-        loadedLevel.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+            if (keypress.getCode() == KeyCode.ESCAPE) {
                 togglePause();
             }
-            pressedKeys.put(keyEvent.getCode(), true);
         });
         loadedLevel.setOnKeyReleased(keypress -> pressedKeys.put(keypress.getCode(), false));
 

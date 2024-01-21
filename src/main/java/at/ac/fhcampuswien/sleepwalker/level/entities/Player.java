@@ -76,7 +76,6 @@ public class Player extends Rectangle {
         }
 
         moveY((int) playerVelocity.getY());
-        System.out.println(playerOnGround);
     }
 
     public Point2D getPlayerVelocity(){
