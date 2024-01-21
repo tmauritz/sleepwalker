@@ -229,21 +229,21 @@ public class LevelData {
                 "                     ",
         });
         Levels.put(6, new String[]{
-                "                                          ",
-                "              -       c                   ",
-                "                      -                   ",
+                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+                "                       c                  ",
+                "    c                   -                 ",
                 "    -                                     ",
-                "         c                       c        ",
-                "         -                       -        ",
-                "             -                            ",
-                "                -         -               ",
-                "                                          ",
+                "               -                 c        ",
                 "                                 -        ",
+                "                                          ",
+                "        -    -    -        -              ",
+                "                                          ",
+                "                      -          -        ",
                 "      c                                   ",
                 "      -                                   ",
                 "                                          ",
                 "  s                                     F ",
-                "ww-wwwwwww-wwww-wwww-wwww-wwww-wwww-wwww-w",
+                "^^-^^^^^^^-^^^^-^^^^-^^^^-^^^^-^^^^-^^^^-^",
                 "------------------------------------------",
         });
 
@@ -262,7 +262,7 @@ public class LevelData {
                 "                                          ",
                 "                                          ",
                 "                                          ",
-                "                                          ",
+                "    Tt         tTt               rrR      ",
                 "                                          ",
         });
     }
