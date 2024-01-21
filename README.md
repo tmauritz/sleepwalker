@@ -25,6 +25,4 @@ Check the project JDK: use Amazon Coretta version 21
 ### Step 5
 Check the gradle settings: use Gradle JVM Amazon Coretta version 21
 ### Step 6
-Open the Class Sleepwalker (Main-Class)
-### Step 7
-Run this class and have fun playing our Jump&Run-Game
+Run the Game with Gradle
