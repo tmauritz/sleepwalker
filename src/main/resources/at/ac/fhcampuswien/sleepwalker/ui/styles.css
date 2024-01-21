@@ -1,4 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/pixcon');
+
 
 .button {
     -fx-background-color: #C8A2C8;
@@ -21,9 +21,11 @@
 }
 
 @font-face {
-    font-family: 'PixCon';
+    font-family: 'dogica';
+    src: url('fonts/dogica.ttf');
 }
 
 .label {
-    -fx-font-family: 'PixCon';
+    -fx-font-family: 'dogica';
+    -fx-font-weight: bold;
 }

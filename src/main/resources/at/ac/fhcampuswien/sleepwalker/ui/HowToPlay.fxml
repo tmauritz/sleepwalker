@@ -14,53 +14,53 @@
          <image>
             <Image url="@../level/background/background_layer_2.png" />
          </image></ImageView>
-      <Button fx:id="BackToMainMenu" layoutX="220.0" layoutY="367.0" mnemonicParsing="false" onAction="#showBackToMainMenu" styleClass="button" text="Back To Main Menu">
+      <Button fx:id="BackToMainMenu" layoutX="237.0" layoutY="353.0" mnemonicParsing="false" onAction="#showBackToMainMenu" styleClass="button" text="Back To Main Menu">
          <font>
             <Font name="PixCon" size="12.0" />
          </font></Button>
-      <Label alignment="TOP_CENTER" layoutX="209.0" layoutY="30.0" text="Controls" textFill="WHITE">
+      <Label alignment="TOP_CENTER" layoutX="178.0" layoutY="47.0" text="CONTROLS" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="PixCon" size="28.0" />
+            <Font size="35.0" />
          </font>
       </Label>
-      <Text fill="#61536d" layoutX="228.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left">
+      <Text fill="#61536d" layoutX="228.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEFT">
          <font>
-            <Font name="PixCon" size="18.0" />
+            <Font name="Dogica bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="228.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right">
+      <Text fill="#61536d" layoutX="228.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RIGHT">
          <font>
-            <Font name="PixCon" size="18.0" />
+            <Font name="Dogica bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="228.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jump">
+      <Text fill="#61536d" layoutX="228.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JUMP">
          <font>
-            <Font name="PixCon" size="18.0" />
+            <Font name="Dogica bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="228.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pause">
+      <Text fill="#61536d" layoutX="228.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PAUSE">
          <font>
-            <Font name="PixCon" size="18.0" />
+            <Font name="Dogica bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="379.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;">
+      <Text fill="#61536d" layoutX="379.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;">
          <font>
-            <Font name="PixCon" size="18.0" />
+            <Font name="Dogica bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="379.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt;">
+      <Text fill="#61536d" layoutX="379.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt;">
          <font>
-            <Font name="PixCon" size="18.0" />
+            <Font name="Dogica bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="358.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Esc">
+      <Text fill="#61536d" layoutX="358.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ESC">
          <font>
-            <Font name="PixCon" size="18.0" />
+            <Font name="Dogica bold" size="18.0" />
          </font>
       </Text>
-      <Text fill="#61536d" layoutX="379.0" layoutY="267.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt;">
+      <Text fill="#61536d" layoutX="378.0" layoutY="262.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt;">
          <font>
-            <Font name="PixCon" size="18.0" />
+            <Font name="Dogica bold" size="18.0" />
          </font>
       </Text>
    </children>

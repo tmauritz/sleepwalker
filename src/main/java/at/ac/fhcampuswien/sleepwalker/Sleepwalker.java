@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.sleepwalker;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,6 +29,7 @@ public class Sleepwalker extends Application {
         primaryStage.setMaxHeight(GameProperties.HEIGHT);
         primaryStage.setMinHeight(GameProperties.HEIGHT);
         primaryStage.setResizable(false);
+        primaryStage.getIcons().add(MediaManager.loadImage("ui/gui/icon.png"));
         initGame(primaryStage);
     }
 

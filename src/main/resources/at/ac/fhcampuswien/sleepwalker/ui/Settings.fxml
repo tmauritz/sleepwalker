@@ -6,7 +6,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" stylesheets="@../ui/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.sleepwalker.controller.SettingsController">
     <children>
         <ImageView fx:id="backgroundView" fitHeight="480" fitWidth="640" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="false">
@@ -14,10 +15,12 @@
                 <Image url="@../level/background/background_layer_2.png" />
             </image>
         </ImageView>
-        <VBox alignment="CENTER" layoutX="220.0" layoutY="120.0" prefHeight="394.0" prefWidth="200.0" spacing="10">
-            <Label styleClass="settings-label" text="Volume" />
-            <Slider fx:id="musicVolumeSlider" max="100" min="0" showTickMarks="true" showTickLabels="true" majorTickUnit="10" snapToTicks="true" blockIncrement="1" styleClass="settings-slider" value="50" />
-            <Button fx:id="backToMainMenuButton" onAction="#handleBackToMainMenu" styleClass="button" text="Back To Main Menu" />
-        </VBox>
+         <Label layoutX="215.0" layoutY="47.0" styleClass="settings-label" text="VOLUME" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+         <Slider fx:id="musicVolumeSlider" blockIncrement="1" layoutX="191.0" layoutY="188.0" majorTickUnit="10" max="100" min="0" prefHeight="115.0" prefWidth="258.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="settings-slider" value="50" />
+         <Button fx:id="backToMainMenuButton" layoutX="237.0" layoutY="354.0" onAction="#handleBackToMainMenu" styleClass="button" text="Back To Main Menu" />
     </children>
 </AnchorPane>

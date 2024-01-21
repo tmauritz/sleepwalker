@@ -8,26 +8,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" stylesheets="@../ui/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.sleepwalker.controller.MainMenuController">
     <children>
         <ImageView fx:id="backgroundView" fitHeight="480" fitWidth="640" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="false">
          <image>
             <Image url="@../level/background/background_layer_2.png" />
          </image></ImageView>
-        <Label fx:id="title" layoutX="120.0" layoutY="21.0" prefWidth="400" text="GAME_TITLE" textAlignment="CENTER" textFill="WHITE">
-            <font>
-                <Font name="PixCon" size="35.0" />
-            </font>
+      <Label layoutX="120.0" layoutY="33.0" text="SLEEPWALKER" textFill="WHITE">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+        <Label fx:id="description" layoutX="120.0" layoutY="80.0" prefWidth="400" text="SUBTITLE" textAlignment="CENTER" textFill="WHITE">
         </Label>
-        <Label fx:id="description" layoutX="120.0" layoutY="82.0" prefWidth="400" text="SUBTITLE" textAlignment="CENTER" textFill="WHITE">
-            <font>
-                <Font name="PixCon" size="12.0" />
-            </font>
-        </Label>
-        <VBox alignment="CENTER" layoutX="200.0" layoutY="121.0" prefHeight="274.0" prefWidth="200.0" spacing="10">
+        <VBox alignment="CENTER" layoutX="220.0" layoutY="114.0" prefHeight="274.0" prefWidth="200.0" spacing="10">
             <Button fx:id="playButton" mnemonicParsing="false" onAction="#onPlayButtonClick" prefHeight="25.0" prefWidth="200.0" styleClass="button" text="Play" />
             <Button fx:id="howToPlayButton" mnemonicParsing="false" onAction="#showHowToPlay" prefHeight="25.0" prefWidth="200.0" styleClass="button" text="How To Play" />
             <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#showSettingsButton" prefHeight="25.0" prefWidth="200.0" styleClass="button" text="Settings" />

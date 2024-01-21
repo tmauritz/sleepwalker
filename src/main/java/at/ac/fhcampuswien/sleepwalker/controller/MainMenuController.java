@@ -47,9 +47,7 @@ public class MainMenuController implements Initializable {
      * Formats the main Menu at runtime.
      */
     private void formatMenu() {
-        title.setText(GameProperties.TITLE);
         description.setText(GameProperties.DESCRIPTION);
-        //TODO: format menu
     }
 
     @Override

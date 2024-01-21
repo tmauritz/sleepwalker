@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -105,17 +106,21 @@ public class GameManager {
             backToMainMenu.setLayoutY(GameProperties.HEIGHT - 100);
             backToMainMenu.setOnAction(t -> getInstance().showMainMenu()); //Look Mum, I'm using lambdas!
 
-            Label levelSelect = new Label("Level select");
-            AnchorPane x = new AnchorPane();
-            x.getChildren().addAll(background, backToMainMenu);
+            Label levelSelect = new Label("LEVEL SELECT");
+            levelSelect.setTextFill(Color.WHITE);
+            levelSelect.setStyle("-fx-font-size:35");
+            AnchorPane x = new AnchorPane(background, backToMainMenu, levelSelect);
+            //x.getChildren().addAll();
+            AnchorPane.setLeftAnchor(levelSelect, 115d);
+            AnchorPane.setTopAnchor(levelSelect, 50d);
 
-            int counterX = 1, counterY = 1;
+            int counterX = 1, counterY = 1, initalX = 80, initialY = 90;
             for (Integer levels: LevelData.Levels.keySet()) {
                 if (levels < 100) {
                     Button loadLevel = new Button("Level " + levels);
                     loadLevel.getStyleClass().add("button");
-                    loadLevel.setLayoutX(100 * counterX);
-                    loadLevel.setLayoutY(80 * counterY);
+                    loadLevel.setLayoutX(100 * counterX + initalX);
+                    loadLevel.setLayoutY(80 * counterY + initialY);
                     counterX++;
                     if (counterX == 4) {
                         counterX = 1;
