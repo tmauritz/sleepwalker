@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class MediaManager {
-    private static Map<String, Image> images = new HashMap<>();
-    private static Map<String, Media> medias = new HashMap<>();
+    private static final Map<String, Image> images = new HashMap<>();
+    private static final Map<String, Media> medias = new HashMap<>();
     private static MediaPlayer musicPlayer;
-    private static double sfxVolume = 50;
+    private static final double sfxVolume = 50;
     private static double musicVolume = 50;
 
     /**
@@ -33,10 +33,9 @@ public abstract class MediaManager {
      */
     public static void setMusicVolume(double musicVolume){
         if(musicVolume > 100) MediaManager.musicVolume = 100;
-        else if (musicVolume == 0 && MediaManager.musicVolume == 0) MediaManager.musicVolume = 100;
         else if (musicVolume < 0) MediaManager.musicVolume = 0;
         else MediaManager.musicVolume = musicVolume;
-        if(musicPlayer != null) musicPlayer.setVolume(MediaManager.musicVolume);
+        if(musicPlayer != null) musicPlayer.setVolume(MediaManager.musicVolume / 100);
     }
 
     public static double getMusicVolume(){
