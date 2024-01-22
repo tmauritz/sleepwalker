@@ -1,5 +1,4 @@
 
-
 .button {
     -fx-background-color: #C8A2C8;
     -fx-text-fill: #FFFFFF;
@@ -21,8 +20,7 @@
 }
 
 @font-face {
-    font-family: 'dogica';
-    src: url('fonts/dogica.ttf');
+    font-family: 'dogica_bold';
 }
 
 .label {

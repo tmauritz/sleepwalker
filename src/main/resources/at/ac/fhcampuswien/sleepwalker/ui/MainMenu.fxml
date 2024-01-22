@@ -10,13 +10,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" stylesheets="@../ui/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.sleepwalker.controller.MainMenuController">
     <children>
-        <ImageView fx:id="backgroundView" fitHeight="480" fitWidth="640" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="false">
+        <ImageView fx:id="backgroundView" fitHeight="480" fitWidth="640" pickOnBounds="true">
          <image>
             <Image url="@../level/background/background_layer_2.png" />
          </image></ImageView>
-      <Label layoutX="120.0" layoutY="33.0" text="SLEEPWALKER" textFill="WHITE">
+      <Label layoutX="120.0" layoutY="33.0" styleClass="label" text="SLEEPWALKER" textFill="WHITE">
          <font>
-            <Font size="35.0" />
+            <Font name="Dogica bold" size="35.0" />
          </font>
       </Label>
         <Label fx:id="description" layoutX="120.0" layoutY="80.0" prefWidth="400" text="SUBTITLE" textAlignment="CENTER" textFill="WHITE">

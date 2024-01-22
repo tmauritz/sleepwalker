@@ -8,7 +8,7 @@ import javafx.scene.input.KeyCode;
 public abstract class GameProperties {
     public static final String TITLE = "Sleepwalker";
     public static final String DESCRIPTION = "a TeamTwo platformer";
-    public static final double GAME_VERSION = 0.1;
+    public static final double GAME_VERSION = 1.0;
     public static final String BACKGROUND_IMAGE_PATH = "level/background/background_layer_2.png";
     public static final int TILE_UNIT = 32;
     public static final int WIDTH = TILE_UNIT * 20;

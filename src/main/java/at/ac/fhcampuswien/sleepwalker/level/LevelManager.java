@@ -219,9 +219,10 @@ public class LevelManager {
 
         startTime = System.currentTimeMillis();
         timerLabel = new Label();
-        timerLabel.setFont(new Font(20));
+        timerLabel.setFont(new Font("dogica",16));
         timerLabel.setLayoutX(10);
         timerLabel.setLayoutY(10);
+        timerLabel.setGraphic(new ImageView(MediaManager.loadImage("ui/gui/Time.png")));
         timerLabel.setTextFill(Color.WHITE);
         GUIRoot.getChildren().add(timerLabel);
 
@@ -331,7 +332,7 @@ public class LevelManager {
         long seconds = elapsedSeconds % 60;
 
         // Format time as MM:SS
-        String formattedTime = String.format("Time: %02d:%02d", minutes, seconds);
+        String formattedTime = String.format("%02d:%02d", minutes, seconds);
         timerLabel.setText(formattedTime);
     }
 
