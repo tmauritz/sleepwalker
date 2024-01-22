@@ -17,7 +17,7 @@ public class SettingsController {
 
 
         musicVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            MediaManager.setMusicVolume(newValue.doubleValue() /100);
+            MediaManager.setMusicVolume(newValue.doubleValue());
         });
     }
 
