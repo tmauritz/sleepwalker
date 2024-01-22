@@ -20,7 +20,6 @@ public abstract class GameProperties {
     public static final KeyCode JUMP = KeyCode.UP;
     public static final KeyCode LEFT = KeyCode.LEFT;
     public static final KeyCode RIGHT = KeyCode.RIGHT;
-    public static final KeyCode DUCK = KeyCode.DOWN;
     public static final KeyCode DEBUGVIEW = KeyCode.F3;
     public static final int FPS = 140;
 

@@ -102,7 +102,6 @@ public abstract class MediaManager {
                 loadedImage = new Image(Objects.requireNonNull(Sleepwalker.class.getResource(imagePath)).toString());
             } catch (NullPointerException e) {
                 System.err.println("Image not found: " + imagePath);
-                //TODO: figure out what to do
             }
         }
         if (loadedImage != null) images.put(imagePath, loadedImage);

@@ -32,14 +32,6 @@ public class Level {
     private int height;
     private boolean enemyExist;
 
-    public boolean isEnemyExist() {
-        return enemyExist;
-    }
-
-    public void setEnemyExist(boolean enemyExist) {
-        this.enemyExist = enemyExist;
-    }
-
     public Level(int levelID, LevelManager manager) throws LevelNotLoadedException{
         this.manager = manager;
         platforms = new ArrayList<>();
@@ -48,6 +40,14 @@ public class Level {
         powerUpHealth = new ArrayList<>();
         decoration = new ArrayList<>();
         loadLevel(levelID);
+    }
+
+    public boolean isEnemyExist() {
+        return enemyExist;
+    }
+
+    public void setEnemyExist(boolean enemyExist) {
+        this.enemyExist = enemyExist;
     }
 
     public List<Node> Platforms(){
@@ -72,10 +72,6 @@ public class Level {
 
     public Pane getLevelRoot(){
         return levelRoot;
-    }
-
-    public Pane getDecoRoot(){
-        return decoRoot;
     }
 
     public Pane getBgRoot(){
@@ -184,7 +180,7 @@ public class Level {
                         levelRoot.getChildren().addAll(goalTexture, goal);
                         break;
                     case 'e': //enemy spawn
-                        enemy = new Enemy(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10, manager);
+                        enemy = new Enemy(GameProperties.TILE_UNIT - 10, GameProperties.TILE_UNIT - 10);
                         //set spawn for enemy
                         enemy.setTranslateX(GameProperties.TILE_UNIT * j);
                         enemy.setTranslateY(GameProperties.TILE_UNIT * i);

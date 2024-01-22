@@ -110,7 +110,6 @@ public class GameManager {
             levelSelect.setTextFill(Color.WHITE);
             levelSelect.setStyle("-fx-font-size:35");
             AnchorPane x = new AnchorPane(background, backToMainMenu, levelSelect);
-            //x.getChildren().addAll();
             AnchorPane.setLeftAnchor(levelSelect, 115d);
             AnchorPane.setTopAnchor(levelSelect, 50d);
 

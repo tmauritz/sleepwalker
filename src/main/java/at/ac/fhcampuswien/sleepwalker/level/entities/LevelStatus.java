@@ -4,7 +4,6 @@ import at.ac.fhcampuswien.sleepwalker.GameManager;
 import at.ac.fhcampuswien.sleepwalker.GameProperties;
 import at.ac.fhcampuswien.sleepwalker.MediaManager;
 import at.ac.fhcampuswien.sleepwalker.Sleepwalker;
-import at.ac.fhcampuswien.sleepwalker.exceptions.LevelNotLoadedException;
 import at.ac.fhcampuswien.sleepwalker.level.LevelData;
 import at.ac.fhcampuswien.sleepwalker.level.LevelManager;
 import javafx.animation.FadeTransition;
@@ -19,8 +18,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
-
-import static at.ac.fhcampuswien.sleepwalker.GameManager.getInstance;
 
 public class LevelStatus extends Rectangle {
     private final LevelManager levelManager;

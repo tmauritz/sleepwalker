@@ -6,7 +6,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Enemy extends Rectangle {
-    private final LevelManager levelManager;
     // Source of animation: https://www.deviantart.com/neslug/art/Mad-Raven-Animation-98847870
     private final ImagePattern idleLeft = new ImagePattern(MediaManager.loadImage("animation/enemy/Mad_Raven_Left.gif"));
     private final ImagePattern idleRight = new ImagePattern(MediaManager.loadImage("animation/enemy/Mad_Raven_Right.gif"));
@@ -21,9 +20,8 @@ public class Enemy extends Rectangle {
     public void setCharTexture(ImagePattern texture) {
         this.setFill(texture);
     }
-    public Enemy(int height, int width, LevelManager levelManager) {
+    public Enemy(int height, int width) {
         super();
-        this.levelManager = levelManager;
         setWidth(width);
         setHeight(height);
         setCharTexture(idleRight);
